@@ -62,9 +62,8 @@ html(lang="zh-TW")
       
       section.form.w-640
         .text-center
-          h1 Google表單，輸入ID後自動帶入其它欄位資料
-          p 筆記文：
-            a(href="https://letswrite.tw/google-forms-id-data/", target="_blank") Let's Write
+          h1 線上報到系統
+         
         .form-group
           label(for="name") 請輸入 姓名
           input#main_id.form-control(type="text", v-model="name", @input="limitIdLen(name)")
@@ -93,6 +92,9 @@ html(lang="zh-TW")
         .submit
           a(href="#", :class="{ disabled: person.area == undefined }", @click.prevent="submit") 送出
 
+        .NewData
+          a(href="https://docs.google.com/forms/d/e/1FAIpQLSfLFQnkyH0pjGjZbFV-dw_O1Z7oAJ9SDgd4lO34BVFLRwi7tA/viewform", target="_blank") 我沒填過資料
+
 
     //-script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js") 
-    script(src="dist/main.min.js")
+    //-script(src="dist/main.min.js")
