@@ -22,7 +22,7 @@ const FormAutoFill = new Vue({
       phone: 'entry.1937240046',
       area: 'entry.2050668982',
       org: 'entry.769254',
-	  note: 'entry.1172474453'
+	    note: 'entry.1172474453'
     },
 
     // loading 效果要不要顯示
