@@ -4,23 +4,21 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Google表單，輸入ID後自動帶入其它欄位資料 - August - Let's Write</title>
-    <link rel="canonical" href="https://letswritetw.github.io/letswrite-google-forms-id-data/"/>
-    <meta property="og:url" content="https://letswritetw.github.io/letswrite-google-forms-id-data/"/>
+    <title>線上報到系統</title>
     <meta property="fb:app_id" content="2435108729902508"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="Let's Write"/>
-    <meta property="og:title" content="Google表單，輸入ID後自動帶入其它欄位資料 - August - Let's Write"/>
-    <meta itemprop="name" content="Google表單，輸入ID後自動帶入其它欄位資料 - August - Let's Write"/>
+    <meta property="og:title" content="線上報到系統"/>
+    <meta itemprop="name" content="線上報到系統"/>
     <meta name="description" content="文章大綱"/>
     <meta property="og:description" content="文章大綱"/>
     <meta itemprop="description" content="文章大綱"/>
-    <meta itemprop="image" content="https://letswritetw.github.io/letswrite-google-forms-id-data/fb.jpg"/>
-    <meta property="og:image" content="https://letswritetw.github.io/letswrite-google-forms-id-data/fb.jpg"/>
+    <meta itemprop="image" content="https://karynchang.github.io/demo-webpage/Karyn_Demo/fb.jpg"/>
+    <meta property="og:image" content="https://karynchang.github.io/demo-webpage/Karyn_Demo/fb.jpg"/>
     <meta property="og:image:width" content="1200"/>
     <meta property="og:image:height" content="630"/>
     <meta property="og:image:alt" content="Google表單，輸入ID後自動帶入其它欄位資料"/>
-    <link rel="shortcut icon" href="https://letswritetw.github.io/letswritetw/dist/img/logo_512.png"/>
+    <link rel="shortcut icon" href="https://karynchang.github.io/demo-webpage/Karyn_Demo/dist/img/logo_512.png"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
     <link rel="stylesheet" href="dist/style.min.css"/>
     <!-- Google Tag Manager-->
@@ -80,10 +78,12 @@
           <input class="form-control" id="note" type="text" v-model="person.note" :disabled="person.area == undefined"/>
         </div>
         <div class="submit"><a href="#" :class="{ disabled: person.area == undefined }" @click.prevent="submit">送出</a></div>
-        <div class="NewData"><a href="https://docs.google.com/forms/d/e/1FAIpQLSfLFQnkyH0pjGjZbFV-dw_O1Z7oAJ9SDgd4lO34BVFLRwi7tA/viewform" target="_blank">我沒填過資料</a></div>
+		<div class="NewData"><a href="https://docs.google.com/forms/d/e/1FAIpQLSfLFQnkyH0pjGjZbFV-dw_O1Z7oAJ9SDgd4lO34BVFLRwi7tA/viewform" target="_blank">我沒填過資料</a></div>
+		
+		
       </section>
     </div>
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script> -->
-    <!--<script src="dist/main.min.js"></script> -->
+    <script src="dist/main.min.js"></script>
   </body>
 </html>
