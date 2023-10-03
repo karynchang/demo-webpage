@@ -106,15 +106,7 @@
     border-top-left-radius: .25rem;
     border-bottom-left-radius: .25rem;
   }
-  
-  .pre.male {
-    background-color: rgba(0, 167, 229, .25);
-  }
-  
-  .pre.female {
-    background-color: rgba(233, 30, 99, .25);
-  }
-  
+    
   .double-wrap {
     position: fixed;
     top: 0;
