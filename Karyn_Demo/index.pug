@@ -66,26 +66,12 @@ html(lang="zh-TW")
           p 筆記文：
             a(href="https://letswrite.tw/google-forms-id-data/", target="_blank") Let's Write
         .form-group
-          label(for="main_id") 請輸入 ID（0101 - 0112）
-          input#main_id.form-control(type="number", v-model="id", @input="limitIdLen(id)")
+          label(for="name") 請輸入 姓名
+          input#main_id.form-control(type="text", v-model="name", @input="limitIdLen(name)")
         .two-col
           .col
             .form-group
               label(for="name") 姓名
-              .prepend
-
-                //- 男
-                .pre.male(v-if="person.gender == '男'")
-                  svg(xmlns="http://www.w3.org/2000/svg", viewBox="0 0 24 24", width="24", height="24")
-                    path(fill="none", d="M0 0h24v24H0z")
-                    path(fill="#00A7E5", d="M18.586 5H14V3h8v8h-2V6.414l-3.537 3.537a7.5 7.5 0 1 1-1.414-1.414L18.586 5z")
-                
-                //- 女
-                .pre.female(v-if="person.gender == '女'")
-                  female
-                  svg(xmlns="http://www.w3.org/2000/svg", viewBox="0 0 24 24", width="24", height="24")
-                    path(fill="none", d="M0 0h24v24H0z")
-                    path(fill="#E91E63", d="M11 15.934A7.501 7.501 0 0 1 12 1a7.5 7.5 0 0 1 1 14.934V18h5v2h-5v4h-2v-4H6v-2h5v-2.066z")
                 input#name.form-control(type="text", v-model="person.name", disabled)
           .col
             .form-group
@@ -93,12 +79,16 @@ html(lang="zh-TW")
               input#phone.form-control(type="tel", v-model="person.phone", disabled)
         
         .form-group
-          label(for="site") 地址
-          input#site.form-control(type="text", v-model="person.site", disabled)
+          label(for="area") 地區
+          input#site.form-control(type="text", v-model="person.area", disabled)
         
         .form-group
-          label(for="message") 備註
-          input#message.form-control(type="text", v-model="person.message", :disabled="person.name == undefined")
+          label(for="org") 系統/支部/法座
+          input#site.form-control(type="text", v-model="person.org", disabled)
+
+        .form-group
+          label(for="note") 備註
+          input#message.form-control(type="text", v-model="person.note", :disabled="person.name == undefined")
         
         .submit
           a(href="#", :class="{ disabled: person.name == undefined }", @click.prevent="submit") 送出
