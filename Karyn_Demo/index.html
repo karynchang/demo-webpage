@@ -78,9 +78,9 @@
         </div>
         <div class="form-group">
           <label for="note">備註</label>
-          <input class="form-control" id="note" type="text" v-model="person.note" :disabled="person.name == undefined"/>
+          <input class="form-control" id="note" type="text" v-model="person.note" :disabled="person.area == undefined"/>
         </div>
-        <div class="submit"><a href="#" :class="{ disabled: person.name == undefined }" @click.prevent="submit">送出</a></div>
+        <div class="submit"><a href="#" :class="{ disabled: person.area == undefined }" @click.prevent="submit">送出</a></div>
       </section>
     </div>
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script> -->

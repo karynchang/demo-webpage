@@ -88,10 +88,10 @@ html(lang="zh-TW")
 
         .form-group
           label(for="note") 備註
-          input#message.form-control(type="text", v-model="person.note", :disabled="person.name == undefined")
+          input#message.form-control(type="text", v-model="person.note", :disabled="person.area == undefined")
         
         .submit
-          a(href="#", :class="{ disabled: person.name == undefined }", @click.prevent="submit") 送出
+          a(href="#", :class="{ disabled: person.area == undefined }", @click.prevent="submit") 送出
 
 
     //-script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js") 
