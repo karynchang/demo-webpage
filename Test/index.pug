@@ -66,7 +66,7 @@ html(lang="zh-TW")
          
         .form-group
           label(for="name") 請輸入 姓名
-          input#main_id.form-control(type="text", v-model="name", @input="limitIdLen(name)")
+          input#main_id.form-control(type="text", v-model="message", @input="limitIdLen(name)")
         .two-col
           .col
             .form-group
@@ -96,5 +96,5 @@ html(lang="zh-TW")
           a(href="https://docs.google.com/forms/d/e/1FAIpQLSfLFQnkyH0pjGjZbFV-dw_O1Z7oAJ9SDgd4lO34BVFLRwi7tA/viewform", target="_blank") 我沒填過資料
 
 
-    //-script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js") 
-    //-script(src="dist/main.min.js")
+ script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js") 
+ script(src="dist/main.min.js")
