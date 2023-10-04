@@ -56,21 +56,21 @@ const FormAutoFill = new Vue({
       if(val.length === 3) {
 
         // this.persons 裡沒這筆資料，才 POST
-        if(this.persons[this.name] === undefined) {
+        if(this.persons.name === undefined) {
           this.loading = true;
           let uri = this.gas + '?name=' + this.name;
           fetch(uri, {
             method: 'POST'
           }).then(res => res.json())
             .then(res => {
-              this.persons[this.name] = res; // 把這次查詢的 name 結果存下來
+              this.persons.name = res; // 把這次查詢的 name 結果存下來
               this.person = res;
               this.loading = false;
             })
         }
         // this.persons 裡有資料就吐資料
         else {
-          this.person = this.persons[this.name];
+          this.person = this.persons.name;
         }
 
       }
