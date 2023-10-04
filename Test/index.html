@@ -83,11 +83,11 @@
         </div>
         <div class="form-group">
           <label for="note">備註</label>
-          <input class="form-control" id="note" type="text" v-model="person.note" :disabled="person.area == undefined"/>
+          <input class="form-control" id="note" type="text" v-model="person.note" :disabled="person.name == undefined"/>
         </div>
         <div class="two-col">
           <div class="col">
-            <div class="submit"><a href="#" :class="{ disabled: person.area == undefined }" @click.prevent="submit">送出</a></div>
+            <div class="submit"><a href="#" :class="{ disabled: person.name == undefined }" @click.prevent="submit">送出</a></div>
           </div>
           <div class="col">
             <div class="submit"><a href="https://docs.google.com/forms/d/e/1FAIpQLScdilOxXRm3cScT8uk2z_t-KDH--Mqy3lD_ZQrf1Vng7faPdw/viewform" target="_blank">我沒填過資料</a></div>	
