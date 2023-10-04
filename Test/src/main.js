@@ -3,9 +3,10 @@ const FormAutoFill = new Vue({
   data: {
 
     // Google Apps Script 部署為網路應用程式後的 URL
-    gas: 'https://script.google.com/macros/s/AKfycbz_c5GkJH3FTNvhhG1jPFMKRbZwApWyw51TZ_OcccbHkvU1k2NC8DdT9ik_A_d64VTY/exec',
+    gas: 'https://script.google.com/macros/s/AKfycbx8INvvLIZASn5or3Q8QiZuSU12_axAe3Gi_4RQ3kCVXOcmyKTPyCFumC25FTgUoodc/exec',
 
     name: '',
+    id: '',
 
     // 避免重複 POST，存資料用的
     persons: {},
@@ -51,26 +52,26 @@ const FormAutoFill = new Vue({
     }
   },
   watch: {
-    name: function(val) {
-      // name 輸入到 3 碼就查詢資料
-      if(val.length === 3) {
+    id: function(val) {
+      // ID 輸入到 4 碼就查詢資料
+      if(val.length === 4) {
 
         // this.persons 裡沒這筆資料，才 POST
-        if(this.persons.name === undefined) {
+        if(this.persons[this.id] === undefined) {
           this.loading = true;
-          let uri = this.gas + '?name=' + this.name;
+          let uri = this.gas + '?id=' + this.id;
           fetch(uri, {
             method: 'POST'
           }).then(res => res.json())
             .then(res => {
-              this.persons.name = res; // 把這次查詢的 name 結果存下來
+              this.persons[this.id] = res; // 把這次查詢的 id 結果存下來
               this.person = res;
               this.loading = false;
             })
         }
         // this.persons 裡有資料就吐資料
         else {
-          this.person = this.persons.name;
+          this.person = this.persons[this.id];
         }
 
       }

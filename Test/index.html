@@ -77,10 +77,16 @@
           <label for="note">備註</label>
           <input class="form-control" id="note" type="text" v-model="person.note" :disabled="person.area == undefined"/>
         </div>
-        <div class="submit"><a href="#" :class="{ disabled: person.area == undefined }" @click.prevent="submit">送出</a></div>
-		    <div class="submit"><a href="https://docs.google.com/forms/d/e/1FAIpQLSfLFQnkyH0pjGjZbFV-dw_O1Z7oAJ9SDgd4lO34BVFLRwi7tA/viewform" target="_blank">我沒填過資料</a></div>	
+        <div class="two-col">
+          <div class="col">
+            <div class="submit"><a href="#" :class="{ disabled: person.area == undefined }" @click.prevent="submit">送出</a></div>
+          </div>
+          <div class="col">
+            <div class="submit"><a href="https://docs.google.com/forms/d/e/1FAIpQLSfLFQnkyH0pjGjZbFV-dw_O1Z7oAJ9SDgd4lO34BVFLRwi7tA/viewform" target="_blank">我沒填過資料</a></div>	
+          </div>
       </section>
     </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
     <script src="dist/main.min.js"></script>
   </body>
