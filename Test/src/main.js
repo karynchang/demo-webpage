@@ -33,8 +33,8 @@ const FormAutoFill = new Vue({
   methods: {
     // ID 限填 4 碼
     limitIdLen(val) {
-      if(val.length > 4) {
-        return this.id =  this.id.slice(0, 4);
+      if(val.length > 3) {
+        return this.id =  this.id.slice(0, 3);
       }
     },
     // 送出表單
@@ -55,7 +55,7 @@ const FormAutoFill = new Vue({
   watch: {
     id: function(val) {
       // ID 輸入到 4 碼就查詢資料
-      if(val.length === 4) {
+      if(val.length === 3) {
 
         // this.persons 裡沒這筆資料，才 POST
         if(this.persons[this.id] === undefined) {
