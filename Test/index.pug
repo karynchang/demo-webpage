@@ -8,17 +8,12 @@ html(lang="zh-TW")
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
-    title #{title} - August - Let's Write
 
     link(rel="canonical", href=`https://letswritetw.github.io/${link}/`)
     meta(property="og:url", content=`https://letswritetw.github.io/${link}/`)
 
     meta(property="fb:app_id", content="2435108729902508")
     meta(property="og:type", content="website")
-
-    meta(property="og:site_name", content="Let's Write")
-    meta(property="og:title", content=`${title} - August - Let's Write`)
-    meta(itemprop="name", content=`${title} - August - Let's Write`)
 
     meta(name="description", content=description)
     meta(property="og:description", content=description)
@@ -64,9 +59,13 @@ html(lang="zh-TW")
         .text-center
           h1 線上報到系統
          
-        .form-group
+        //- .form-group
           label(for="name") 請輸入 姓名
           input#main_id.form-control(type="text", v-model="name", @input="limitIdLen(name)")
+        .form-group
+          label(for="main_id") 請輸入 ID（0101 - 0112）
+          input#main_id.form-control(type="number", v-model="id", @input="limitIdLen(id)")
+        
         .two-col
           .col
             .form-group
@@ -79,18 +78,18 @@ html(lang="zh-TW")
         
         .form-group
           label(for="area") 地區
-          input#site.form-control(type="text", v-model="person.area", disabled)
+          input#area.form-control(type="text", v-model="person.area", disabled)
         
         .form-group
           label(for="org") 系統/支部/法座
-          input#site.form-control(type="text", v-model="person.org", disabled)
+          input#org.form-control(type="text", v-model="person.org", disabled)
 
         .form-group
           label(for="note") 備註
-          input#message.form-control(type="text", v-model="person.note", :disabled="person.area == undefined")
+          input#note.form-control(type="text", v-model="person.note", :disabled="person.name == undefined")
         
         .submit
-          a(href="#", :class="{ disabled: person.area == undefined }", @click.prevent="submit") 送出
+          a(href="#", :class="{ disabled: person.name == undefined }", @click.prevent="submit") 送出
 
         .NewData
           a(href="https://docs.google.com/forms/d/e/1FAIpQLSfLFQnkyH0pjGjZbFV-dw_O1Z7oAJ9SDgd4lO34BVFLRwi7tA/viewform", target="_blank") 我沒填過資料
