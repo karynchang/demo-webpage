@@ -30,22 +30,22 @@ const FormAutoFill = new Vue({
     loading: false
   },
   methods: {
-    // name 限填 3 碼
+    // ID 限填 4 碼
     limitIdLen(val) {
-      if(val.length > 3) {
-        return this.name =  this.name.slice(0, 3);
+      if(val.length > 4) {
+        return this.id =  this.id.slice(0, 4);
       }
     },
     // 送出表單
     submit() {
       // 再一次判斷是不是可以送出資料
       if(this.person.name !== undefined) {
-        let params = `${this.input.name}=${this.person.name}&${this.input.phone}=${this.person.phone}&${this.input.area}=${this.person.area}&${this.input.org}=${this.person.org}&${this.input.note}=${this.person.message || '無'}`;
+        let params = `${this.input.id}=${this.person.id}&${this.input.name}=${this.person.name}&${this.input.gender}=${this.person.gender}&${this.input.phone}=${this.person.phone}&${this.input.site}=${this.person.site}&${this.input.msg}=${this.person.message || '無'}`;
         fetch(this.formAction + '?' + params, {
           method: 'POST'
         }).catch(err => {
             alert('提交成功。');
-            this.name = '';
+            this.id = '';
             this.person = {};
           })
       }
