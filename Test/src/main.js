@@ -3,9 +3,9 @@ const FormAutoFill = new Vue({
   data: {
 
     // Google Apps Script 部署為網路應用程式後的 URL
-    gas: 'https://script.google.com/macros/s/AKfycbx8INvvLIZASn5or3Q8QiZuSU12_axAe3Gi_4RQ3kCVXOcmyKTPyCFumC25FTgUoodc/exec',
+    gas: 'https://script.google.com/macros/s/AKfycbw9aX_9oC43oW7CnIF0w9YMKjjfIZPnwjiVwRhBQ2B9IjD51YRPZn8YpDm_yQMzPr5oeQ/exec',
 
-    name: '',
+    // name: '',
     id: '',
 
     // 避免重複 POST，存資料用的
@@ -19,11 +19,12 @@ const FormAutoFill = new Vue({
     
     // Google Form 各個 input 的 name
     input: {
-      name: 'entry.2132758197',
-      phone: 'entry.1937240046',
-      area: 'entry.2050668982',
-      org: 'entry.769254',
-	    note: 'entry.1172474453'
+      id: 'entry.1339314469',
+      name: "entry.2132758197",
+      phone: "entry.1937240046",
+      area: "entry.2050668982",
+      org: "entry.769254",
+      note: "entry.1172474453"
     },
 
     // loading 效果要不要顯示
@@ -40,7 +41,7 @@ const FormAutoFill = new Vue({
     submit() {
       // 再一次判斷是不是可以送出資料
       if(this.person.name !== undefined) {
-        let params = `${this.input.id}=${this.person.id}&${this.input.name}=${this.person.name}&${this.input.gender}=${this.person.gender}&${this.input.phone}=${this.person.phone}&${this.input.site}=${this.person.site}&${this.input.msg}=${this.person.message || '無'}`;
+        let params = `${this.input.id}=${this.person.id}&${this.input.name}=${this.person.name}&${this.input.phone}=${this.person.phone}&${this.input.area}=${this.person.area}&${this.input.org}=${this.person.org}&${this.input.note}=${this.person.message || '無'}`;
         fetch(this.formAction + '?' + params, {
           method: 'POST'
         }).catch(err => {
