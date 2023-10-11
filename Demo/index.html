@@ -44,25 +44,20 @@
       <div class="two-col">
         <div class="col">
           <div class="form-group">
-            <label for="main_id">請輸入 編號</label>
-            <input class="form-control" id="main_id" type="number" v-model="id" />
+            <label for="name">請輸入 名字</label>
+            <input class="form-control" id="name" type="text" v-model="name" />
           </div>
         </div>
         <div class="col">
           <div class="form-group">
-            <label for="name">請輸入 名字</label>
-            <input class="form-control" id="name" type="text" v-model="name" />
+            <label for="main_id">請輸入 編號 (選填) </label>
+            <input class="form-control" id="main_id" type="number" v-model="id" />
           </div>
         </div>
       </div>
 
       <div class="two-col">
-        <div class="col">
-          <div class="form-group">
-            <label for="main_id">編號</label>
-            <input class="form-control" id="main_id" type="number" v-model="person.id" disabled="disabled"/>
-          </div>
-        </div>
+        
         <div class="col">
           <div class="form-group">
             <label for="name">名字</label>
@@ -83,6 +78,13 @@
                 <input class="form-control" id="name" type="text" v-model="person.name" disabled="disabled"/>
               </div>
             </div>
+        </div>
+        
+         <div class="col">
+          <div class="form-group">
+            <label for="main_id">編號</label>
+            <input class="form-control" id="main_id" type="number" v-model="person.id" disabled="disabled"/>
+          </div>
         </div>
       </div>
       <div class="three-col">
