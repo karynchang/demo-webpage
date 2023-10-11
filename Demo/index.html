@@ -51,7 +51,7 @@
         <div class="col">
           <div class="form-group-input">
             <label for="phone" style="font-size:18px">請輸入 電話(選填) </label>
-            <input class="form-control" id="phone" type="number" v-model="phone" />
+            <input class="form-control" id="phone" type="number" v-model="phone" @input="limitIdLen(phone)" />
           </div>
         </div>
       </div>
