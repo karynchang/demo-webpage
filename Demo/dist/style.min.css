@@ -211,7 +211,6 @@
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
-    background-image: rgba(22, 22, 192, 0.921);
     
   }
   
@@ -221,7 +220,7 @@
   
   h1 {
     line-height: 1;
-    font-size: 65px;
+    font-size: 60px;
     position: center;
     max-width: 900px;
     font-family: cursive;
