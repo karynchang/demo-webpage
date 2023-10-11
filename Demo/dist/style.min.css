@@ -200,10 +200,11 @@
   }
   
   h1 {
-    line-height: 1.5;
-    font-size: 48px;
+    line-height: 1;
+    font-size: 65px;
     position: center;
     max-width: 900px;
+    font-family: cursive;
   }
   
   a {
@@ -225,12 +226,14 @@
     margin-right: auto;
     margin-left: auto;
     max-width: 900px;
+    font-family: Microsoft JhengHei ;
   }
   
   @media (max-width: 900px) {
     .w-640 {
       padding-right: 15px;
       padding-left: 15px;
+      font-family: Microsoft JhengHei ;
     }
   }
   
