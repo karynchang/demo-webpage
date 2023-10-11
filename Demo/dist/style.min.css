@@ -262,6 +262,16 @@
   .two-col .col {
     width: 48%;
   }
+
+  .three-col {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .three-col .col {
+    width: 30%;
+  }
+  
   
   @media (max-width: 640px) {
     .two-col {
