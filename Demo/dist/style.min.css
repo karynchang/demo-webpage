@@ -66,20 +66,20 @@
   .form-control[type=text] {
     -moz-appearance: textfield;
     color: #2f3539;
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .form-control[type=tel] {
     -moz-appearance: textfield;
     color: #2f3539;
-    font-size: 13px;
+    font-size: 12px;
 
   }
   
   .form-control[type=number] {
     -moz-appearance: textfield;
     color: #2f3539;
-    font-size: 13px;
+    font-size: 14px;
   }
   
 
@@ -318,6 +318,7 @@
   
   .submit {
     text-align: center;
+    line-height: 3;
   }
   
   .submit a {
