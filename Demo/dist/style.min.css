@@ -211,6 +211,8 @@
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
+    background-image: rgba(22, 22, 192, 0.921);
+    
   }
   
   img {
