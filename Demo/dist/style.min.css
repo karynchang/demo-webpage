@@ -64,8 +64,20 @@
   
   .form-control[type=text] {
     -moz-appearance: textfield;
+    color: #68757e;
+  }
+
+  .form-control[type=tel] {
+    -moz-appearance: textfield;
+    color: #68757e;
   }
   
+  .form-control[type=number] {
+    -moz-appearance: textfield;
+    color: #68757e;
+  }
+  
+
   @media (prefers-reduced-motion: reduce) {
     .form-control {
       transition: none;
@@ -74,13 +86,19 @@
   
   .form-group {
     margin-bottom: 1rem;
-    font-weight:bold
+    font-weight:bold ;
+    color: #2d3135;
+  }
+
+  .form-group-input {
+    margin-bottom: 1rem;
+    font-weight: bold;
   }
   
   label {
     display: block;
     line-height: 2;
-    font-size: 18px;
+    font-size: 16px;
   }
   
   .prepend {
@@ -226,14 +244,13 @@
     margin-right: auto;
     margin-left: auto;
     max-width: 900px;
-    font-family: Microsoft JhengHei ;
+    font-family: 'Comic Sans MS',Microsoft JhengHei ;
   }
   
   @media (max-width: 900px) {
     .w-640 {
       padding-right: 15px;
       padding-left: 15px;
-      font-family: Microsoft JhengHei ;
     }
   }
   
@@ -282,8 +299,8 @@
   .three-col .col {
     width:30%;
   }
-  
-  
+
+ 
   @media (max-width: 900px) {
     .two-col {
       flex-wrap: wrap;
