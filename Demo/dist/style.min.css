@@ -6,7 +6,8 @@
     position: relative;
     display: block;
     width: 100%;
-    height: calc(1.5em + 0.75rem + 2px);
+    /* height: calc(1.5em + 0.75rem + 2px); */
+    height: 38px;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -65,16 +66,20 @@
   .form-control[type=text] {
     -moz-appearance: textfield;
     color: #2f3539;
+    font-size: 13px;
   }
 
   .form-control[type=tel] {
     -moz-appearance: textfield;
     color: #2f3539;
+    font-size: 13px;
+
   }
   
   .form-control[type=number] {
     -moz-appearance: textfield;
     color: #2f3539;
+    font-size: 13px;
   }
   
 
@@ -289,7 +294,7 @@
   }
   
   .two-col .col {
-    width: 30%;
+    width: 48%;
   }
 
   .three-col {

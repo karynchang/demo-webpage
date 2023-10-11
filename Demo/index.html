@@ -63,14 +63,14 @@
             <label for="name">名字</label>
               <div class="prepend">
                 <div class="pre male" v-if="person.gender == '男'">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
                     <path fill="none" d="M0 0h24v24H0z"></path>
                     <path fill="#00A7E5" d="M18.586 5H14V3h8v8h-2V6.414l-3.537 3.537a7.5 7.5 0 1 1-1.414-1.414L18.586 5z"></path>
                   </svg>
                 </div>
                 <div class="pre female" v-if="person.gender == '女'">
                   <female></female>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" >
                     <path fill="none" d="M0 0h24v24H0z"></path>
                     <path fill="#E91E63" d="M11 15.934A7.501 7.501 0 0 1 12 1a7.5 7.5 0 0 1 1 14.934V18h5v2h-5v4h-2v-4H6v-2h5v-2.066z"></path>
                   </svg>
@@ -97,7 +97,7 @@
         <div class="col">
           <div class="form-group">
             <label for="phone">電話</label>
-            <input class="form-control" id="phone" type="tel" v-model="person.phone" disabled="disabled"/>
+            <input class="form-control" id="phone" type="tel"  v-model="person.phone" disabled="disabled"/>
           </div>
         </div>
         <div class="col">
@@ -130,7 +130,7 @@
         <div class="col">
           <div class="form-group">
             <label for="org_3">法座</label>
-            <input class="form-control" id="org_3" type="text" v-model="person.org_3" disabled="disabled"/>
+            <input class="form-control" id="org_3" type="text" v-model="person.org_3" disabled="disabled" />
           </div>
         </div>
       </div>
