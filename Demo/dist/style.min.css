@@ -202,6 +202,8 @@
   h1 {
     line-height: 1.5;
     font-size: 48px;
+    position: center;
+    max-width: 900px;
   }
   
   a {
@@ -266,7 +268,7 @@
   }
   
   .two-col .col {
-    width: 48%;
+    width: 30%;
   }
 
   .three-col {
