@@ -56,8 +56,7 @@
         </div>
       </div>
 
-      <div class="three-col">
-        
+      <div class="two-col">
         <div class="col">
           <div class="form-group">
             <label for="name">名字</label>
@@ -79,31 +78,19 @@
               </div>
             </div>
         </div>
-        
-        <div class="col">
-          <div class="form-group">
-            <label for="main_id">編號</label>
-            <input class="form-control" id="main_id" type="number" v-model="person.id" disabled="disabled"/>
-          </div>
-        </div>
-        <div class="col">
-          <div class="form-group">
-            
-          </div>
-        </div>
-
-      </div>
-      <div class="three-col">
         <div class="col">
           <div class="form-group">
             <label for="phone">電話</label>
             <input class="form-control" id="phone" type="text"  v-model="person.phone" disabled="disabled"/>
           </div>
         </div>
+      </div>
+
+      <div class="two-col">
         <div class="col">
           <div class="form-group">
-            <label for="age">學生部/青年部/一般/幼兒</label>
-            <input class="form-control" id="age" type="text" v-model="person.age" disabled="disabled"/>
+            <label for="partment">學生部/青年部/一般/幼兒</label>
+            <input class="form-control" id="partment" type="text" v-model="person.partment" disabled="disabled"/>
           </div>
         </div>
         <div class="col">
@@ -114,7 +101,7 @@
         </div>
       </div>
 
-      <div class="three-col">
+      <div class="two-col">
         <div class="col">
           <div class="form-group">
             <label for="org_1">系統</label>
@@ -123,14 +110,8 @@
         </div>
         <div class="col">
           <div class="form-group">
-            <label for="org_2">支部/準支部</label>
+            <label for="org_2">(準)支部/法座</label>
             <input class="form-control" id="org_2" type="text" v-model="person.org_2" disabled="disabled"/>
-          </div>
-        </div>
-        <div class="col">
-          <div class="form-group">
-            <label for="org_3">法座</label>
-            <input class="form-control" id="org_3" type="text" v-model="person.org_3" disabled="disabled" />
           </div>
         </div>
       </div>
