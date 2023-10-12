@@ -66,19 +66,19 @@
   .form-control[type=text] {
     -moz-appearance: textfield;
     color: #0b141b;
-
+    font-size: 14px;
   }
 
   .form-control[type=tel] {
     -moz-appearance: textfield;
     color: #0b141b;
-
-
+    font-size: 14px;
   }
   
   .form-control[type=number] {
     -moz-appearance: textfield;
     color: #0b141b;
+    font-size: 14px;
 
   }
   

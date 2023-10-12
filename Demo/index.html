@@ -46,13 +46,14 @@
           <div class="col">
             <div class="form-group-input">
               <label for="phone" style="font-size:18px">請輸入 電話(選填) </label>
-              <input class="form-control" id="phone" type="number" v-model="phone" @input="limitIdLen(phone)" />
+              <input class="form-control" id="phone" type="number" v-model="phone" @input="limitIdLen(phone)" /> 
+              <!--limitIdLen(phone)：限制只能輸入10碼-->
             </div>
           </div>
         </div>
 
 <!-- 輸入Name、Phone後查找資料 -->
-        <div class="two-col">
+        <div class="three-col">
           <div class="col">
             <div class="form-group">
               <label for="name">名字</label>
@@ -76,11 +77,18 @@
                 </div>
             </div>
           </div>
-          <!-- 顯示 電話 -->
+          <!-- 顯示 年齡 -->
           <div class="col">
             <div class="form-group">
-              <label for="phone">電話</label>
-              <input class="form-control" id="phone" type="text"  v-model="person.phone" disabled="disabled"/>
+              <label for="age">年齡</label>
+              <input class="form-control" id="age" type="number" v-model="person.age" disabled="disabled"/>
+            </div>
+          </div>
+          <!-- 顯示 地區 -->
+          <div class="col">
+            <div class="form-group">
+              <label for="area">地區</label>
+              <input class="form-control" id="area" type="text" v-model="person.area" disabled="disabled"/>
             </div>
           </div>
         </div>
@@ -94,11 +102,11 @@
             </div>
           </div>
 
-          <!-- 顯示 地區 -->
+          <!-- 顯示 電話 -->
           <div class="col">
             <div class="form-group">
-              <label for="area">地區</label>
-              <input class="form-control" id="area" type="text" v-model="person.area" disabled="disabled"/>
+              <label for="phone">電話</label>
+              <input class="form-control" id="phone" type="text"  v-model="person.phone" disabled="disabled"/>
             </div>
           </div>
         </div>
