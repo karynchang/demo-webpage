@@ -65,21 +65,21 @@
   
   .form-control[type=text] {
     -moz-appearance: textfield;
-    color: #2f3539;
-    font-size: 14px;
+    color: #0b141b;
+
   }
 
   .form-control[type=tel] {
     -moz-appearance: textfield;
-    color: #2f3539;
-    font-size: 12px;
+    color: #0b141b;
+
 
   }
   
   .form-control[type=number] {
     -moz-appearance: textfield;
-    color: #2f3539;
-    font-size: 14px;
+    color: #0b141b;
+
   }
   
 
@@ -92,7 +92,7 @@
   .form-group {
     margin-bottom: 1rem;
     font-weight:bold ;
-    color: #2d3135;
+    color: #0b141b;
   }
 
   .form-group-input {
