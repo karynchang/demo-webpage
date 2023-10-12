@@ -107,7 +107,7 @@
   }
   
   .prepend input {
-    padding-left: 3.5rem;
+    padding-left: 2rem;
   }
   
   .pre {
@@ -115,7 +115,8 @@
     z-index: 1;
     display: flex;
     align-items: center;
-    padding: .375rem .75rem;
+    justify-content: center;
+    padding: .5rem .2rem;
     font-size: 1rem;
     line-height: 1.5;
     color: #495057;
@@ -349,4 +350,5 @@
     opacity: .5;
     pointer-events: none;
   }
+  
   
