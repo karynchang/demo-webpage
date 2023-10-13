@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>線上報到系統</title>
+    <meta property="fb:app_id" content="2435108729902508"/>
+    <meta property="og:title" content="線上報到系統"/>
+    <meta itemprop="name" content="線上報到系統"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+    <link rel="stylesheet" href="dist/style.min.css"/>
+    <!-- Google Tag Manager -->
+  </head>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <div class="container" id="app">
+      <div class="double-wrap" :class="{ hide: !loading }">
+        <div class="double">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+        </div>
+      </div>
+
+      <section class="form w-640">
+        <div class="text-center">
+          <h1>線上報到系統</h1>
+        </div>
+
+        <div class="two-col">
+          <!-- 輸入Name -->
+          <div class="col">
+            <div class="form-group-input">
+              <label for="name" style="font-size:18px" >請輸入 名字  </label>
+              <input class="form-control" id="name" type="text" v-model="name" />
+            </div>
+          </div>
+
+          <!-- 輸入Phone -->
+          <div class="col">
+            <div class="form-group-input">
+              <label for="phone" style="font-size:18px">請輸入 電話(選填) </label>
+              <input class="form-control" id="phone" type="number" v-model="phone" @input="limitIdLen(phone)" /> 
+              <!--limitIdLen(phone)：限制只能輸入10碼-->
+            </div>
+          </div>
+        </div>
+
+<!-- 輸入Name、Phone後查找資料 -->
+        <div class="three-col">
+          <div class="col">
+            <div class="form-group">
+              <label for="name">名字</label>
+              <!-- 性別以圖像表示 -->
+                <div class="prepend">
+                  <div class="pre male" v-if="person.gender == '男'">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                      <path fill="none" d="M0 0h24v24H0z"></path>
+                      <path fill="#00A7E5" d="M18.586 5H14V3h8v8h-2V6.414l-3.537 3.537a7.5 7.5 0 1 1-1.414-1.414L18.586 5z"></path>
+                    </svg>
+                  </div>
+                  <div class="pre female" v-if="person.gender == '女'">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" >
+                      <path fill="none" d="M0 0h24v24H0z"></path>
+                      <path fill="#E91E63" d="M11 15.934A7.501 7.501 0 0 1 12 1a7.5 7.5 0 0 1 1 14.934V18h5v2h-5v4h-2v-4H6v-2h5v-2.066z"></path>
+                    </svg>
+                  </div>
+                  <!-- 顯示 名字 -->
+                  <input class="form-control" id="name" type="text" v-model="person.name" disabled="disabled"/>
+                </div>
+            </div>
+          </div>
+          <!-- 顯示 年齡 -->
+          <div class="col">
+            <div class="form-group">
+              <label for="age">年齡</label>
+              <input class="form-control" id="age" type="number" v-model="person.age" disabled="disabled"/>
+            </div>
+          </div>
+          <!-- 顯示 地區 -->
+          <div class="col">
+            <div class="form-group">
+              <label for="area">地區</label>
+              <input class="form-control" id="area" type="text" v-model="person.area" disabled="disabled"/>
+            </div>
+          </div>
+        </div>
+      
+        <div class="two-col">
+          <!-- 顯示 學生部/青年部/一般/幼兒 -->
+          <div class="col">
+            <div class="form-group">
+              <label for="dept">學生部/青年部/一般/幼兒</label>
+              <input class="form-control" id="dept" type="text" v-model="person.dept" disabled="disabled"/>
+            </div>
+          </div>
+
+          <!-- 顯示 電話 -->
+          <div class="col">
+            <div class="form-group">
+              <label for="phone">電話</label>
+              <input class="form-control" id="phone" type="text"  v-model="person.phone" disabled="disabled"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <!-- 顯示 系統 -->
+          <div class="col">
+            <div class="form-group">
+              <label for="org_1">系統</label>
+              <input class="form-control" id="org_1" type="text" v-model="person.org_1" disabled="disabled"/>
+            </div>
+          </div>
+
+          <!-- 顯示 (準)支部/法座 -->
+          <div class="col">
+            <div class="form-group">
+              <label for="org_2">(準)支部/法座</label>
+              <input class="form-control" id="org_2" type="text" v-model="person.org_2" disabled="disabled"/>
+            </div>
+          </div>
+        </div>
+      
+        <!-- 填寫 備註 -->
+        <div class="form-group">
+          <label for="note">備註 (如有需要修改資料，請在備註說明)</label>
+          <input class="form-control" id="note" type="text" v-model="person.note" :disabled="person.area == undefined"/>
+        </div>
+
+        <!-- 按鈕：送出 -->
+        <div class="col">
+          <div class="submit"><a href="#" :class="{ disabled: person.area == undefined }" @click.prevent="submit">送出</a></div>
+          <br> </br>
+        </div>
+      
+        <!-- 按鈕：我沒填寫過 -->
+        <div class="col">
+          <div class="submit"><a href="https://docs.google.com/forms/d/e/1FAIpQLScdilOxXRm3cScT8uk2z_t-KDH--Mqy3lD_ZQrf1Vng7faPdw/viewform" target="_blank">我沒填過資料</a></div>	
+        </div>
+    
+      </section>
+    </div>
+
+    <!-- vue.js路徑 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>  
+    
+    <!-- main.min.js路徑 -->
+    <script src="dist/main.min.js"></script>
+  </body>
+</html>
