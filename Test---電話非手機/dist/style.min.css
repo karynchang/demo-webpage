@@ -350,5 +350,30 @@
     opacity: .5;
     pointer-events: none;
   }
+
+fieldset {
+  border: 6px ridge#ffffff;
+  padding: 10px;
+  border-color: rgba(255,255,255,.6);
+  border-radius: 5px;  
+  
+}
+
+legend {
+    font-size: 18px;
+    font-weight:bold ;
+    padding: 0 10px;
+    
+}
+
+legend-label {
+  display: inline-block;
+  line-height: 2;
+  font-size: 18px;
+  font-weight: bold;
+  width: 30%;
+  
+}
+  
   
   

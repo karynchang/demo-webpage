@@ -51,6 +51,16 @@
             </div>
           </div>
         </div>
+        
+        <fieldset>
+          <legend> 參加形式 </legend>
+          <div>
+            <input type="radio" id="join_type_1" name="join_type" value="線上" v-model="person.join_type" :disabled="person.area == undefined"/> 
+            <legend-label for="join_type_1">線上</legend-label>
+            <input type="radio" id="join_type_2" name="join_type" value="實體" v-model="person.join_type" :disabled="person.area == undefined"/>
+            <legend-label for="join_type_1">實體</legend-label>
+          </div>
+        </fieldset>
 
 <!-- 輸入Name、Phone後查找資料 -->
         <div class="three-col">
@@ -127,7 +137,7 @@
             </div>
           </div>
         </div>
-      
+
         <!-- 填寫 備註 -->
         <div class="form-group">
           <label for="note">備註 (如有需要修改資料，請在備註說明)</label>
