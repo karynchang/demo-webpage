@@ -70,12 +70,14 @@
         </fieldset>
 
 <!-- 輸入Name、Phone後查找資料 -->
-        <div class="three-col">
+
+<!--       <div class="three-col">
           <div class="col">
             <div class="form-group">
               <label for="name">名字</label>
+--> 
               <!-- 性別以圖像表示 -->
-                <div class="prepend">
+<!--                <div class="prepend">
                   <div class="pre male" v-if="person.gender == '男'">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
                       <path fill="none" d="M0 0h24v24H0z"></path>
@@ -88,26 +90,22 @@
                       <path fill="#E91E63" d="M11 15.934A7.501 7.501 0 0 1 12 1a7.5 7.5 0 0 1 1 14.934V18h5v2h-5v4h-2v-4H6v-2h5v-2.066z"></path>
                     </svg>
                   </div>
+-->
                   <!-- 顯示 名字 -->
-                  <input class="form-control" id="name" type="text" v-model="person.name" disabled="disabled"/>
+<!--                  <input class="form-control" id="name" type="text" v-model="person.name" disabled="disabled"/>
                 </div>
             </div>
           </div>
+-->
           <!-- 顯示 年齡 -->
-          <div class="col">
+<!--          <div class="col">
             <div class="form-group">
               <label for="age">年齡</label>
               <input class="form-control" id="age" type="number" v-model="person.age" disabled="disabled"/>
             </div>
           </div>
-          <!-- 顯示 地區 -->
-          <div class="col">
-            <div class="form-group">
-              <label for="area">地區</label>
-              <input class="form-control" id="area" type="text" v-model="person.area" disabled="disabled"/>
-            </div>
-          </div>
-        </div>
+        </div> 
+-->
       
         <div class="two-col">
           <!-- 顯示 學生部/青年部/一般/幼兒 -->
@@ -123,6 +121,24 @@
             <div class="form-group">
               <label for="phone">電話</label>
               <input class="form-control" id="phone" type="text"  v-model="person.phone" disabled="disabled"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <!-- 顯示 地區 -->
+          <div class="col">
+            <div class="form-group">
+              <label for="area">地區</label>
+              <input class="form-control" id="area" type="text" v-model="person.area" disabled="disabled"/>
+            </div>
+          </div>
+
+          <!-- 顯示 座談會地區 -->
+          <div class="col">
+            <div class="form-group">
+              <label for="district">座談會地區</label>
+              <input class="form-control" id="district" type="text"  v-model="person.district" disabled="disabled"/>
             </div>
           </div>
         </div>
@@ -163,10 +179,11 @@
           <br> </br>
         </div>
       
-        <!-- 按鈕：我沒填寫過 -->
+        <!-- 按鈕：我沒填寫過 
         <div class="col">
           <div class="submit"><a href="https://docs.google.com/forms/d/e/1FAIpQLScdilOxXRm3cScT8uk2z_t-KDH--Mqy3lD_ZQrf1Vng7faPdw/viewform" target="_blank">我沒填過資料</a></div>	
         </div>
+        -->
     
       </section>
     </div>
