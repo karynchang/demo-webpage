@@ -38,7 +38,7 @@
           <div class="col">
             <div class="form-group-input">
               <label for="name" style="font-size:18px" >請輸入 名字  </label>
-              <input class="form-control" id="name" type="text" v-model="name" />
+              <input class="form-control" id="name" type="text" v-model="name" oninput="toggleInputPhone()"/>
             </div>
           </div>
 
@@ -53,8 +53,24 @@
                 v-model="phone" 
                 @input="limitIdLen(phone)"
                 placeholder="如果不是自己的資料，請輸入電話"
-                :disabled="person.name == undefined"/> 
+                disabled
+              /> 
               <!--limitIdLen(phone)：限制只能輸入10碼-->
+
+              <!--使用Script控制Phone欄位是否開放-->
+              <script>
+                function toggleInputPhone() {
+                  var inputName = document.getElementById('name');
+                  var inputPhone = document.getElementById('phone');
+                    
+                  if (inputName.value) {
+                    inputPhone.removeAttribute('disabled'); // 輸入Name後，才開放phone欄位
+                  } 
+                  else {
+                    inputPhone.disabled = true; // 禁用phone欄位
+                  }
+                }
+            </script>
             </div>
           </div>
         </div>        
@@ -62,9 +78,9 @@
         <fieldset>
           <legend> 參加形式 </legend>
           <div>
-            <input type="radio" id="join_type_1" name="join_type" value="線上" v-model="person.join_type" :disabled="person.area == undefined"/> 
+            <input type="radio" id="join_type_1" name="join_type" value="線上" v-model="person.join_type" :disabled="person.name == undefined"/> 
             <legend-label for="join_type_1">線上</legend-label>
-            <input type="radio" id="join_type_2" name="join_type" value="實體" v-model="person.join_type" :disabled="person.area == undefined"/>
+            <input type="radio" id="join_type_2" name="join_type" value="實體" v-model="person.join_type" :disabled="person.name == undefined"/>
             <legend-label for="join_type_1">實體</legend-label>
           </div>
         </fieldset>
@@ -175,8 +191,9 @@
 
         <!-- 按鈕：送出 -->
         <div class="col">
-          <div class="submit"><a href="#" :class="{ disabled: person.area == undefined }" @click.prevent="submit">送出</a></div>
-          <br> </br>
+          <div class="submit">
+            <a href="#" :class="{ disabled: person.name == undefined }" @click.prevent="submit">送出</a>
+          </div>
         </div>
       
         <!-- 按鈕：我沒填寫過 
