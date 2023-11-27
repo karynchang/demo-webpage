@@ -12,6 +12,31 @@
     <meta property="og:image:height" content="630"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
     <link rel="stylesheet" href="dist/style.min.css"/>
+    <!-- SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <style>
+      /* 自定義的 SweetAlert 樣式 */
+      .my-swal-icon {
+        font-size: 20px; /* 調整圖示大小 */
+        background-color: none; /* 修改背景色 */
+        color: #ffffff; /* 修改文本顏色 */
+        border: 2px solid #142226; /* 修改邊框樣式 */
+        border-radius: 50%; /* 圓角 */
+        padding: 10px; /* 調整內邊距 */
+      }
+      .swal2-title {
+        font-size: 24px; /* 調整標題字體大小 */
+        color: #a42323; /* 調整標題字體顏色 */
+        font-weight: bold;
+      }
+      .swal2-content {
+        font-size: 18px; /* 調整文本字體大小 */
+        color: #000000; /* 調整標題字體顏色 */
+        font-weight: bold;
+      }
+    </style>
     <!-- Google Tag Manager -->
 
     <!-- 網頁 icon -->
@@ -40,8 +65,11 @@
           <!-- 輸入Name -->
           <div class="col">
             <div class="form-group-input">
-              <label for="name" style="font-size:18px" >請輸入 名字  </label>
-              <input class="form-control" id="name" type="text" v-model="name" oninput="toggleInputPhone()"/>
+              <label for="name" style="font-size:18px">請輸入名字</label>
+              <div class="input-with-button">
+                <input class="form-control" id="name" type="text" v-model="name" oninput="toggleInputPhone()"/>
+                <button type="button" @click.prevent="confirmName()">查詢</button>
+              </div>
             </div>
           </div>
 
@@ -49,6 +77,7 @@
           <div class="col">
             <div class="form-group-input">
               <label for="phone" style="font-size:18px">請輸入 電話(選填) </label>
+              <div class="input-with-button">
               <input 
                 class="form-control" 
                 id="phone" 
@@ -58,6 +87,8 @@
                 placeholder="如果不是自己的資料，請輸入電話"
                 disabled
               /> 
+              <button type="button" @click.prevent="confirmPhone()">查詢</button>
+            </div>
               <!--limitIdLen(phone)：限制只能輸入10碼-->
 
               <!--使用Script控制Phone欄位是否開放-->

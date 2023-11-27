@@ -375,6 +375,41 @@ legend-label {
   width: 30%;
   
 }
-  
+
+
+/* 新增樣式 */
+.input-with-button {
+  display: flex;
+  align-items: center;
+}
+
+/* 修改按鈕外觀 */
+.input-with-button button {
+  background-color: #142226; /* 背景色 */
+  color: white; /* 文字顏色 */
+  padding: .375rem .75rem; /* 內邊距 */
+  text-align: center;
+  display: inline-block;
+  margin: 2px 2px;
+  cursor: pointer;
+  font-family: 'Comic Sans MS',Microsoft JhengHei ;
+  letter-spacing: 1.5px;
+  height: 35px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  width: auto;
+  background-clip: padding-box;
+  border: none;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  white-space: nowrap;
+}
+
+/* 按鈕悬停效果 */
+.input-with-button button:hover {
+  background-color: #142226;
+}
+
+
   
   
