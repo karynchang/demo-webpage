@@ -66,7 +66,7 @@
   .form-control[type=text] {
     -moz-appearance: textfield;
     color: #000000;
-    background-color: #f7f6f6;
+    background-color: #f5f5f5;
   }
 
   .form-control[type=tel] {
@@ -410,6 +410,9 @@ legend-label {
   background-color: #142226;
 }
 
-
+input:disabled {
+  background-color: #f2f2f2; /* 設置灰色背景色 */
+  opacity: 8; /* 設置不透明度，可視情況調整 */
+}
   
   
