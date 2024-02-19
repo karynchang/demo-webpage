@@ -61,14 +61,14 @@
           <h1>線上報到系統</h1>
         </div>
 
-        <div class="two-col">
+        
           <!-- 輸入Name -->
           <div class="col">
             <div class="form-group-input">
-              <label for="name" style="font-size:18px">請輸入名字</label>
+              <label for="name" style="font-size:18px">請輸入【名字】，輸入後點選【下一步】</label>
               <div class="input-with-button">
                 <input class="form-control" id="name" type="text" v-model="name" oninput="toggleInputPhone()"/>
-                <button type="button" @click.prevent="confirmName()">查詢</button>
+                <button type="button" @click.prevent="confirmName()">下一步</button>
               </div>
             </div>
           </div>
@@ -76,7 +76,7 @@
           <!-- 輸入Phone -->
           <div class="col">
             <div class="form-group-input">
-              <label for="phone" style="font-size:18px">請輸入 電話(選填) </label>
+              <label for="phone" style="font-size:18px">如果不是自己的資料，請輸入電話，輸入後點選【下一步】 </label>
               <div class="input-with-button">
               <input 
                 class="form-control" 
@@ -87,7 +87,7 @@
                 placeholder="如果不是自己的資料，請輸入電話"
                 disabled
               /> 
-              <button type="button" @click.prevent="confirmPhone()">查詢</button>
+              <button type="button" @click.prevent="confirmPhone()">下一步</button>
             </div>
               <!--limitIdLen(phone)：限制只能輸入10碼-->
 
@@ -107,10 +107,10 @@
             </script>
             </div>
           </div>
-        </div>        
+              
         
         <fieldset>
-          
+          <legend> 請選擇 參加形式 </legend>
           <!-- <div>
             <input type="radio" id="join_type_1" name="join_type" value="線上" v-model="person.join_type" :disabled="person.name == undefined"/> 
             <legend-label for="join_type_1">線上</legend-label>
@@ -118,12 +118,10 @@
             <legend-label for="join_type_1">實體</legend-label>
           </div> -->
           <div class="form-group-input">
-            <label for="name" style="font-size:18px" >請輸入 名字  </label>
             <!-- <input class="form-control" id="name" type="text" v-model="name" /> -->
-            <select class="selectpicker" data-live-search="true"  id="name" type="text" v-model="name">
-              <option selected>張綺容</option>
-              <option>Ketchup</option>
-              <option>Relish</option>
+            <select class="selectpicker" style="width: 200px;" id="join_type" type="text" v-model="person.join_type" :disabled="person.name == undefined">
+              <option value="實體"selected>實體</option>
+              <option value="線上">線上</option>
             </select>
             
           </div>
