@@ -66,6 +66,7 @@
   .form-control[type=text] {
     -moz-appearance: textfield;
     color: #000000;
+    background-color: #f7f6f6;
   }
 
   .form-control[type=tel] {
