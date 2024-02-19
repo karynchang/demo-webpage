@@ -352,7 +352,7 @@
   }
 
 fieldset {
-  border: 6px ridge#ffffff;
+  border: 6px ridge#000000;
   padding: 10px;
   border-color: rgba(0, 0, 0, 0.6);
   border-radius: 5px;  
