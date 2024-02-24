@@ -65,7 +65,7 @@
           <!-- 輸入Name -->
           <div class="col">
             <div class="form-group-input">
-              <label for="name" style="font-size:18px">請輸入【名字】，輸入後點選【下一步】</label>
+              <label for="name" style="font-size:18px">請輸入【完整性名】，輸入後點選【下一步】</label>
               <div class="input-with-button">
                 <input class="form-control" id="name" type="text" v-model="name" oninput="toggleInputPhone()"/>
                 <button type="button" @click.prevent="confirmName()">下一步</button>
@@ -73,42 +73,7 @@
             </div>
           </div>
           <br>
-          <!-- 輸入Phone -->
-          <div class="col">
-            <div class="form-group-input">
-              <label for="phone" style="font-size:18px">如果不是自己的資料：<br>請輸入【電話】，輸入後點選【下一步】 </label>
-              <div class="input-with-button">
-              <input 
-                class="form-control" 
-                id="phone" 
-                type="number" 
-                v-model="phone" 
-                @input="limitIdLen(phone)"
-                placeholder="如果不是自己的資料，請輸入電話"
-                disabled
-              /> 
-              <button type="button" @click.prevent="confirmPhone()">下一步</button>
-            </div>
-              <!--limitIdLen(phone)：限制只能輸入10碼-->
 
-              <!--使用Script控制Phone欄位是否開放-->
-              <script>
-                function toggleInputPhone() {
-                  var inputName = document.getElementById('name');
-                  var inputPhone = document.getElementById('phone');
-                    
-                  if (inputName.value) {
-                    inputPhone.removeAttribute('disabled'); // 輸入Name後，才開放phone欄位
-                  } 
-                  else {
-                    inputPhone.disabled = true; // 禁用phone欄位
-                  }
-                }
-            </script>
-            </div>
-          </div>
-              
-          <br>
         <fieldset>
           <legend> 請選擇 參加形式 </legend>
           <!-- <div>
@@ -219,9 +184,47 @@
           </div>
         </div>
 
+        <br>
+
+<!-- 輸入Phone -->
+<div class="col">
+  <div class="form-group-input">
+    <label for="phone" style="font-size:18px">如果不是自己的資料：<br>請輸入【電話】，輸入後點選【下一步】 </label>
+    <div class="input-with-button">
+    <input 
+      class="form-control" 
+      id="phone" 
+      type="number" 
+      v-model="phone" 
+      @input="limitIdLen(phone)"
+      placeholder="如果以上不是自己的資料，請輸入電話"
+      disabled
+    /> 
+    <button type="button" @click.prevent="confirmPhone()">下一步</button>
+  </div>
+    <!--limitIdLen(phone)：限制只能輸入10碼-->
+
+    <!--使用Script控制Phone欄位是否開放-->
+    <script>
+      function toggleInputPhone() {
+        var inputName = document.getElementById('name');
+        var inputPhone = document.getElementById('phone');
+          
+        if (inputName.value) {
+          inputPhone.removeAttribute('disabled'); // 輸入Name後，才開放phone欄位
+        } 
+        else {
+          inputPhone.disabled = true; // 禁用phone欄位
+        }
+      }
+  </script>
+  </div>
+</div>
+
+<br>
         <!-- 填寫 備註 -->
         <div class="form-group">
-          <label for="note">備註</label>
+          <label for="note" style="font-size:18px">備註</label>
           <input 
             class="form-control" 
             id="note" 
