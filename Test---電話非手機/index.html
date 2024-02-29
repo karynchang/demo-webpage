@@ -67,7 +67,7 @@
             <div class="form-group" >
               <label for="name" style="font-size:18px;">請輸入【完整姓名】，輸入後點選【下一步】</label>
               <div class="input-with-button">
-                <input class="form-control_input" rows="10" id="name" type="text" v-model="name" oninput="toggleInputPhone()"/>
+                <input class="form-control_input" id="name" type="text" v-model="name" oninput="toggleInputPhone()"/>
                 <button type="button" @click.prevent="confirmName()">下一步</button>
               </div>
             </div>
