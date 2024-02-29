@@ -64,10 +64,10 @@
         
           <!-- 輸入Name -->
           <div class="col">
-            <div class="form-group-input">
-              <label for="name" style="font-size:18px">請輸入【完整姓名】，輸入後點選【下一步】</label>
+            <div class="form-group-input" >
+              <label for="name" style="font-size:20px;">請輸入【完整姓名】，輸入後點選【下一步】</label>
               <div class="input-with-button">
-                <input class="form-control" id="name" type="text" v-model="name" oninput="toggleInputPhone()"/>
+                <input class="form-control_input" id="name" type="text" v-model="name" oninput="toggleInputPhone()"/>
                 <button type="button" @click.prevent="confirmName()">下一步</button>
               </div>
             </div>
@@ -75,7 +75,7 @@
           <br>
 
         <fieldset>
-          <legend> 請選擇 參加形式 </legend>
+          <legend style="font-size:18px;"> 請選擇 參加形式 </legend>
           <!-- <div>
             <input type="radio" id="join_type_1" name="join_type" value="線上" v-model="person.join_type" :disabled="person.name == undefined"/> 
             <legend-label for="join_type_1">線上</legend-label>
@@ -192,13 +192,13 @@
     <label for="phone" style="font-size:18px">如果不是自己的資料：<br>請輸入【電話】，輸入後點選【下一步】 </label>
     <div class="input-with-button">
     <input 
-      class="form-control" 
+      class="form-control_input" 
       id="phone" 
       type="number" 
       v-model="phone" 
       @input="limitIdLen(phone)"
       placeholder="如果以上不是自己的資料，請輸入電話"
-      disabled
+      :disabled="!name" 
     /> 
     <button type="button" @click.prevent="confirmPhone()">下一步</button>
   </div>
@@ -226,7 +226,7 @@
         <div class="form-group">
           <label for="note" style="font-size:18px">備註</label>
           <input 
-            class="form-control" 
+            class="form-control_input" 
             id="note" 
             type="text" 
             v-model="person.note" 
@@ -237,7 +237,7 @@
         <!-- 按鈕：送出 -->
         <div class="col">
           <div class="submit">
-            <a href="#" :class="{ disabled: person.name == undefined }" @click.prevent="submit">送出</a>
+            <a href="#" :class="{ disabled: person.name == undefined }" @click.prevent="submit">送  出</a>
           </div>
         </div>
       

@@ -19,6 +19,27 @@
     border-radius: .25rem;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
   }
+
+  .form-control_input {
+    position: relative;
+    display: block;
+    width: 100%;
+    /* height: calc(1.5em + 0.75rem + 2px); */
+    height: 50px;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #000000;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
+
+
+
   
   .form-control::-ms-expand {
     background-color: transparent;
@@ -334,9 +355,10 @@
     vertical-align: middle;
     text-decoration: none;
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 30px;
     color: rgba(255, 255, 255, .8);
     transition: color .2s;
+    
   }
   
   .submit a:focus {
@@ -394,7 +416,7 @@ legend-label {
   cursor: pointer;
   font-family: 'Comic Sans MS',Microsoft JhengHei ;
   letter-spacing: 1.5px;
-  height: 35px;
+  height: 50px;
   font-size: 0.9rem;
   font-weight: 400;
   width: auto;
