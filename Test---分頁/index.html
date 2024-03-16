@@ -206,38 +206,42 @@
 
        
           <div class="two-col">
-          <div class="input-with-button" id="comfirmDataButton" >
-            
-            <button type="button" @click.prevent="submit">正 確</button>
+            <div class="input-with-button" id="comfirmDataButton" style="display: none;">
+              <button type="button" @click.prevent="submit">完成報到</button>
+            </div>
+            <div class="input-with-button" id="wrongDataButton" style="display: none;" >
+              <button type="button" @click.prevent="wrongData()">錯 誤</button>  
+            </div>
+          </div>
 
-              
+          <div class="two-col">
+            <div class="input-with-button" id="comfirmDataButton2" style="display: none;">
+              <button type="button" @click.prevent="submit">完成報到</button>
             </div>
-            <div class="input-with-button" id="wrongDataButton"  >
-            
-  
-              <button type="button" @click.prevent="wrongData()">錯 誤</button>
-                
-              </div>
+            <div class="input-with-button" id="wrongDataButton2"  style="display: none;">
+              <button type="button" @click.prevent="wrongData2()">修改資料</button>  
             </div>
+          </div>
+          
         
 
 
 
 <!-- 輸入Phone -->
 <div class="col">
-  <div class="form-group-input" id="phoneGroup" style="display: none;" >
-    <label for="phone" style="font-size:18px">如果不是自己的資料：<br>請輸入【電話】，輸入後點選【下一步】 </label>
-    <div class="input-with-button_phone">
+  <div class="form-group" id="phoneConfirmGroup" style="display: none;" >
+    <label for="phone" style="font-size:24px">請輸入【電話】 <br> 例如：0912345678 </label>
+    <div class="input-with-button" >
     <input 
-      class="form-control_input" 
+      class="form-control_inputPhone" 
       id="phone" 
       type="number" 
       v-model="phone" 
       @input="limitIdLen(phone)"
-      placeholder="如果以上不是自己的資料，請輸入電話"
-      :disabled="!name" 
+
+      
     /> 
-    <button type="button" @click.prevent="confirmPhone()">下一步</button>
+   <!-- <button type="button" @click.prevent="confirmPhone()">下一步</button> -->
   </div>
     <!--limitIdLen(phone)：限制只能輸入10碼-->
 
@@ -259,23 +263,29 @@
   </div>
 </div>
 
+<div class="col">
+  <div class="next" id="comfirmPhoneButton" style="display: none;" >
+    <a href="#" :class="{ disabled: name.length === 0  }" @click.prevent="confirmPhone()" >下一步</a>
+  </div>
+</div>
+
 <br>
         <!-- 填寫 備註 -->
         <div class="form-group" id="noteGroup" style="display: none;" >
-          <label for="note" style="font-size:18px">備註</label>
+          <label for="note" style="font-size:24px">請輸入您要修改的資料內容</label>
           <input 
-            class="form-control_input" 
+            class="form-control_inputNote" 
             id="note" 
             type="text" 
             v-model="person.note" 
             :disabled="person.area == undefined" 
-            placeholder="若以上資料有誤，需要修改資料，請在備註說明"/>
+            placeholder="請輸入您要修改的資料內容"/>
         </div>
 
         <!-- 按鈕：送出 -->
         <div class="col">
           <div class="submit" id="submitGroup" style="display: none;" >
-            <a href="#" :class="{ disabled: person.name == undefined }" @click.prevent="submit">送  出</a>
+            <a href="#" :class="{ disabled: person.name == undefined }" @click.prevent="submit">完成報到</a>
           </div>
         </div>
       
