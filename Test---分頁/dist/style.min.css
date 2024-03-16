@@ -105,7 +105,7 @@
   .form-control:focus {
     color: #000000;
     background-color: #fff;
-    border-color: #80bdff;
+    border-color: #360b50;
     outline: 0;
     box-shadow: 0 0 0 .2rem rgba(0, 167, 229, .25);
   }
@@ -302,7 +302,7 @@
   }
   
   a {
-    color: #00a7e5;
+    color: #22c919;
   }
   
   .container {
