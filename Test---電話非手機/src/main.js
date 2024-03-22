@@ -53,6 +53,7 @@ const FormAutoFill = new Vue({
     }
   },
   watch: {
+   
     id: function(val) {
       // ID 輸入到 4 碼就查詢資料
       if(val.length === 3) {
@@ -76,6 +77,9 @@ const FormAutoFill = new Vue({
         }
 
       }
+      
     }
+
+ 
   }
 })

@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <!-- SweetAlert JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+
     <style>
       /* 自定義的 SweetAlert 樣式 */
       .my-swal-icon {
@@ -46,9 +48,7 @@
 
   <body>
     <!-- Google Tag Manager (noscript) -->
-    <noscript>
-      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    </noscript>
+
     <div class="container" id="app">
       <div class="double-wrap" :class="{ hide: !loading }">
         <div class="double">
@@ -56,42 +56,55 @@
           <div class="double-bounce2"></div>
         </div>
       </div>
-
+      <br>              
       <section class="form w-640">
         <div class="text-center">
           <h1>線上報到系統</h1>
         </div>
 
-        
+       
+     
           <!-- 輸入Name -->
           <div class="col">
-            <div class="form-group" >
-              <label for="name" style="font-size:18px;">請輸入【完整姓名】，輸入後點選【下一步】</label>
+            <div class="form-group" id="nameGroup" >
+              <label for="name" style="font-size:24px;">請輸入【完整姓名】</label>
               <div class="input-with-button">
-                <input class="form-control_inputName" id="name" type="text" v-model="name" oninput="toggleInputPhone()"/>
-                <button type="button" @click.prevent="confirmName()">下一步</button>
+                <input 
+                class="form-control_inputName" 
+                id="name" 
+                type="text" 
+                v-model="name" 
+                oninput="toggleInputPhone()"/>
+                <!-- <button type="button" @click.prevent="confirmName()">下一步</button> -->
               </div>
             </div>
           </div>
           <br>
 
-        <fieldset>
-          <legend style="font-size:18px;"> 請選擇 參加形式 </legend>
+        <fieldset id="joinGroup">
+          <legend style="font-size:24px;"> 請選擇 參加形式 </legend>
           <!-- <div>
             <input type="radio" id="join_type_1" name="join_type" value="線上" v-model="person.join_type" :disabled="person.name == undefined"/> 
             <legend-label for="join_type_1">線上</legend-label>
             <input type="radio" id="join_type_2" name="join_type" value="實體" v-model="person.join_type" :disabled="person.name == undefined"/>
             <legend-label for="join_type_1">實體</legend-label>
           </div> -->
-          <div class="form-group-input">
+          <div class="form-group-input" >
             <!-- <input class="form-control" id="name" type="text" v-model="name" /> -->
-            <select class="selectpicker" style="width: 200px;" id="join_type" type="text" v-model="person.join_type" :disabled="person.name == undefined">
-              <option value="實體"selected>實體</option>
-              <option value="線上">線上</option>
+            <select class="selectpicker" style="width: 200px;height: 2.5rem;font-size:22px;" id="join_type" type="text" v-model="person.join_type" >
+              <option value="實體" style="font-size:18px;" selected >實體</option>
+              <option value="線上" style="font-size:18px;" >線上</option>
             </select>
             
           </div>
         </fieldset>
+
+        <div class="col">
+          <div class="next" id="comfirmNameButton">
+            <a href="#" :class="{ disabled: name.length === 0  }" @click.prevent="confirmName()" >下一步</a>
+          </div>
+        </div>
+
 
 <!-- 輸入Name、Phone後查找資料 -->
 
@@ -130,20 +143,23 @@
           </div>
         </div> 
 -->
-<br>
+
         <div class="two-col">
           <!-- 顯示 學生部/青年部/一般/幼兒 -->
           <div class="col">
-            <div class="form-group">
-              <label for="dept">學生部/青年部/一般/幼兒</label>
-              <input class="form-control" id="dept" type="text" v-model="person.dept" disabled="disabled"/>
+            <div class="form-group" id="deptGroup" style="display: none;" >
+              <label for="dept" style="font-size:20px;">學生部/青年部/一般/幼兒</label>
+              <input class="form-control" id="dept" type="text" v-model="person.dept" disabled="disabled" />
+              
             </div>
           </div>
+                             
+
 
           <!-- 顯示 電話 -->
            <div class="col">
-            <div class="form-group" style="display:none">
-              <label for="phone">電話</label>
+            <div class="form-group" style="display:none" id="phoneGroup">
+              <label for="phone" style="font-size:20px;">電話</label>
               <input class="form-control" id="phone" type="text"  v-model="person.phone" disabled="disabled"/>
             </div>
           </div> 
@@ -153,16 +169,16 @@
         <div class="two-col">
           <!-- 顯示 地區 -->
           <div class="col">
-            <div class="form-group">
-              <label for="area">地區</label>
+            <div class="form-group" id="areaGroup" style="display: none;" >
+              <label for="area" style="font-size:20px;">地區</label>
               <input class="form-control" id="area" type="text" v-model="person.area" disabled="disabled"/>
             </div>
           </div>
 
           <!-- 顯示 座談會地區 -->
           <div class="col">
-            <div class="form-group">
-              <label for="district">座談會地區</label>
+            <div class="form-group" id="districtGroup" style="display: none;" >
+              <label for="district" style="font-size:20px;">座談會地區</label>
               <input class="form-control" id="district" type="text"  v-model="person.district" disabled="disabled"/>
             </div>
           </div>
@@ -171,16 +187,16 @@
         <div class="two-col">
           <!-- 顯示 系統 -->
           <div class="col">
-            <div class="form-group">
-              <label for="org_1">系統</label>
+            <div class="form-group" id="org_1_Group" style="display: none;" >
+              <label for="org_1" style="font-size:20px;">系統</label>
               <input class="form-control" id="org_1" type="text" v-model="person.org_1" disabled="disabled"/>
             </div>
           </div>
 
           <!-- 顯示 (準)支部/法座 -->
           <div class="col">
-            <div class="form-group">
-              <label for="org_2">(準)支部/法座</label>
+            <div class="form-group" id="org_2_Group" style="display: none;" >
+              <label for="org_2" style="font-size:20px;">(準)支部/法座</label>
               <input class="form-control" id="org_2" type="text" v-model="person.org_2" disabled="disabled"/>
             </div>
           </div>
@@ -188,21 +204,44 @@
 
         <br>
 
+       
+          <div class="two-col">
+            <div class="input-with-button" id="comfirmDataButton" style="display: none;">
+              <button type="button" @click.prevent="submit">完成報到</button>
+            </div>
+            <div class="input-with-button" id="wrongDataButton" style="display: none;" >
+              <button type="button" @click.prevent="wrongData()">錯 誤</button>  
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="input-with-button" id="comfirmDataButton2" style="display: none;">
+              <button type="button" @click.prevent="submit">完成報到</button>
+            </div>
+            <div class="input-with-button" id="wrongDataButton2"  style="display: none;">
+              <button type="button" @click.prevent="wrongData2()">修改資料</button>  
+            </div>
+          </div>
+          
+        
+
+
+
 <!-- 輸入Phone -->
 <div class="col">
-  <div class="form-group-input">
-    <label for="phone" style="font-size:18px">如果不是自己的資料：<br>請輸入【電話】，輸入後點選【下一步】 </label>
-    <div class="input-with-button_phone">
+  <div class="form-group" id="phoneConfirmGroup" style="display: none;" >
+    <label for="phone" style="font-size:24px; color: #000000;">請輸入【電話】 <br> 例如：0912345678 </label>
+    <div class="input-with-button" >
     <input 
-      class="form-control_input" 
+      class="form-control_inputPhone" 
       id="phone" 
       type="number" 
       v-model="phone" 
       @input="limitIdLen(phone)"
-      placeholder="如果以上不是自己的資料，請輸入電話"
-      :disabled="!name" 
+
+      
     /> 
-    <button type="button" @click.prevent="confirmPhone()">下一步</button>
+   <!-- <button type="button" @click.prevent="confirmPhone()">下一步</button> -->
   </div>
     <!--limitIdLen(phone)：限制只能輸入10碼-->
 
@@ -218,28 +257,35 @@
         else {
           inputPhone.disabled = true; // 禁用phone欄位
         }
+        
       }
   </script>
   </div>
 </div>
 
+<div class="col">
+  <div class="next" id="comfirmPhoneButton" style="display: none;" >
+    <a href="#" :class="{ disabled: name.length === 0  }" @click.prevent="confirmPhone()" >下一步</a>
+  </div>
+</div>
+
 <br>
         <!-- 填寫 備註 -->
-        <div class="form-group">
-          <label for="note" style="font-size:18px">備註</label>
+        <div class="form-group" id="noteGroup" style="display: none;" >
+          <label for="note" style="font-size:24px">請輸入您要修改的資料內容</label>
           <input 
-            class="form-control_input" 
+            class="form-control_inputNote" 
             id="note" 
             type="text" 
             v-model="person.note" 
             :disabled="person.area == undefined" 
-            placeholder="若以上資料有誤，需要修改資料，請在備註說明"/>
+            placeholder="請輸入您要修改的資料內容"/>
         </div>
 
         <!-- 按鈕：送出 -->
         <div class="col">
-          <div class="submit">
-            <a href="#" :class="{ disabled: person.name == undefined }" @click.prevent="submit">送  出</a>
+          <div class="submit" id="submitGroup" style="display: none;" >
+            <a href="#" :class="{ disabled: person.name == undefined }" @click.prevent="submit">完成報到</a>
           </div>
         </div>
       
