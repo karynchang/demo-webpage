@@ -86,13 +86,13 @@
           <!-- <div>
             <input type="radio" id="join_type_1" name="join_type" value="線上" v-model="person.join_type" :disabled="person.name == undefined"/> 
             <legend-label for="join_type_1">線上</legend-label>
-            <input type="radio" id="join_type_2" name="join_type" value="實體" v-model="person.join_type" :disabled="person.name == undefined"/>
-            <legend-label for="join_type_1">實體</legend-label>
+            <input type="radio" id="join_type_2" name="join_type" value="現場" v-model="person.join_type" :disabled="person.name == undefined"/>
+            <legend-label for="join_type_1">現場</legend-label>
           </div> -->
           <div class="form-group-input" >
             <!-- <input class="form-control" id="name" type="text" v-model="name" /> -->
             <select class="selectpicker" style="width: 200px;height: 2.5rem;font-size:22px;" id="join_type" type="text" v-model="person.join_type" >
-              <option value="實體" style="font-size:18px;" selected >實體</option>
+              <option value="現場" style="font-size:18px;" selected >現場</option>
               <option value="線上" style="font-size:18px;" >線上</option>
             </select>
             
@@ -206,12 +206,14 @@
 
        
           <div class="two-col">
+            <div class="input-with-button" id="wrongDataButton" style="display: none;" >
+              <button type="button" @click.prevent="wrongData()">資料不符</button>  
+            </div>
+            
             <div class="input-with-button" id="comfirmDataButton" style="display: none;">
               <button type="button" @click.prevent="submit">完成報到</button>
             </div>
-            <div class="input-with-button" id="wrongDataButton" style="display: none;" >
-              <button type="button" @click.prevent="wrongData()">資料錯誤</button>  
-            </div>
+
           </div>
 
           <div class="two-col">
