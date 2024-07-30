@@ -286,6 +286,7 @@
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
+    padding-bottom: 60px; /* 頁腳高度 + 一些額外空間 */
     
   }
   
