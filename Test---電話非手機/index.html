@@ -18,6 +18,11 @@
     <!-- SweetAlert JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chocolate+Classical+Sans&family=LXGW+WenKai+TC:wght@300;400;700&display=swap" rel="stylesheet">
+
 
     <style>
       /* 自定義的 SweetAlert 樣式 */
@@ -39,6 +44,26 @@
         color: #000000; /* 調整標題字體顏色 */
         font-weight: bold;
       }
+      footer {
+            text-align: left;
+            padding: 10px;
+            background-color: #050505;
+            color: #fff;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            border-top: 1px solid #444;
+            font-size: 1rem ;
+            line-height: 1.5; /* 增加行高，例如 1.5 */
+        }
+        footer p {
+            margin: 0;
+            font-size: 0.75em ;
+            line-height: 1.75; /* 增加行高，例如 1.5 */
+            font-family: "Chocolate Classical Sans", sans-serif;
+            font-weight: 300;
+            font-style: normal; /* 指定字體 */
+        }
     </style>
     <!-- Google Tag Manager -->
 
@@ -86,13 +111,13 @@
           <!-- <div>
             <input type="radio" id="join_type_1" name="join_type" value="線上" v-model="person.join_type" :disabled="person.name == undefined"/> 
             <legend-label for="join_type_1">線上</legend-label>
-            <input type="radio" id="join_type_2" name="join_type" value="現場" v-model="person.join_type" :disabled="person.name == undefined"/>
-            <legend-label for="join_type_1">現場</legend-label>
+            <input type="radio" id="join_type_2" name="join_type" value="實體" v-model="person.join_type" :disabled="person.name == undefined"/>
+            <legend-label for="join_type_1">實體</legend-label>
           </div> -->
           <div class="form-group-input" >
             <!-- <input class="form-control" id="name" type="text" v-model="name" /> -->
             <select class="selectpicker" style="width: 200px;height: 2.5rem;font-size:22px;" id="join_type" type="text" v-model="person.join_type" >
-              <option value="現場" style="font-size:18px;" selected >現場</option>
+              <option value="實體" style="font-size:18px;" selected >實體</option>
               <option value="線上" style="font-size:18px;" >線上</option>
             </select>
             
@@ -206,14 +231,12 @@
 
        
           <div class="two-col">
-            <div class="input-with-button" id="wrongDataButton" style="display: none;" >
-              <button type="button" @click.prevent="wrongData()">資料不符</button>  
-            </div>
-            
             <div class="input-with-button" id="comfirmDataButton" style="display: none;">
               <button type="button" @click.prevent="submit">完成報到</button>
             </div>
-
+            <div class="input-with-button" id="wrongDataButton" style="display: none;" >
+              <button type="button" @click.prevent="wrongData()">資料錯誤</button>  
+            </div>
           </div>
 
           <div class="two-col">
@@ -305,5 +328,13 @@
     
     <!-- main.min.js路徑 -->
     <script src="dist/main.min.js"></script>
+
+    <footer>
+      <p> © 2024 張綺容、蔡德蓉共同創建和維護。保留所有權利。
+          <br>
+          所有內容均受版權保護，不得未經授權複製、再發行或以其他方式使用本網站上的內容。
+      </p>
+  </footer>
+
   </body>
 </html>
