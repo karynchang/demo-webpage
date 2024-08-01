@@ -65,12 +65,19 @@
             font-weight: 300;
             font-style: normal; /* 指定字體 */
         }
-        /* 設置電話號碼的顏色 */
-         #phoneConfirmGroup label {
+                /* 設置所有電話號碼連結的顏色 */
+                a[href^="tel"] {
+            color: #000000; /* 設置字體顏色為黑色 */
             font-size: 24px; /* 設置字體大小 */
+            text-decoration: none; /* 移除下劃線 */
         }
-        #phoneConfirmGroup label span.phone-number {
-            color: #ff0000; /* 設置電話號碼顏色為黑色 */
+
+        /* 針對手機瀏覽器自動識別的電話號碼連結設置 */
+        a[href^="tel"]:active, 
+        a[href^="tel"]:focus, 
+        a[href^="tel"]:visited {
+            color: #000000; /* 確保各種狀態下字體顏色都為黑色 */
+            text-decoration: none; /* 確保各種狀態下移除下劃線 */
         }
     </style>
     <!-- Google Tag Manager -->
