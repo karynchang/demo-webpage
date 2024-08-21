@@ -1,0 +1,633 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  .form-control {
+    position: relative;
+    display: block;
+    width: 100%;
+    /* height: calc(1.5em + 0.75rem + 2px); */
+    height: 45px;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #000000;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
+
+  .form-control_inputName {
+    position: relative;
+    display: block;
+    width: 100%;
+    /* height: calc(1.5em + 0.75rem + 2px); */
+    height:60px;
+    padding: .375rem .75rem;
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 1.5;
+    color: #000000;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
+  .form-control_inputPhone {
+    position: relative;
+    display: block;
+    width: 100%;
+    /* height: calc(1.5em + 0.75rem + 2px); */
+    height:60px;
+    padding: .375rem .75rem;
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 1.5;
+    color: #000000;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
+
+  .form-control_input {
+    position: relative;
+    display: block;
+    width: 100%;
+    /* height: calc(1.5em + 0.75rem + 2px); */
+    height:50px;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #000000;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
+
+  .form-control_inputNote {
+    position: relative;
+    display: block;
+    width: 100%;
+    /* height: calc(1.5em + 0.75rem + 2px); */
+    height:200px;
+    padding: .375rem .75rem;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #000000;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
+
+  
+  .form-control::-ms-expand {
+    background-color: transparent;
+    border: 0;
+  }
+  
+  .form-control:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000000;
+  }
+  
+  .form-control:focus {
+    color: #000000;
+    background-color: #fff;
+    border-color: #000000;
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(0, 167, 229, .25);
+  }
+  
+  .form-control::-webkit-input-placeholder {
+    color: #000000;
+    opacity: 1;
+  }
+  
+  .form-control::-webkit-input-placeholder,
+  .form-control::-moz-placeholder,
+  .form-control:-ms-input-placeholder,
+  .form-control::-ms-input-placeholder,
+  .form-control::placeholder {
+    color: #000000;
+    opacity: 1;
+  }
+  
+  .form-control:disabled {
+    background: #f1f1f1;
+    cursor: not-allowed;
+  }
+  
+  .form-control::-webkit-outer-spin-button,
+  .form-control::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  .form-control[type=text] {
+    -moz-appearance: textfield;
+    color: #000000;
+    background-color: #f5f5f5;
+  }
+
+  .form-control[type=tel] {
+    -moz-appearance: textfield;
+    color: #000000;
+  }
+  
+  .form-control[type=number] {
+    -moz-appearance: textfield;
+    color: #000000;
+  }
+  
+
+  @media (prefers-reduced-motion: reduce) {
+    .form-control {
+      transition: none;
+    }
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+    font-weight:bold ;
+    color: #000000;
+  }
+
+  .form-group-input {
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+  
+  label {
+    display: block;
+    line-height: 2;
+    font-size: 16px;
+  }
+  
+  .prepend {
+    position: relative;
+  }
+  
+  .prepend input {
+    padding-left: 2rem;
+  }
+  
+  .pre {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem .2rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #000000;
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    border-right-color: rgba(0, 0, 0, .1);
+    border-top-left-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+  }
+    
+  .double-wrap {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, .8);
+    transition: opacity .6s;
+  }
+  
+  .double-wrap.hide {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .double-wrap.hide .double-bounce1,
+  .double-wrap.hide .double-bounce2 {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+  }
+  
+  .double {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin: 100px auto;
+  }
+  
+  .double-bounce1 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #00a7e5;
+    opacity: .6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-animation: sk-bounce 2s infinite ease-in-out;
+    animation: sk-bounce 2s infinite ease-in-out;
+  }
+  
+  .double-bounce2 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #00a7e5;
+    opacity: .6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-animation: sk-bounce 2s infinite ease-in-out;
+    animation: sk-bounce 2s infinite ease-in-out;
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+  }
+  
+  @-webkit-keyframes sk-bounce {
+    0%, 100% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes sk-bounce {
+    0%, 100% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1);
+    }
+  }
+  
+  body {
+    /*background: #f5f5f5;*/
+    background-image: url(background.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    padding-bottom: 60px; /* 頁腳高度 + 一些額外空間 */
+    
+  }
+  
+  img {
+    max-width: 100%;
+  }
+  
+  h1 {
+    line-height: 1;
+    font-size: 48px;
+    position: center;
+    max-width: 640px;
+    font-family: PingFang ;
+  }
+  
+  a {
+    color: #00a7e5;
+  }
+  
+  .container {
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+  }
+  
+  @media (max-width: 640px) {
+    .container {
+      padding-top: 0;
+    }
+  }
+  
+  .w-640 {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 640px;
+    font-family: 'Comic Sans MS',Microsoft JhengHei ;
+  }
+  
+  @media (max-width: 640px) {
+    .w-640 {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .kv {
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .3);
+  }
+  
+  .kv, .kv img {
+    border-radius: 10px;
+  }
+  
+  .kv img {
+    display: block;
+    height: auto;
+  }
+  
+  @media (max-width: 640px) {
+    .kv {
+      padding-right: 0;
+      padding-left: 0;
+    }
+    .kv, .kv img {
+      border-radius: 0;
+    }
+  }
+  
+  .two-col {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .two-col .col {
+    width: 48%;
+  }
+
+  .three-col {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .three-col .col {
+    width:30%;
+  }
+
+ 
+  @media (max-width: 640px) {
+    .two-col {
+      flex-wrap: wrap;
+    }
+    .two-col .col {
+      width: 100%;
+    }
+  }
+  
+  .submit {
+    text-align: center;
+    height: 38px;
+    position: relative;
+  }
+  
+  .submit a {
+    display: inline-block;
+    padding: .375rem 2rem;
+    line-height: 1.5;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #142226;
+    border: 1px solid transparent;
+    border-radius: .5rem;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 30px;
+    color: rgba(255, 255, 255, .8);
+    transition: color .2s;
+    margin-bottom: 100px;
+    
+  }
+  
+  .submit a:focus {
+    outline: 0;
+  }
+  
+  .submit a:hover {
+    color: #fff;
+  }
+  
+  .submit a.disabled {
+    opacity: .5;
+    pointer-events: none;
+  }
+
+  .next {
+    text-align: center;
+    height: 38px;
+  }
+  
+  .next  a{
+    display: inline-block;
+    padding: .375rem 2rem;
+    line-height: 1.5;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #142226;
+    border: 1px solid transparent;
+    border-radius: .5rem;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+    transition: color .2s;
+    
+  }
+
+  .next a:focus {
+    outline: 0;
+  }
+  
+  .next a:hover {
+    color: #fff;
+  }
+  
+  .next a.disabled {
+    opacity: .5;
+    pointer-events: none;
+  }
+
+
+fieldset {
+  border: 6px ridge#000000;
+  padding: 10px;
+  border-color: rgba(0, 0, 0, 0.6);
+  border-radius: 5px;  
+  margin-bottom: 20px;
+}
+
+
+legend {
+    font-size: 18px;
+    font-weight:bold ;
+    padding: 10 10px;
+    
+}
+
+legend-label {
+  display: inline-block;
+  line-height: 2;
+  font-size: 18px;
+  font-weight: bold;
+  width: 30%;
+  
+}
+
+
+/* 新增樣式 */
+.input-with-button {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 水平居中 */
+}
+
+/* 修改按鈕外觀 */
+.input-with-button button {
+  background-color: #142226; /* 背景色 */
+  color: white; /* 文字顏色 */
+  padding: .375rem .75rem; /* 內邊距 */
+  text-align: center;
+  display: inline-block;
+  margin: 2px 2px;
+  cursor: pointer;
+  font-family: 'Comic Sans MS',Microsoft JhengHei ;
+  letter-spacing: 1.5px;
+  height: 65px;
+  font-size:1.5rem;
+  font-weight: 350;
+  width: 150px;
+  background-clip: padding-box;
+  border: none;
+  border-radius: .5rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  white-space: nowrap;
+  justify-content: center;
+}
+
+.input-with-button_phone {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 水平居中 */
+}
+
+.input-with-button_phone button {
+  background-color: #142226; /* 背景色 */
+  color: white; /* 文字顏色 */
+  padding: .375rem .75rem; /* 內邊距 */
+  text-align: center;
+  display: inline-block;
+  margin: 2px 2px;
+  cursor: pointer;
+  font-family: 'Comic Sans MS',Microsoft JhengHei ;
+  letter-spacing: 1.5px;
+  height: 50px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  width: auto;
+  background-clip: padding-box;
+  border: none;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  white-space: nowrap;
+  justify-content: center;
+}
+
+/* 按鈕悬停效果 */
+.input-with-button button:hover {
+  background-color: #142226;
+}
+.input-with-button_phone button:hover {
+  background-color: #142226;
+}
+
+input:disabled {
+  background-color: #f2f2f2; /* 設置灰色背景色 */
+  opacity: 8; /* 設置不透明度，可視情況調整 */
+}
+
+.selectpicker {
+  font-size: 24px; /* 字體大小 */
+  color: #333; /* 字體顏色 */
+  font-family: 'Comic Sans MS',Microsoft JhengHei ;
+  font-weight: bold;
+  width: 100%;
+  height:60px;
+  padding: .375rem .75rem;
+  border-radius: .25rem; 
+  appearance: none; /* 取消原生樣式 */
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath d="M7 10l5 5 5-5z" fill="%23333"/%3E%3C/svg%3E') no-repeat right 10px center;
+  background-size: 24px; /* 調整箭頭大小 */
+  background-color: #ffffff;
+}
+
+.selectpicker .dropdown-menu {
+  font-size: 24px; /* 下拉選單的字體大小 */
+  font-family: 'Comic Sans MS',Microsoft JhengHei ;
+  font-weight: bold;
+  width: 100%;
+  height:60px;
+  padding: .375rem .75rem;
+  
+}
+
+.selectpicker .dropdown-item {
+  font-size: 24px; /* 下拉選單項目的字體大小 */
+  font-weight: bold;
+  width: 100%;
+  height:60px;
+  padding: .375rem .75rem;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  
+  
+}
+
+.selectpicker .dropdown-item:hover {
+  background-color: #f8f9fa; /* 滑鼠懸停項目的背景顏色 */
+}
+
+.rdobutton_radio{
+  width: 20px;
+  height: 20px;
+}
+
+.radio-group {
+
+  padding-left: 15px;
+
+}
+.radio-group label {
+  display: block; /* 使每個單選框顯示為區塊元素 */
+  margin-bottom: 10px; /* 每個單選框的上下間距 */
+  text-align: left; /* 選項文字對齊方式 */
+}
+.radio-group input[type="radio"] {
+  margin-right: 2px; /* 單選框與文字之間的間距 */
+}
+
+
+
+
+  

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>線上報到系統</title>
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+      <!-- <link rel="stylesheet" href="dist/style.min.css"/> -->
+      <link rel="stylesheet" href="dist/style.min.css?123456"  />
+      <!-- SweetAlert CSS -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+      <!-- SweetAlert JavaScript -->
+
+  <!-- customized style -->
+  <style>
+    /* 自定義的 SweetAlert 樣式 */
+    .my-swal-icon {
+      font-size: 20px; /* 調整圖示大小 */
+      background-color: none; /* 修改背景色 */
+      color: #ffffff; /* 修改文本顏色 */
+      border: 2px solid #142226; /* 修改邊框樣式 */
+      border-radius: 50%; /* 圓角 */
+      padding: 10px; /* 調整內邊距 */
+    }
+    .swal2-title {
+      font-size: 24px; /* 調整標題字體大小 */
+      color: #a42323; /* 調整標題字體顏色 */
+      font-weight: bold;
+    }
+    .swal2-content {
+      font-size: 18px; /* 調整文本字體大小 */
+      color: #000000; /* 調整標題字體顏色 */
+      font-weight: bold;
+    }
+    footer {
+          text-align: left;
+          padding: 10px;
+          background-color: #000000;
+          color: #fff;
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+          border-top: 1px solid #444;
+          font-size: 1rem ;
+          line-height: 1.5; /* 增加行高，例如 1.5 */
+          z-index: 10; /* 確保頁腳位於上層 */
+      }
+      footer p {
+          margin: 0;
+          font-size: 0.75em ;
+          line-height: 1.75; /* 增加行高，例如 1.5 */
+          font-family: "Chocolate Classical Sans", sans-serif;
+          font-weight: 300;
+          font-style: normal; /* 指定字體 */
+      }
+      /* 設置所有電話號碼連結的顏色 */
+      a[href^="tel"] {
+          color: #000000; /* 設置字體顏色為黑色 */
+          font-size: 24px; /* 設置字體大小 */
+          text-decoration: none; /* 移除下劃線 */
+      }
+
+      /* 針對手機瀏覽器自動識別的電話號碼連結設置 */
+      a[href^="tel"]:active, 
+      a[href^="tel"]:focus, 
+      a[href^="tel"]:visited {
+          color: #000000; /* 確保各種狀態下字體顏色都為黑色 */
+          text-decoration: none; /* 確保各種狀態下移除下劃線 */
+      }
+      
+      h1 {
+          line-height: 1.25; /* 調整行距 */
+      }
+
+      
+  </style>
+  
+
+
+
+<script>
+  let data = [];
+  function Api(data, success, error) {
+      var dataObj = {
+          url: 'https://script.google.com/macros/s/AKfycbzKsdxwVRgEdpY9pQFOSxty6nVFs-MdOo9tYuWFdZVqzubPWO3uytDEGuliH_rIzFlF9w/exec',
+          type: 'POST',
+          data: data,
+          success: function (e) {
+              success(e);
+          },
+          error: function (e) { error(e); }
+          /**/
+      };
+
+      $.ajax(dataObj).done();
+  }
+ 
+  function getSelectData() {
+       Api({
+          FUNC: 'GetSysSub'
+      },
+          (e) => {
+              data = e
+              let selectElement = document.getElementById("org_1");
+              // 迴圈遍歷資料陣列，並為每個選項建立一個 option 元素
+              data.sort((a, b) => parseFloat(a.sysOrder) - parseFloat(b.sysOrder)).forEach(x => {
+                  let option = document.createElement("option");
+                  option.text = x.sysName
+                  option.value = x.sysId
+                  selectElement.appendChild(option);
+              })
+          }, (e) => {
+              alert('取得資料錯誤，請聯絡系統管理員!')
+              console.log(e)
+          })
+
+
+      /*----- API回傳 資料結構(測試) -----*/
+      /*
+      data = [
+          {
+              sysId: 'A02',
+              sysName: 'TTT',
+              sysOrder: 2,
+              subs: [
+                  {
+                      subId: 'A02-01',
+                      subName: 'AAA',
+                      subOrder: 1,
+                  },
+                  {
+                      subId: 'A02-02',
+                      subName: 'Test',
+                      subOrder: 2,
+                  }
+              ]
+          },
+          {
+              sysId: 'A01',
+              sysName: '許自強',
+              sysOrder: 1,
+              subs: [
+                  {
+                      subId: 'A01-01',
+                      subName: '許自強',
+                      subOrder: 1,
+                  },
+                  {
+                      subId: 'A01-02',
+                      subName: 'Test',
+                      subOrder: 2,
+                  }
+              ]
+          }
+      ];
+       */
+      /*----- API回傳 資料結構(測試) -----*/
+
+
+      
+
+  }
+  function changeSub(v) {
+      let target = data.find(x => x.sysId == v)
+      let selectElement = document.getElementById("org_2");
+      selectElement.innerHTML = ""
+      var option = document.createElement("option");
+      option.text = '請選擇'
+      option.value = ''
+      selectElement.appendChild(option);
+      if (target != null) {
+          target.subs.sort((a, b) => parseFloat(a.subOrder) - parseFloat(b.subOrder)).forEach(x => {
+              var option = document.createElement("option");
+              option.text = x.subName
+              option.value = x.subId
+              selectElement.appendChild(option);
+          })
+      }
+  }
+  function getSelectedValue() {
+      let sys = document.getElementById('org_1').value
+      let org_2 = document.getElementById('org_2').value
+      alert('系統:' + sys + ' 支/法座:' + org_2)
+  }
+</script>
+
+</head>
+<body onload="getSelectData()">
+             
+    <section class="form w-640">
+      <div class="text-center">
+        <h1>線上報到系統 <br>首次登錄 </h1>
+      </div>
+
+     
+   
+      <!-- 輸入Name -->
+        <div class="col">
+          <div class="form-group" id="nameGroup" >
+            <label for="name" style="font-size:24px;">請輸入【完整姓名】</label>
+            <div class="input-with-button">
+              <input 
+              class="form-control_inputName" 
+              id="name" 
+              type="text" 
+              name="name" />
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+      <!-- 選擇性別 -->
+      <fieldset id="genderGroup">
+        <legend style="font-size:24px;padding-left: 10px;"> 請選擇 性別 </legend>
+        <div class="radio-group">
+          <input class="rdobutton_radio" type="radio" id="gender_b" name="gender" value="男"  /> 
+          <legend-label for="gender_b" style="font-size:24px;">男</legend-label>
+          <input class="rdobutton_radio" type="radio" id="gender_g" name="gender" value="女"  />
+          <legend-label for="gender_g" style="font-size:24px;">女</legend-label>
+        </div>
+      </fieldset>
+
+      <!-- 選擇出生年分 -->
+       <div class="col">
+        <div class="form-group-input" >
+          <label for="birth_year" style="font-size:24px;">請選擇 出生年份</label>
+          <select class="selectpicker" name="birth_year" id="birth_year"  >
+             <option value=''>請選擇</option>
+           </select>
+           <script >
+            document.addEventListener('DOMContentLoaded', function () {
+                // 獲取當前年份
+                const currentYear = new Date().getFullYear();
+                // 獲取下拉選單元素
+                const yearSelect = document.getElementById('birth_year');
+    
+                // 創建選項
+                for (let year = 1900; year <= currentYear; year++) {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.textContent = year;
+                    yearSelect.appendChild(option);
+                }
+            });
+           </script>
+        </div>
+      </div>     
+      
+      <!-- 輸入電話 -->
+        <div class="col">
+          <div class="form-group" id="phoneeGroup" >
+            <label for="phone" >
+              <span style="font-size:24px;">請輸入【完整電話】 <br> </span>
+              <span style="font-size:18px;line-height: 5px;">例如：0912345678</span>
+            </label>
+            <div class="input-with-button" id="phone" type="text" >
+              <input 
+              class="form-control_inputPhone" 
+              id="phone" 
+              type="tel" 
+              name="phone"
+              @input="limitIdLen(phone)"/>
+            </div>
+          </div>
+        </div>
+      
+
+
+      <br>
+      <!--選擇系統、支部-->
+        <div class="col">
+          <div class="form-group-input" >
+            <label for="org_1" style="font-size:24px;">請選擇 所屬系統</label>
+            <select class="selectpicker" name="org_1" id="org_1"  onchange="changeSub(this.value); " >
+              <option value='' >請選擇</option>
+             </select>
+             <label for="org_2" style="font-size:24px;">請選擇 所屬支部、準支部、法座</label>
+             <select class="selectpicker" name="org_2" id="org_2" >
+               <option value='' >請選擇</option>
+             </select>
+          </div>
+        </div>
+      <br>  
+
+      <!--選擇地區、座談會地區-->
+      <div class="col">
+        <div class="form-group-input" >
+          <label for="org_1" style="font-size:24px;">請選擇 居住地區 (未完成)</label>
+          <select class="selectpicker" name="area" id="area"  >
+             <option value=''  >請選擇</option>
+           </select>
+           <label for="org_2" style="font-size:24px;">請選擇 座談會地區 (未完成)</label>
+           <select class="selectpicker" name="district" id="district" onchange="changeSub(this.value);">
+             <option value='' >請選擇</option>
+           </select>
+        </div>
+      </div>
+
+      <br> 
+      
+      <!-- 選擇學生部/青年部/一般/幼兒 -->
+      <fieldset id="deptGroup">
+        <legend style="font-size:24px;padding-left: 10px;"> 學生部/青年部/一般/幼兒 </legend>
+        <div class="text-block" style="font-size:18px;padding-left: 18px;line-height: 30px;background-color: #337bdf6b; font-weight: bold;">
+          <span> 學生部：仍在就學的學生 <br></span>
+          <span> 青年部：畢業後至40歲(含)以下<br> </span>
+          <span> 一般：41歲(含)以上<br>  </span>
+          <span> 幼兒：6歲(含)以下 <br> </span>
+          <span> 非會員：否 </span>
+        </div>
+        <div class="radio-group">
+          <input class="rdobutton_radio" type="radio" id="dept_stu" name="dept" value="學生部" /> 
+          <legend-label for="gender_b" style="font-size:24px;">學生部</legend-label>
+          <input class="rdobutton_radio" type="radio" id="dept_yth" name="dept" value="青年部" />
+          <legend-label for="gender_g" style="font-size:24px;">青年部</legend-label>
+          <br>
+          <input class="rdobutton_radio" type="radio" id="dept_nor" name="dept" value="一般"  /> 
+          <legend-label for="gender_b" style="font-size:24px;">一般</legend-label>
+          <input class="rdobutton_radio" type="radio" id="dept_kid" name="dept" value="幼兒"  />
+          <legend-label for="gender_g" style="font-size:24px;">幼兒</legend-label>
+          <br>
+          <input class="rdobutton_radio" type="radio" id="dept_none" name="dept" value="否" v/>
+          <legend-label for="gender_g" >否</legend-label>
+        </div>
+      </fieldset>
+
+      <!-- 選擇參加形式-->
+      <div class="col">
+        <div class="form-group-input" >
+          <label for="join_type" style="font-size:24px;"> 請選擇 參加形式 </label>
+          <select class="selectpicker" id="join_type" type="text" name="join_type" >
+            <option value="現場" selected >現場</option>
+            <option value="線上" >線上</option>
+          </select>
+        </div>
+      </div>
+
+      <br>
+      
+      <!--同意個資蒐集-->
+      <div class="col" style="background-color: #337bdf6b;">
+        <div class="form-group-input" >
+          <label for="consent" style="font-size:24px;">【同意個資蒐集】</label>
+            <div class="radio-group">
+              <label for="consent" style="font-size:18px; line-height: 30px; width: 100%; font-weight: bold;color: #030b1a;">
+                <input class="rdobutton_radio"  style="margin-right: 5px;width: 15px; height: 15px;" type="radio" id="consent" value="已同意本表單蒐集之個人資料，僅限於佛所護念會會員資料庫，以及佛所護念會各項活動之報名系統使用，非經當事人同意，不轉做其他用途，亦不會公佈任何資訊，並遵循資料保存與安全控管辦理。" name="consent" />已同意本表單蒐集之個人資料，僅限於佛所護念會會員資料庫，以及佛所護念會各項活動之報名系統使用，非經當事人同意，不轉做其他用途，亦不會公佈任何資訊，並遵循資料保存與安全控管辦理。
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- 按鈕：送出 -->
+      <div class="col">
+        <div class="submit" id="submitGroup"  >
+          <a href="#"  @click.prevent="submit()">完成報到</a>
+        </div>
+      </div>
+
+        <button type="button" id="submit" class="button-primary u-full-width">確認送出</button>
+
+    </section>
+  </div>
+
+  <!-- vue.js路徑 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>  
+  
+  <!-- main.min.js路徑 -->
+  <!-- <script src="dist/main.min _First_Registration.js"></script> -->
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> 
+  <script>
+    $(function() {
+      $('#submit').on('click', function() {
+        
+        // 姓名
+        var name = $('#name').val() || '未填寫';
+
+        // 性別
+        var gender = function() {
+          var v;
+          $('[name="gender"]').each(function() {
+            if($(this).prop('checked') === true) v = $(this).val();
+          });
+          return v;
+        };
+
+        // 電話
+        var phone = $('#phone').val() || '未填寫';
+
+        // 系統
+        var org_1 = $('#org_1').val() || '未填寫';
+
+        // 支部/準支部/法座
+        var org_2 = $('#org_2').val() || '未填寫';
+
+        // 地區
+        var area = $('#area').val() || '未填寫';
+
+        // 座談會地區
+        var district = $('#district').val() || '未填寫';
+
+        // 學生部/青年部/一般/幼兒
+        var dept = $('#dept').val() || '未填寫';
+
+        // 參加形式
+        var join_type = $('#join_type').val() || '未填寫';
+
+        // 同意資料蒐集
+        var consent = $('#consent').val() || '未填寫';
+
+
+        // post
+        var data = {
+
+          'entry.2132758197': name,      // 首次登錄表單欄位：姓名
+          'entry.484563647': gender(),     // 首次登錄表單欄位：性別
+          'entry.1937240046': phone,     // 首次登錄表單欄位：電話
+          'entry.2050668982': area,      // 首次登錄表單欄位：地區
+          'entry.527397194': district,   // 首次登錄表單欄位：座談會地區
+          'entry.883603394': org_1,      // 首次登錄表單欄位：系統
+          'entry.686627579': org_2,      // 首次登錄表單欄位：支部/準支部/法座
+          'entry.1818800730': birth_year,       // 首次登錄表單欄位：出生年份
+          'entry.769254':dept,          // 首次登錄表單欄位：學生部/青年部/一般/幼兒
+          'entry.57473509': join_type,   // 首次登錄表單欄位：參加形式
+          'entry.1350156201': consent    // 首次登錄表單欄位：同意資料蒐集
+          
+
+        };
+        $.ajax({
+          type: 'POST',
+          url: 'https://docs.google.com/forms/u/0/d/e/1FAIpQLScdilOxXRm3cScT8uk2z_t-KDH--Mqy3lD_ZQrf1Vng7faPdw/formResponse',
+          data: data,
+          contentType: 'application/json',
+          dataType: 'jsonp',
+          complete: function() {
+            alert('資料已送出！');
+          }
+        });
+        
+      });
+    });
+  </script>
+
+
+  <footer>
+    <p> © 2024 張綺容、蔡德蓉共同創建和維護。保留所有權利。
+        <br>
+        所有內容均受版權保護，不得未經授權複製、再發行或以其他方式使用本網站上的內容。
+    </p>
+</footer>
+
+
+
+</body>
+
+
+
+</html>
