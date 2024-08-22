@@ -402,17 +402,8 @@
             const cityKey = cities.find(c => c.name === city).value;
             const districtsList = districts[cityKey];
             if (districts[cityKey]) {
-                if (districts[cityKey].length === 2) {
-                    // If there's only one district, select it automatically
-                    const option = document.createElement('option');
-                    option.value = districts[cityKey][1];
-                    option.textContent = districts[cityKey][1];
-                    districtChoice.appendChild(option);
-                    districtChoice.disabled = false;
-                } 
-
-                else if (districts[cityKey].length === 3) {
-                    // If there's only one district, select it automatically
+                
+                    // If there are multiple districts, show them as options
                     districtsList.slice(1).forEach(district => {
                         const option = document.createElement('option');
                         option.value = district;
@@ -420,25 +411,14 @@
                         districtChoice.appendChild(option);
                     });
                     districtChoice.disabled = false;
-                }
                 
-                else {
-                    // If there are multiple districts, show them as options
-                    districts[cityKey].forEach(district => {
-                        const option = document.createElement('option');
-                        option.value = district;
-                        option.textContent = district;
-                        districtChoice.appendChild(option);
-                    });
-                    districtChoice.disabled = false;
-                }
             } else {
                 // If there are no districts for the selected city, display the city name
                 const option = document.createElement('option');
                 option.value = cityKey;
                 option.textContent = cityKey;
                 districtChoice.appendChild(option);
-                districtChoice.disabled = true;
+                districtChoice.disabled = false;
             }
             
             // Check if the selected city is '其他'
@@ -615,7 +595,7 @@
            }
 
           // 座談會地區
-          var dist = $('#district').val() || $('#otherCityInput'()) ;
+          var dist = $('#district').val() || $('#otherCityInput').val() ;
           if(dist.length == 0){ 
             formcheck_err = formcheck_err + '\n' + '請選擇 座談會地區。'
             console.log('formcheck_err=',formcheck_err)
@@ -704,6 +684,8 @@
               $('input[type="radio"]').prop('checked', false); // 清除所有单选按钮和复选框的选中状态
               $('select').prop('selectedIndex', 0); // 将所有下拉菜单重置为第一个选项
               districtChoice.innerHTML = '<option value="">請先選擇縣市</option>';
+              otherCityDiv.style.display = 'none';
+              districtGroup.style.display = 'block';
             }
           });
           console.log("na=",na);
