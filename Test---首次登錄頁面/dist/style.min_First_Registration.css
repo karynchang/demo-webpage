@@ -594,4 +594,19 @@ input:disabled {
 .error {
   border: 1px solid red;
 }
-  
+
+.hide-select-btn .dropdown-toggle {
+  display: none;
+}
+.hide-select-btn .dropdown-menu {
+  display: none !important;
+  max-height: 100px; /* 设置最大高度以便出现滚动条 */
+  overflow-y: auto;  /* 允许垂直滚动 */
+  position: absolute; /* 确保下拉菜单在视口内显示 */
+}
+
+/* 调整下拉菜单的定位 */
+.bootstrap-select.show .dropdown-menu {
+  margin-top: 50px; /* 调整下拉菜单的顶部间距 */
+  margin-bottom: 50px ; /* 调整下拉菜单的顶部间距 */
+}

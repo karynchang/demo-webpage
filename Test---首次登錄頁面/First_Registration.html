@@ -23,6 +23,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chocolate+Classical+Sans&family=LXGW+WenKai+TC:wght@300;400;700&display=swap" rel="stylesheet">
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- 引入 Bootstrap 和 Bootstrap Select -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    
+
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
     <script>
         let data = [];
@@ -250,7 +257,7 @@
          <div class="col">
           <div class="form-group-input" >
             <label for="birth_year" style="font-size:24px;">請選擇 出生年份</label>
-            <select class="selectpicker" name="birth_year" id="birth_year"  >
+            <select class="selectpicker hide-select-btn" name="birth_year" id="birth_year"  >
                <option value=''>請選擇</option>
              </select>
              <script >
@@ -296,13 +303,14 @@
           <div class="col">
             <div class="form-group-input" >
               <label for="org_1" style="font-size:24px;">請選擇 所屬系統</label>
-              <select class="selectpicker" name="org_1" id="org_1"  onchange="changeSub(this.value); "  >
+              <select class="selectpicker hide-select-btn" name="org_1" id="org_1"  onchange="changeSub(this.value); "  >
                 <option value='' >請選擇</option>
                </select>
                <label for="org_2" style="font-size:24px;">請選擇 所屬支部、準支部、法座</label>
-               <select class="selectpicker" name="org_2" id="org_2"  >
+               <select class="selectpicker hide-select-btn" name="org_2" id="org_2"  >
                  <option value='' >請選擇</option>
                </select>
+
             </div>
           </div>
         <br>  
@@ -310,16 +318,152 @@
         <!--選擇地區、座談會地區-->
         <div class="col">
           <div class="form-group-input" >
-            <label for="org_1" style="font-size:24px;">請選擇 居住地區 (未完成)</label>
-            <select class="selectpicker" name="area" id="area"   >
+            <label for="city" style="font-size:24px;">請選擇 居住縣市</label>
+            <select class="selectpicker hide-select-btn" name="city" id="city"  data-live-search="true" >
                <option value=''  >請選擇</option>
              </select>
-             <label for="org_2" style="font-size:24px;">請選擇 座談會地區 (未完成)</label>
-             <select class="selectpicker" name="district" id="district" onchange="changeSub(this.value);"  >
-               <option value='' >請選擇</option>
+
+             <div id="districGroup" class="input-with-button" style="display: block;">
+             <label for="district" style="font-size:24px;">請選擇 地區</label>
+             <select class="selectpicker hide-select-btn" name="district" id="district"  >
+               <option value='' >請先選擇縣市</option>
              </select>
+            </div>
+
+             <div id="other-city" class="input-with-button" style="display: none;">
+              <label for="otherCityInput" style="font-size:24px;">請輸入 居住地區</label>
+              <input type="text" id="otherCityInput" class="form-control_inputPhone" style="font-size:20px;" placeholder="請輸入其他縣市">
+             </div>
+
           </div>
         </div>
+        <script>
+          const cityChoice = document.getElementById('city');
+          const districtChoice = document.getElementById('district');
+          const otherCityDiv = document.getElementById('other-city');
+          const otherCityInput = document.getElementById('otherCityInput');
+          const districtGroup = document.getElementById('districGroup');
+
+          const cities = [
+            { value: '基隆', name: '基隆' },
+            { value: '台北', name: '台北' },
+            { value: '新北', name: '新北' },
+            { value: '桃園', name: '桃園' },
+            { value: '新竹', name: '新竹' },
+            { value: '苗栗', name: '苗栗' },
+            { value: '台中', name: '台中' },
+            { value: '彰化', name: '彰化' },
+            { value: '南投', name: '南投' },
+            { value: '雲林', name: '雲林' },
+            { value: '嘉義', name: '嘉義' },
+            { value: '台南', name: '台南' },
+            { value: '高雄', name: '高雄' },
+            { value: '屏東', name: '屏東' },
+            { value: '宜蘭', name: '宜蘭' },
+            { value: '花蓮', name: '花蓮' },
+            { value: '台東', name: '台東' },
+            { value: '澎湖', name: '澎湖' },
+            { value: '金門', name: '金門' },
+            { value: '連江', name: '連江' },
+            { value: '其他', name: '其他' }
+          ]
+
+          const districts = {
+            基隆: ['請先選擇縣市', '汐止', '基隆、五堵、八堵、暖暖'],
+            台北: ['請先選擇縣市', '中正、萬華', '松山、信義', '北區(中山、大同、士林)', '大安、文山'],
+            新北: ['請先選擇縣市', '三重、蘆洲', '板橋A組', '汐止、基隆、五堵、八堵、暖暖', '中和、永和', '新店、深坑、石碇、坪林、烏來', '板橋B組(板橋、土城、樹林、鶯歌、三峽)', '新莊、五股、泰山'],
+            桃園: ['請先選擇縣市', '桃園(北)', '桃園(南)'],
+            新竹: ['請先選擇縣市', '新竹'],
+            苗栗: ['請先選擇縣市', '苗栗'],
+            台中: ['請先選擇縣市', '台中'],
+            雲林: ['請先選擇縣市', '西螺'],
+            嘉義: ['請先選擇縣市', '嘉義'],
+            台南: ['請先選擇縣市', '台南(山、海線)'],
+            高雄: ['請先選擇縣市', '高雄'],
+            宜蘭: ['請先選擇縣市', '宜蘭'],
+            花蓮: ['請先選擇縣市', '花蓮'],
+            台東: ['請先選擇縣市', '台東'],
+
+          };
+
+          function populateCityChoice() {
+            cities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city.name;
+                option.textContent = city.value;
+                cityChoice.appendChild(option);
+            });
+            // Initialize the selectpicker
+            $('.selectpicker').selectpicker('refresh');
+        }
+
+        function populateDistrictChoice(city) {
+          districtChoice.innerHTML = ''; // Clear previous options
+            const cityKey = cities.find(c => c.name === city).value;
+            const districtsList = districts[cityKey];
+            if (districts[cityKey]) {
+                if (districts[cityKey].length === 2) {
+                    // If there's only one district, select it automatically
+                    const option = document.createElement('option');
+                    option.value = districts[cityKey][1];
+                    option.textContent = districts[cityKey][1];
+                    districtChoice.appendChild(option);
+                    districtChoice.disabled = false;
+                } 
+
+                else if (districts[cityKey].length === 3) {
+                    // If there's only one district, select it automatically
+                    districtsList.slice(1).forEach(district => {
+                        const option = document.createElement('option');
+                        option.value = district;
+                        option.textContent = district;
+                        districtChoice.appendChild(option);
+                    });
+                    districtChoice.disabled = false;
+                }
+                
+                else {
+                    // If there are multiple districts, show them as options
+                    districts[cityKey].forEach(district => {
+                        const option = document.createElement('option');
+                        option.value = district;
+                        option.textContent = district;
+                        districtChoice.appendChild(option);
+                    });
+                    districtChoice.disabled = false;
+                }
+            } else {
+                // If there are no districts for the selected city, display the city name
+                const option = document.createElement('option');
+                option.value = cityKey;
+                option.textContent = cityKey;
+                districtChoice.appendChild(option);
+                districtChoice.disabled = true;
+            }
+            
+            // Check if the selected city is '其他'
+            if (city === '其他') {
+                districtChoice.innerHTML = '';
+                districtChoice.disabled = true;
+                otherCityDiv.style.display = 'block';
+                districtGroup.style.display = 'none';             
+            } else {
+                otherCityDiv.style.display = 'none';
+                districtGroup.style.display = 'block';
+            }
+
+        }
+
+        cityChoice.addEventListener('change', (event) => {
+            const selectedCity = event.target.value;
+            populateDistrictChoice(selectedCity);
+        });
+        
+
+        // Initialize the city choices
+        populateCityChoice();
+
+        </script>
 
         <br> 
         
@@ -353,7 +497,7 @@
         <div class="col">
           <div class="form-group-input" >
             <label for="join_type" style="font-size:24px;"> 請選擇 參加形式 </label>
-            <select class="selectpicker" id="join_type" type="text" name="join_type"  >
+            <select class="selectpicker  hide-select-btn" id="join_type" type="text" name="join_type"  >
               <option value="現場" selected >現場</option>
               <option value="線上" >線上</option>
             </select>
@@ -379,8 +523,7 @@
               </label>
             </div>
           </div>
-        </div>
-        
+        </div>   
         <script>
           // 監聽 radio button 的 change 事件
           document.getElementById('consent').addEventListener('change', function() {
@@ -465,18 +608,18 @@
           }
 
           // 地區
-          var city = $('#area').val() || '未填寫';
-          //if(city.length == 0){ 
-          //  formcheck_err = formcheck_err + '\n' + '請選擇 地區。'
-          //  console.log('formcheck_err=',formcheck_err)
-          // }
+          var city = $('#city').val() || '未填寫';
+          if(city.length == 0){ 
+            formcheck_err = formcheck_err + '\n' + '請選擇 地區。'
+            console.log('formcheck_err=',formcheck_err)
+           }
 
           // 座談會地區
-          var dist = $('#district').val()|| '未填寫' ;
-          //if(dist.length == 0){ 
-          //  formcheck_err = formcheck_err + '\n' + '請選擇 座談會地區。'
-          //  console.log('formcheck_err=',formcheck_err)
-          // }
+          var dist = $('#district').val() || $('#otherCityInput'()) ;
+          if(dist.length == 0){ 
+            formcheck_err = formcheck_err + '\n' + '請選擇 座談會地區。'
+            console.log('formcheck_err=',formcheck_err)
+           }
 
           // 學生部/青年部/一般/幼兒
           var dep = function() {
@@ -517,7 +660,7 @@
 
           var currentTime = new Date();
           var formattedTime = currentTime.getFullYear()+"-"+(currentTime.getMonth() + 1).toString().padStart(2, '0')+"-"+currentTime.getDate().toString().padStart(2, '0')+" "+currentTime.getHours().toString().padStart(2, '0')+":"+currentTime.getMinutes().toString().padStart(2, '0')+":"+currentTime.getSeconds().toString().padStart(2, '0');
-
+          var formattedDate = currentTime.getFullYear()+"-"+(currentTime.getMonth() + 1).toString().padStart(2, '0')+"-"+currentTime.getDate().toString().padStart(2, '0')
 
           // post
           var data = {
@@ -532,7 +675,8 @@
             'entry.1818800730': year,       // 首次登錄表單欄位：出生年份
             'entry.769254':dep(),          // 首次登錄表單欄位：學生部/青年部/一般/幼兒
             'entry.57473509': join,   // 首次登錄表單欄位：參加形式
-            'entry.1350156201': cons()    // 首次登錄表單欄位：同意資料蒐集
+            'entry.1350156201': cons(),    // 首次登錄表單欄位：同意資料蒐集
+            'entry.585112253': formattedDate      // 首次登錄表單欄位：日期
             
 
           };
@@ -559,7 +703,7 @@
               $('input[type="text"], input[type="tel"], textarea').val(''); // 清除文本输入框、电话输入框、电子邮件输入框和文本区域
               $('input[type="radio"]').prop('checked', false); // 清除所有单选按钮和复选框的选中状态
               $('select').prop('selectedIndex', 0); // 将所有下拉菜单重置为第一个选项
-              
+              districtChoice.innerHTML = '<option value="">請先選擇縣市</option>';
             }
           });
           console.log("na=",na);
@@ -573,6 +717,7 @@
           console.log("dep=",dep());
           console.log("join=",join);
           console.log("cons=",cons());
+          console.log('currentTime=',currentTime);
           console.log('formcheck_err',formcheck_err);
         }
         else{
