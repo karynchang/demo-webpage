@@ -203,7 +203,8 @@
 	width: 100vw;
 	height: 100vh;
 	z-index: 9999;
-	background-color: rgba(0,0,0,0.01);">
+	background-color: rgba(0,0,0,0.01);
+  ">
   </div>
 
   
@@ -377,7 +378,7 @@ function renderQuestion() {
         } else {
           showResult();
         }
-      }, 800);
+      }, 1000);
     };
 
     optionsDiv.appendChild(btn);
@@ -387,7 +388,7 @@ function renderQuestion() {
 
   setTimeout(() => {
     document.activeElement.blur();
-  }, 500);
+  }, 1000);
 }
 
 
