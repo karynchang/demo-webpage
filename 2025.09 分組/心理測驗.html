@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>決策風格心理測驗</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    #quiz-container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+    }
+    h2 {
+      font-size: 1.4em;
+      margin-bottom: 20px;
+    }
+    button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 15px;
+      font-size: 1em;
+      border: none;
+      border-radius: 5px;
+      background: #e0e0e0;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #ccc;
+    }
+    .result {
+      font-size: 1.2em;
+      margin-top: 20px;
+      padding: 20px;
+      background: #f0f8ff;
+      border-left: 5px solid #007acc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="quiz-container">
+    <h2 id="question">載入中...</h2>
+    <div id="choices"></div>
+    <div id="result" class="result" style="display:none;"></div>
+  </div>
+
+  <script>
+    const quiz = [
+      {
+        question: "Q1. 當你面對一個大方向的決定（如是否換工作），你會怎麼開始？",
+        answers: [
+          { text: "做 SWOT 分析、列優缺點表", type: "A" },
+          { text: "看自己現在的感覺和狀態", type: "B" },
+          { text: "先放著，再等幾天看看狀況", type: "C" },
+          { text: "有個想法就先開始行動，邊做邊調整", type: "D" }
+        ]
+      },
+      {
+        question: "Q2. 當朋友問你週末要不要出門聚會，你最常回應是？",
+        answers: [
+          { text: "問細節再看行程決定", type: "A" },
+          { text: "聽起來有趣就直接答應", type: "B" },
+          { text: "說「再看看」，其實在拖", type: "C" },
+          { text: "直接答應，問了再說", type: "D" }
+        ]
+      },
+      {
+        question: "Q3. 小時候你在家中排行是？\n📌 如果你家裡只有兩個孩子，老二請選「老么」",
+        answers: [
+          { text: "老大", type: "A" },
+          { text: "中間（3人以上家庭）", type: "C" },
+          { text: "老么（或2人中的老二）", type: "D" },
+          { text: "獨生子女", type: "B" }
+        ],
+        isTiebreaker: true
+      },
+      {
+        question: "Q4. 如果你正在挑選一份禮物給朋友，你會怎麼做？",
+        answers: [
+          { text: "看對方需求、預算、評價再選", type: "A" },
+          { text: "走進店裡，看到喜歡的就買", type: "B" },
+          { text: "猶豫很久都決定不了", type: "C" },
+          { text: "想到一個有趣的點子就馬上做", type: "D" }
+        ]
+      },
+      {
+        question: "Q5. 遇到突然發生的突發狀況（如活動取消），你最可能？",
+        answers: [
+          { text: "立刻重新安排備案，確保流程順暢", type: "A" },
+          { text: "覺得沒關係，反正順其自然", type: "B" },
+          { text: "感到焦慮，不知如何是好", type: "C" },
+          { text: "說：那我們換個玩法吧！馬上提新方案", type: "D" }
+        ]
+      }
+    ];
+
+    let currentQuestion = 0;
+    const scores = { A: 0, B: 0, C: 0, D: 0 };
+    let tiebreaker = null;
+
+    function showQuestion() {
+      const q = quiz[currentQuestion];
+      document.getElementById("question").textContent = q.question;
+      const choicesDiv = document.getElementById("choices");
+      choicesDiv.innerHTML = "";
+      q.answers.forEach(answer => {
+        const btn = document.createElement("button");
+        btn.textContent = answer.text;
+        btn.onclick = () => {
+          if (q.isTiebreaker) {
+            tiebreaker = answer.type;
+          } else {
+            scores[answer.type]++;
+          }
+          currentQuestion++;
+          if (currentQuestion < quiz.length) {
+            showQuestion();
+          } else {
+            showResult();
+          }
+        };
+        choicesDiv.appendChild(btn);
+      });
+    }
+
+    function showResult() {
+      const resultDiv = document.getElementById("result");
+      document.getElementById("choices").style.display = "none";
+      document.getElementById("question").style.display = "none";
+      resultDiv.style.display = "block";
+
+      const max = Math.max(...Object.values(scores));
+      const topTypes = Object.keys(scores).filter(k => scores[k] === max);
+
+      let finalType = topTypes.length === 1 ? topTypes[0] : tiebreaker || topTypes[0];
+
+      const messages = {
+        A: "🧠 你是【分析型思考者】：邏輯清晰、做事謹慎，是團隊裡的智多星。",
+        B: "✨ 你是【直覺型行動者】：憑感覺走人生，靈光一閃就是你出手的時機。",
+        C: "😅 你是【拖延型觀望者】：謹慎小心，但常常一拖再拖，不做決定就是你的決定。",
+        D: "⚡ 你是【衝動型執行者】：想到就做，靈活有衝勁，行動力爆表！"
+      };
+
+      resultDiv.textContent = messages[finalType] || "測驗完成，無法判斷結果。";
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
