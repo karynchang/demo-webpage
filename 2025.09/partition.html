@@ -330,82 +330,78 @@
   };
 
   function renderQuestion() {
-    if (window.isProcessing) return;
-    window.isProcessing = true;
+  if (window.isProcessing) return;
+  window.isProcessing = true;
 
-    // 淡出選項
-    optionsDiv.classList.add("hidden");
+  // 先禁用點擊，淡出選項
+  optionsDiv.classList.add("hidden");
+
+  setTimeout(() => {
+    // 清空選項
+    optionsDiv.innerHTML = "";
+
+    // 設定問題標題與文字
+    const q = questions[currentIndex];
+    questionTitleEl.textContent = q.title;
+    questionEl.textContent = q.text;
+
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.textContent = opt.text;
+      btn.disabled = true; // 初始禁用
+
+      // 若已作答，標示 selected
+      if (answers[currentIndex] === idx) {
+        btn.classList.add("selected");
+      }
+
+      btn.onclick = () => {
+        if (window.isProcessing) return;
+        window.isProcessing = true;
+
+        // 移除所有選中樣式
+        document.querySelectorAll('.option-btn.selected').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+
+        answers[currentIndex] = idx;
+
+        // 禁用所有按鈕避免重複點擊
+        document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+
+        blocker.style.display = "block";
+
+        setTimeout(() => {
+          blocker.style.display = "none";
+          window.isProcessing = false;
+
+          currentIndex++;
+          if (currentIndex < questions.length) {
+            renderQuestion();
+          } else {
+            showResult();
+          }
+        }, 500);
+      };
+
+      optionsDiv.appendChild(btn);
+    });
+
+    backBtn.style.display = currentIndex > 0 ? "inline-block" : "none";
+
+    // 淡入選項，並在動畫結束後啟用按鈕
+    setTimeout(() => {
+      optionsDiv.classList.remove("hidden");
+      document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = false);
+      window.isProcessing = false;
+    }, 300);
 
     setTimeout(() => {
-      // 清除所有選中
-      document.querySelectorAll('.option-btn.selected').forEach(btn => btn.classList.remove('selected'));
+      document.activeElement.blur();
+    }, 100);
+  }, 300);
+}
 
-      const q = questions[currentIndex];
-      questionTitleEl.textContent = q.title;
-      questionEl.textContent = q.text;
-      optionsDiv.innerHTML = "";
-
-      q.options.forEach((opt, idx) => {
-        const btn = document.createElement("button");
-        btn.className = "option-btn";
-        btn.textContent = opt.text;
-
-        //if (answers[currentIndex] === idx) {
-        //  btn.classList.add("selected");
-        //}
-
-		// 👉 先暫時禁用點擊
-		btn.disabled = true;
-		
-        btn.onclick = () => {
-          if (window.isProcessing) return;
-          window.isProcessing = true;
-
-          // 清除所有選中
-          document.querySelectorAll('.option-btn.selected').forEach(b => b.classList.remove('selected'));
-          btn.classList.add('selected');
-
-          answers[currentIndex] = idx;
-
-          // 禁用所有按鈕
-          const allBtns = document.querySelectorAll('.option-btn');
-          allBtns.forEach(b => b.disabled = true);
-
-          blocker.style.display = "block";
-
-          setTimeout(() => {
-            blocker.style.display = "none";
-            window.isProcessing = false;
-
-            currentIndex++;
-            if (currentIndex < questions.length) {
-              renderQuestion();
-            } else {
-              showResult();
-            }
-          }, 500);
-        };
-
-        optionsDiv.appendChild(btn);
-      });
-
-      backBtn.style.display = currentIndex > 0 ? "inline-block" : "none";
-
-      // 淡入選項
-      setTimeout(() => {
-        optionsDiv.classList.remove("hidden");
-		// ✅ 啟用選項按鈕（等動畫跑完再啟用點擊）
-		document.querySelectorAll('.option-btn').forEach(btn => {
-		btn.disabled = false;
-		});
-        window.isProcessing = false;
-      }, 300);
-
-      setTimeout(() => {
-        document.activeElement.blur();
-      }, 100);
-    }, 300);
-  }
 
   function showResult() {
     quiz.style.display = "none";
