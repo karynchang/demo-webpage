@@ -71,6 +71,7 @@
       user-select: none;
       -webkit-tap-highlight-color: transparent;
 	  touch-action: manipulation;
+	  min-height: 48px;
     }
 
     .option-btn:hover {
@@ -171,7 +172,7 @@
 <body>
 
   <div class="container">
-    <h1>命運之森的抉擇試煉</h1>
+    <h1>命運之森的抉擇試煉1</h1>
 
     <div id="start-page">
       <p>歡迎來到命運之森的抉擇試煉！<br>準備好踏上冒險旅程了嗎？</p>
@@ -208,229 +209,208 @@
   
   
   <script>
-    const questions = [
-      {
-        title: "🔮 Q1. 神秘地圖",
-        text: "你剛收到一張神秘的地圖，地圖上標示了一座傳說中的寶藏遺跡。\n你打算怎麼處理這張地圖？",
-        options: [
-          { text: "A：仔細研究地圖與周邊地形，做足資料查找再出發。", type: "A" },
-          { text: "B：閉上眼感受地圖上的能量流動，覺得哪裡有感就走。", type: "B" },
-          { text: "C：雖然很想去，但擔心危險或迷路，暫時先放一邊。", type: "C" },
-          { text: "D：太刺激了！馬上打包裝備就要出發。", type: "D" },
-        ]
-      },
-      {
-        title: "🧙‍♀️ Q2. 神秘任務邀請",
-        text: "路上你遇到一位旅者，他邀請你加入一場未知的任務，但沒有說明太多細節。\n你會怎麼回應？",
-        options: [
-          { text: "A：詢問任務內容、風險與回報，再決定是否加入。", type: "A" },
-          { text: "B：感覺這人不壞，而且直覺告訴你這任務值得冒險，就答應了。", type: "B" },
-          { text: "C：說「再考慮一下」，其實你在猶豫很久都還沒決定。", type: "C" },
-          { text: "D：馬上說好，反正有事就當作磨練經驗值！", type: "D" },
-        ]
-      },
-      {
-        title: "🏰 Q3. 命運的交叉口",
-        text: "任務途中你來到一個神秘的交叉口，四條路看起來一樣，但每條路都可能通往不同命運。\n你會怎麼選擇？",
-        options: [
-          { text: "A：拿出指南針、比對地圖與星象，理性分析再選擇。", type: "A" },
-          { text: "B：站在路中央，感受哪條路「在召喚你」，順勢而行。", type: "B" },
-          { text: "C：你選不出來，乾脆原地搭帳篷休息一晚再說。", type: "C" },
-          { text: "D：任選一條直走，因為「不走不會知道」。", type: "D" },
-        ]
-      },
-      {
-        title: "👨‍👩‍👧 Q4. 成長背景",
-        text: "旅程中，你遇見了一位會預言的老者，他說你的成長背景影響了你的選擇。\n他問你：「你在家中的排行是？」\n(如果家中只有兩個孩子，請老二選「老么」)",
-        options: [
-          { text: "A：我是家中老大，習慣領導與負責。", type: "A" },
-          { text: "B：我是獨生子女，習慣自己獨立思考與安排。", type: "B" },
-          { text: "C：我是家中中間的孩子，常在他人之間平衡。", type: "C" },
-          { text: "D：我是家中老么，習慣自由且有創意地生活。", type: "D" },
-        ]
-      },
-      {
-        title: "🐉 Q5. 巨龍的試煉",
-        text: "最後一關你面對一頭守護寶藏的巨龍，它提出一個條件：\n「你要決定獨自挑戰我，還是集結夥伴一同應戰？」\n你想怎麼做？",
-        options: [
-          { text: "A：召集隊友並規劃戰略，每人分工合作。", type: "A" },
-          { text: "B：看起來這條龍不一定要打，或許有其他和平方式？", type: "B" },
-          { text: "C：猶豫很久，不確定該選哪個方式最好。", type: "C" },
-          { text: "D：你燃起戰鬥之魂，決定一個人上場一戰到底！", type: "D" },
-        ]
-      },
-      {
-        title: "🌫️ Q6. 命運之鏡",
-        text: "你擊敗巨龍後，寶藏門打開了。\n裡面不是黃金，而是一面神秘的「命運之鏡」。\n鏡子裡會顯現你心中最渴望的畫面。\n你看到了什麼？",
-        options: [
-          { text: "A：一張策略地圖，上面標著你未來幾年要完成的任務與路線。", type: "A" },
-          { text: "B：一段充滿色彩與可能性的旅程，你正隨風而行。", type: "B" },
-          { text: "C：你站在十字路口，望著多條分岔的路，不知該去哪。", type: "C" },
-          { text: "D：你與夥伴們在篝火前歡笑，那是剛完成一場刺激冒險後的夜晚。", type: "D" },
-        ]
-      },
-      {
-        title: "🌌 Q7. 崩塌的出口",
-        text: "命運之森開始崩塌，你要快速離開！\n出口方向有三條路，各自有未知的風險與機會。\n你會怎麼應對？",
-        options: [
-          { text: "A：拿出地圖與指南針，冷靜分析最有機會生還的路線。", type: "A" },
-          { text: "B：內心浮現一道光，引導你選擇其中一條，你毫不遲疑跟著感覺走。", type: "B" },
-          { text: "C：猶豫不決、來回踱步，擔心每條路都可能是陷阱。", type: "C" },
-          { text: "D：選一條風最強、最刺激的方向衝出去，大喊：「命運我來了！」", type: "D" },
-        ]
-      }
-    ];
+  const questions = [
+    {
+      title: "🔮 Q1. 神秘地圖",
+      text: "你剛收到一張神秘的地圖，地圖上標示了一座傳說中的寶藏遺跡。\n你打算怎麼處理這張地圖？",
+      options: [
+        { text: "A：仔細研究地圖與周邊地形，做足資料查找再出發。", type: "A" },
+        { text: "B：閉上眼感受地圖上的能量流動，覺得哪裡有感就走。", type: "B" },
+        { text: "C：雖然很想去，但擔心危險或迷路，暫時先放一邊。", type: "C" },
+        { text: "D：太刺激了！馬上打包裝備就要出發。", type: "D" },
+      ]
+    },
+    {
+      title: "🧙‍♀️ Q2. 神秘任務邀請",
+      text: "路上你遇到一位旅者，他邀請你加入一場未知的任務，但沒有說明太多細節。\n你會怎麼回應？",
+      options: [
+        { text: "A：詢問任務內容、風險與回報，再決定是否加入。", type: "A" },
+        { text: "B：感覺這人不壞，而且直覺告訴你這任務值得冒險，就答應了。", type: "B" },
+        { text: "C：說「再考慮一下」，其實你在猶豫很久都還沒決定。", type: "C" },
+        { text: "D：馬上說好，反正有事就當作磨練經驗值！", type: "D" },
+      ]
+    },
+    {
+      title: "🏰 Q3. 命運的交叉口",
+      text: "任務途中你來到一個神秘的交叉口，四條路看起來一樣，但每條路都可能通往不同命運。\n你會怎麼選擇？",
+      options: [
+        { text: "A：拿出指南針、比對地圖與星象，理性分析再選擇。", type: "A" },
+        { text: "B：站在路中央，感受哪條路「在召喚你」，順勢而行。", type: "B" },
+        { text: "C：你選不出來，乾脆原地搭帳篷休息一晚再說。", type: "C" },
+        { text: "D：任選一條直走，因為「不走不會知道」。", type: "D" },
+      ]
+    },
+    {
+      title: "👨‍👩‍👧 Q4. 成長背景",
+      text: "旅程中，你遇見了一位會預言的老者，他說你的成長背景影響了你的選擇。\n他問你：「你在家中的排行是？」\n(如果家中只有兩個孩子，請老二選「老么」)",
+      options: [
+        { text: "A：我是家中老大，習慣領導與負責。", type: "A" },
+        { text: "B：我是獨生子女，習慣自己獨立思考與安排。", type: "B" },
+        { text: "C：我是家中中間的孩子，常在他人之間平衡。", type: "C" },
+        { text: "D：我是家中老么，習慣自由且有創意地生活。", type: "D" },
+      ]
+    },
+    {
+      title: "🐉 Q5. 巨龍的試煉",
+      text: "最後一關你面對一頭守護寶藏的巨龍，它提出一個條件：\n「你要決定獨自挑戰我，還是集結夥伴一同應戰？」\n你想怎麼做？",
+      options: [
+        { text: "A：召集隊友並規劃戰略，每人分工合作。", type: "A" },
+        { text: "B：看起來這條龍不一定要打，或許有其他和平方式？", type: "B" },
+        { text: "C：猶豫很久，不確定該選哪個方式最好。", type: "C" },
+        { text: "D：你燃起戰鬥之魂，決定一個人上場一戰到底！", type: "D" },
+      ]
+    },
+    {
+      title: "🌫️ Q6. 命運之鏡",
+      text: "你擊敗巨龍後，寶藏門打開了。\n裡面不是黃金，而是一面神秘的「命運之鏡」。\n鏡子裡會顯現你心中最渴望的畫面。\n你看到了什麼？",
+      options: [
+        { text: "A：一張策略地圖，上面標著你未來幾年要完成的任務與路線。", type: "A" },
+        { text: "B：一段充滿色彩與可能性的旅程，你正隨風而行。", type: "B" },
+        { text: "C：你站在十字路口，望著多條分岔的路，不知該去哪。", type: "C" },
+        { text: "D：你與夥伴們在篝火前歡笑，那是剛完成一場刺激冒險後的夜晚。", type: "D" },
+      ]
+    },
+    {
+      title: "🌌 Q7. 崩塌的出口",
+      text: "命運之森開始崩塌，你要快速離開！\n出口方向有三條路，各自有未知的風險與機會。\n你會怎麼應對？",
+      options: [
+        { text: "A：拿出地圖與指南針，冷靜分析最有機會生還的路線。", type: "A" },
+        { text: "B：內心浮現一道光，引導你選擇其中一條，你毫不遲疑跟著感覺走。", type: "B" },
+        { text: "C：猶豫不決、來回踱步，擔心每條路都可能是陷阱。", type: "C" },
+        { text: "D：選一條風最強、最刺激的方向衝出去，大喊：「命運我來了！」", type: "D" },
+      ]
+    }
+  ];
 
-    const personalityDescriptions = {
-      A: "你是【理性規劃者】。\n\n喜歡用理性和分析來面對挑戰，善於規劃與領導，像是隊伍中的大腦。",
-      B: "你是【直覺冒險家】。\n\n憑直覺與感性做決定，勇於冒險與嘗試，總能發現不一樣的路。",
-      C: "你是【謹慎觀察者】。\n\n較為謹慎與猶豫，喜歡觀察環境並評估風險，屬於穩健型人格。",
-      D: "你是【熱情衝刺者】。\n\n充滿熱情與行動力，不怕挑戰，面對困難時總是敢於直衝而上！"
-    };
+  const personalityDescriptions = {
+    A: "你是【理性規劃者】。\n\n喜歡用理性和分析來面對挑戰，善於規劃與領導，像是隊伍中的大腦。",
+    B: "你是【直覺冒險家】。\n\n憑直覺與感性做決定，勇於冒險與嘗試，總能發現不一樣的路。",
+    C: "你是【謹慎觀察者】。\n\n較為謹慎與猶豫，喜歡觀察環境並評估風險，屬於穩健型人格。",
+    D: "你是【熱情衝刺者】。\n\n充滿熱情與行動力，不怕挑戰，面對困難時總是敢於直衝而上！"
+  };
 
-    let currentIndex = 0;
-    let goingBack = false;
-    const answers = new Array(questions.length).fill(null);
+  let currentIndex = 0;
+  let goingBack = false;
+  const answers = new Array(questions.length).fill(null);
 
-    const startBtn = document.getElementById("start-btn");
-    const restartBtn = document.getElementById("restart-btn");
-    const backBtn = document.getElementById("back-btn");
-    const startPage = document.getElementById("start-page");
-    const quizDiv = document.getElementById("quiz");
-    const resultDiv = document.getElementById("result");
-    const questionTitleEl = document.getElementById("question-title");
-    const questionEl = document.getElementById("question");
-    const optionsDiv = document.querySelector(".options");
-    const resultText = document.getElementById("result-text");
+  const startBtn = document.getElementById("start-btn");
+  const restartBtn = document.getElementById("restart-btn");
+  const backBtn = document.getElementById("back-btn");
+  const startPage = document.getElementById("start-page");
+  const quizDiv = document.getElementById("quiz");
+  const resultDiv = document.getElementById("result");
+  const questionTitleEl = document.getElementById("question-title");
+  const questionEl = document.getElementById("question");
+  const optionsDiv = document.querySelector(".options");
+  const resultText = document.getElementById("result-text");
+  const blocker = document.getElementById("touch-blocker");
 
-    startBtn.onclick = () => {
-      startPage.style.display = "none";
-      quizDiv.style.display = "block";
-      currentIndex = 0;
-      answers.fill(null);
-      goingBack = false;
+  // 阻止遮罩上的滾動，避免滑動穿透
+  blocker.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+
+  startBtn.onclick = () => {
+    startPage.style.display = "none";
+    quizDiv.style.display = "block";
+    currentIndex = 0;
+    answers.fill(null);
+    goingBack = false;
+    renderQuestion();
+  };
+
+  restartBtn.onclick = () => {
+    resultDiv.style.display = "none";
+    startPage.style.display = "block";
+  };
+
+  backBtn.onclick = () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      goingBack = true;
       renderQuestion();
-    };
-
-    restartBtn.onclick = () => {
-      resultDiv.style.display = "none";
-      startPage.style.display = "block";
-    };
-
-    backBtn.onclick = () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-        goingBack = true;
-        renderQuestion();
-      }
-    };
-
-    function renderQuestion() {
-      const q = questions[currentIndex];
-      questionTitleEl.textContent = q.title;
-      questionEl.textContent = q.text;
-      optionsDiv.innerHTML = "";
-
-      q.options.forEach((opt, idx) => {
-        const btn = document.createElement("button");
-        btn.className = "option-btn";
-        btn.textContent = opt.text;
-
-        if (goingBack && answers[currentIndex] === idx) {
-          btn.classList.add("selected");
-        }
-
-		//btn.onclick = () => {
-		//  answers[currentIndex] = idx;
-		//  goingBack = false;
-		//
-		//  // ✅ 顯示觸控遮罩，阻擋穿透點擊
-		//  const blocker = document.getElementById("touch-blocker");
-		//  blocker.style.display = "block";
-		//
-		//  setTimeout(() => {
-		//	blocker.style.display = "none";
-		//
-		//	currentIndex++;
-		//	if (currentIndex < questions.length) {
-		//		renderQuestion();
-		//	} else {
-		//		showResult();
-		//	}
-		//  }, 500); // 0.5 秒後才切題，並移除遮罩
-		//};
-		//
-		
-		
-		btn.onclick = () => {
-			if (window.isProcessing) return;  // 防止多次點擊
-				window.isProcessing = true;
-
-				answers[currentIndex] = idx;
-				goingBack = false;
-
-			// 禁用所有按鈕
-			const allBtns = document.querySelectorAll('.option-btn');
-			allBtns.forEach(b => b.disabled = true);
-
-			// 顯示觸控遮罩
-			const blocker = document.getElementById("touch-blocker");
-			blocker.style.display = "block";
-
-			setTimeout(() => {
-				blocker.style.display = "none";
-				window.isProcessing = false;
-
-				currentIndex++;
-				if (currentIndex < questions.length) {
-					renderQuestion();
-				} else {
-					showResult();
-				}
-			}, 500);
-		};
-		
-		
-
-        optionsDiv.appendChild(btn);
-      });
-
-      backBtn.style.display = currentIndex > 0 ? "inline-block" : "none";
-
-      // 保險措施：移除任何焦點
-      setTimeout(() => {
-        document.activeElement.blur();
-      }, 50);
     }
+  };
 
-    function showResult() {
-      const counts = { A: 0, B: 0, C: 0, D: 0 };
-      answers.forEach((ans, i) => {
-        if (ans !== null) {
-          const type = questions[i].options[ans].type;
-          counts[type]++;
-        }
-      });
+  function renderQuestion() {
+    const q = questions[currentIndex];
+    questionTitleEl.textContent = q.title;
+    questionEl.textContent = q.text;
+    optionsDiv.innerHTML = "";
 
-      const max = Math.max(...Object.values(counts));
-      let maxTypes = Object.keys(counts).filter(k => counts[k] === max);
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.textContent = opt.text;
 
-      if (maxTypes.length > 1) {
-        const q4Ans = answers[3];
-        if (q4Ans !== null) {
-          const q4Type = questions[3].options[q4Ans].type;
-          if (maxTypes.includes(q4Type)) {
-            maxTypes = [q4Type];
+      if (goingBack && answers[currentIndex] === idx) {
+        btn.classList.add("selected");
+      }
+
+      btn.onclick = () => {
+        if (window.isProcessing) return;  // 防止多次點擊
+        window.isProcessing = true;
+
+        answers[currentIndex] = idx;
+        goingBack = false;
+
+        // 禁用所有按鈕
+        const allBtns = document.querySelectorAll('.option-btn');
+        allBtns.forEach(b => b.disabled = true);
+
+        // 顯示觸控遮罩
+        blocker.style.display = "block";
+
+        setTimeout(() => {
+          blocker.style.display = "none";
+          window.isProcessing = false;
+
+          currentIndex++;
+          if (currentIndex < questions.length) {
+            renderQuestion();
+          } else {
+            showResult();
           }
-        }
-      }
+        }, 600); // 確保阻斷滑動穿透時間
+      };
 
-      const finalType = maxTypes[0];
-      resultText.textContent = personalityDescriptions[finalType];
-      quizDiv.style.display = "none";
-      resultDiv.style.display = "block";
+      optionsDiv.appendChild(btn);
+    });
+
+    backBtn.style.display = currentIndex > 0 ? "inline-block" : "none";
+
+    // 失去焦點避免手機鍵盤等問題
+    setTimeout(() => {
+      document.activeElement.blur();
+    }, 50);
+  }
+
+  function showResult() {
+    quizDiv.style.display = "none";
+    resultDiv.style.display = "block";
+
+    // 計算最多的答案類型
+    const countMap = { A: 0, B: 0, C: 0, D: 0 };
+    answers.forEach((ans, i) => {
+      if (ans !== null) {
+        const type = questions[i].options[ans].type;
+        countMap[type]++;
+      }
+    });
+
+    // 找出最高得票類型
+    let maxType = null;
+    let maxCount = -1;
+    for (const type in countMap) {
+      if (countMap[type] > maxCount) {
+        maxCount = countMap[type];
+        maxType = type;
+      }
     }
-  </script>
+
+    // 顯示結果
+    resultText.textContent = personalityDescriptions[maxType] || "無法判斷結果。";
+  }
+</script>
+
 
 </body>
 </html>
