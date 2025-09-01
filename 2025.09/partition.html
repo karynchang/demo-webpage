@@ -172,7 +172,7 @@
 <body>
 
   <div class="container">
-    <h1>命運之森的抉擇試煉5</h1>
+    <h1>命運之森的抉擇試煉</h1>
 
     <div id="start-page">
       <p>歡迎來到命運之森的抉擇試煉！<br>準備好踏上冒險旅程了嗎？</p>
@@ -331,6 +331,9 @@
   };
   
 function renderQuestion() {
+	// ✅ 每次重渲染題目前，確保清除所有 .selected 樣式
+	document.querySelectorAll('.option-btn.selected').forEach(btn => btn.classList.remove('selected'));
+
   const q = questions[currentIndex];
   questionTitleEl.textContent = q.title;
   questionEl.textContent = q.text;
