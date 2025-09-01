@@ -100,7 +100,6 @@
     #result p {
       font-size: 1.2rem;
       line-height: 1.6;
-      white-space: pre-wrap;
     }
 
     #start-page {
@@ -153,6 +152,19 @@
         align-items: center;
       }
     }
+
+    /* ✅ 遮罩：防止點擊穿透 */
+    #touch-blocker {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      background-color: rgba(0, 0, 0, 0);
+    }
+	
   </style>
 </head>
 <body>
@@ -180,6 +192,19 @@
       <button id="restart-btn">重新測驗</button>
     </div>
   </div>
+
+  <!-- ✅ 加入透明遮罩防止誤觸 -->
+  <div id="touch-blocker" style="
+	display: none;
+	position: fixed;
+	top: 0; left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 9999;
+	background-color: rgba(0,0,0,0);">
+  </div>
+
+  
   
   <script>
     const questions = [
@@ -314,23 +339,44 @@
           btn.classList.add("selected");
         }
 
-        btn.onclick = () => {
-          answers[currentIndex] = idx;
-          goingBack = false;
+        //btn.onclick = () => {
+        //  answers[currentIndex] = idx;
+        //  goingBack = false;
+		//
+		//  // ✅ 禁用所有選項按鈕，防止誤觸下一題
+		//  const allBtns = document.querySelectorAll('.option-btn');
+		//  allBtns.forEach(b => b.disabled = true);
+		//
+        //  setTimeout(() => {
+        //    currentIndex++;
+        //    if (currentIndex < questions.length) {
+        //      renderQuestion();
+        //    } else {
+        //      showResult();
+        //    }
+        //  }, 500); // 可調整延遲時間
+        //};
+		
+		btn.onclick = () => {
+		  answers[currentIndex] = idx;
+		  goingBack = false;
 
-		  // ✅ 禁用所有選項按鈕，防止誤觸下一題
-		  const allBtns = document.querySelectorAll('.option-btn');
-		  allBtns.forEach(b => b.disabled = true);
+		  // ✅ 顯示觸控遮罩，阻擋穿透點擊
+		  const blocker = document.getElementById("touch-blocker");
+		  blocker.style.display = "block";
 
-          setTimeout(() => {
-            currentIndex++;
-            if (currentIndex < questions.length) {
-              renderQuestion();
-            } else {
-              showResult();
-            }
-          }, 500); // 可調整延遲時間
-        };
+		  setTimeout(() => {
+			blocker.style.display = "none";
+
+			currentIndex++;
+			if (currentIndex < questions.length) {
+				renderQuestion();
+			} else {
+				showResult();
+			}
+		  }, 500); // 0.5 秒後才切題，並移除遮罩
+		};
+		
 		
 
         optionsDiv.appendChild(btn);
