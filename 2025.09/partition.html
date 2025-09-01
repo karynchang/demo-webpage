@@ -352,9 +352,9 @@
       btn.disabled = true; // 初始禁用
 
       // 若已作答，標示 selected
-      if (answers[currentIndex] === idx) {
-        btn.classList.add("selected");
-      }
+      if (typeof answers[currentIndex] === 'number' && answers[currentIndex] === idx) {
+    btn.classList.add("selected");
+  }
 
       btn.onclick = () => {
         if (window.isProcessing) return;
