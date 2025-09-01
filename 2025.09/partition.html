@@ -56,6 +56,12 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .options.hidden {
+      opacity: 0;
     }
 
     .option-btn {
@@ -70,8 +76,8 @@
       transition: 0.3s;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
-	  touch-action: manipulation;
-	  min-height: 48px;
+      touch-action: manipulation;
+      min-height: 48px;
     }
 
     .option-btn:hover {
@@ -166,7 +172,6 @@
       z-index: 9999;
       background-color: rgba(0, 0, 0, 0.01);
     }
-
   </style>
 </head>
 <body>
@@ -197,17 +202,15 @@
 
   <!-- ✅ 加入透明遮罩防止誤觸 -->
   <div id="touch-blocker" style="
-	display: none;
-	position: fixed;
-	top: 0; left: 0;
-	width: 100vw;
-	height: 100vh;
-	z-index: 9999;
-	background-color: rgba(0,0,0,0.01);
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    background-color: rgba(0,0,0,0.01);
   ">
   </div>
-
-  
   
   <script>
   const questions = [
@@ -291,30 +294,25 @@
   };
 
   let currentIndex = 0;
-  let goingBack = false;
-  const answers = new Array(questions.length).fill(null);
+  let answers = [];
 
   const startBtn = document.getElementById("start-btn");
   const restartBtn = document.getElementById("restart-btn");
   const backBtn = document.getElementById("back-btn");
   const startPage = document.getElementById("start-page");
-  const quizDiv = document.getElementById("quiz");
-  const resultDiv = document.getElementById("result");
+  const quiz = document.getElementById("quiz");
   const questionTitleEl = document.getElementById("question-title");
   const questionEl = document.getElementById("question");
   const optionsDiv = document.querySelector(".options");
+  const resultDiv = document.getElementById("result");
   const resultText = document.getElementById("result-text");
   const blocker = document.getElementById("touch-blocker");
 
-  // 阻止遮罩上的滾動，避免滑動穿透
-  blocker.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
-
   startBtn.onclick = () => {
     startPage.style.display = "none";
-    quizDiv.style.display = "block";
+    quiz.style.display = "block";
     currentIndex = 0;
-    answers.fill(null);
-    goingBack = false;
+    answers = [];
     renderQuestion();
   };
 
@@ -324,100 +322,115 @@
   };
 
   backBtn.onclick = () => {
+    if (window.isProcessing) return;
     if (currentIndex > 0) {
       currentIndex--;
-      goingBack = true;
       renderQuestion();
     }
   };
-  
-function renderQuestion() {
-  // 清除所有選中
-  document.querySelectorAll('.option-btn.selected').forEach(btn => btn.classList.remove('selected'));
-  
-  const q = questions[currentIndex];
-  questionTitleEl.textContent = q.title;
-  questionEl.textContent = q.text;
-  optionsDiv.innerHTML = "";
 
-  q.options.forEach((opt, idx) => {
-    const btn = document.createElement("button");
-    btn.className = "option-btn";
-    btn.textContent = opt.text;
+  function renderQuestion() {
+    if (window.isProcessing) return;
+    window.isProcessing = true;
 
-    // 不管是前進還是回頭，只要有答案就標示
-    if (answers[currentIndex] === idx) {
-      btn.classList.add("selected");
-    }
+    // 淡出選項
+    optionsDiv.classList.add("hidden");
 
-    btn.onclick = () => {
-      if (window.isProcessing) return;
-      window.isProcessing = true;
-
+    setTimeout(() => {
       // 清除所有選中
-      document.querySelectorAll('.option-btn.selected').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
+      document.querySelectorAll('.option-btn.selected').forEach(btn => btn.classList.remove('selected'));
 
-      answers[currentIndex] = idx;
+      const q = questions[currentIndex];
+      questionTitleEl.textContent = q.title;
+      questionEl.textContent = q.text;
+      optionsDiv.innerHTML = "";
 
-      // 禁用所有按鈕
-      const allBtns = document.querySelectorAll('.option-btn');
-      allBtns.forEach(b => b.disabled = true);
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.textContent = opt.text;
 
-      blocker.style.display = "block";
+        if (answers[currentIndex] === idx) {
+          btn.classList.add("selected");
+        }
+
+        btn.onclick = () => {
+          if (window.isProcessing) return;
+          window.isProcessing = true;
+
+          // 清除所有選中
+          document.querySelectorAll('.option-btn.selected').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+
+          answers[currentIndex] = idx;
+
+          // 禁用所有按鈕
+          const allBtns = document.querySelectorAll('.option-btn');
+          allBtns.forEach(b => b.disabled = true);
+
+          blocker.style.display = "block";
+
+          setTimeout(() => {
+            blocker.style.display = "none";
+            window.isProcessing = false;
+
+            currentIndex++;
+            if (currentIndex < questions.length) {
+              renderQuestion();
+            } else {
+              showResult();
+            }
+          }, 500);
+        };
+
+        optionsDiv.appendChild(btn);
+      });
+
+      backBtn.style.display = currentIndex > 0 ? "inline-block" : "none";
+
+      // 淡入選項
+      setTimeout(() => {
+        optionsDiv.classList.remove("hidden");
+        window.isProcessing = false;
+      }, 50);
 
       setTimeout(() => {
-        blocker.style.display = "none";
-        window.isProcessing = false;
-
-        currentIndex++;
-        if (currentIndex < questions.length) {
-          renderQuestion();
-        } else {
-          showResult();
-        }
-      }, 500);
-    };
-
-    optionsDiv.appendChild(btn);
-  });
-
-  backBtn.style.display = currentIndex > 0 ? "inline-block" : "none";
-
-  setTimeout(() => {
-    document.activeElement.blur();
-  }, 100);
-}
-  
+        document.activeElement.blur();
+      }, 100);
+    }, 300);
+  }
 
   function showResult() {
-    quizDiv.style.display = "none";
+    quiz.style.display = "none";
     resultDiv.style.display = "block";
 
-    // 計算最多的答案類型
-    const countMap = { A: 0, B: 0, C: 0, D: 0 };
-    answers.forEach((ans, i) => {
-      if (ans !== null) {
-        const type = questions[i].options[ans].type;
-        countMap[type]++;
-      }
+    // 計算答案最多的類型
+    const counts = { A: 0, B: 0, C: 0, D: 0 };
+    answers.forEach(idx => {
+      const t = questions[answers.indexOf(idx)].options[idx]?.type;
+      if (t && counts[t] !== undefined) counts[t]++;
     });
 
-    // 找出最高得票類型
-    let maxType = null;
-    let maxCount = -1;
-    for (const type in countMap) {
-      if (countMap[type] > maxCount) {
-        maxCount = countMap[type];
-        maxType = type;
+    // 或改用更穩定方法：
+    // 計算所有答案的類型出現次數
+    const countTypes = { A: 0, B: 0, C: 0, D: 0 };
+    answers.forEach((ansIdx, i) => {
+      const type = questions[i].options[ansIdx]?.type;
+      if (type) countTypes[type]++;
+    });
+
+    // 找出最大值類型
+    let maxType = "A";
+    let maxCount = 0;
+    for (const key in countTypes) {
+      if (countTypes[key] > maxCount) {
+        maxCount = countTypes[key];
+        maxType = key;
       }
     }
 
-    // 顯示結果
-    resultText.textContent = personalityDescriptions[maxType] || "無法判斷結果。";
+    resultText.textContent = personalityDescriptions[maxType];
   }
-</script>
-
-
+  </script>
 </body>
 </html>
