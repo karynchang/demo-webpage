@@ -172,7 +172,7 @@
 <body>
 
   <div class="container">
-    <h1>命運之森的抉擇試煉2</h1>
+    <h1>命運之森的抉擇試煉3</h1>
 
     <div id="start-page">
       <p>歡迎來到命運之森的抉擇試煉！<br>準備好踏上冒險旅程了嗎？</p>
@@ -329,65 +329,8 @@
       renderQuestion();
     }
   };
-
-  //function renderQuestion() {
-  //  const q = questions[currentIndex];
-  //  questionTitleEl.textContent = q.title;
-  //  questionEl.textContent = q.text;
-  //  optionsDiv.innerHTML = "";
-  //
-  //  q.options.forEach((opt, idx) => {
-  //    const btn = document.createElement("button");
-  //    btn.className = "option-btn";
-  //    btn.textContent = opt.text;
-  //
-  //    if (goingBack && answers[currentIndex] === idx) {
-  //      btn.classList.add("selected");
-  //    }
-  //
-  //    btn.onclick = () => {
-  //      if (window.isProcessing) return;  // 防止多次點擊
-  //      window.isProcessing = true;
-  //
-  //      answers[currentIndex] = idx;
-  //      goingBack = false;
-  //
-  //      // 禁用所有按鈕
-  //      const allBtns = document.querySelectorAll('.option-btn');
-  //      allBtns.forEach(b => b.disabled = true);
-  //
-  //      // 顯示觸控遮罩
-  //      blocker.style.display = "block";
-  //
-  //      setTimeout(() => {
-  //        blocker.style.display = "none";
-  //        window.isProcessing = false;
-  //
-  //        currentIndex++;
-  //        if (currentIndex < questions.length) {
-  //          renderQuestion();
-  //        } else {
-  //          showResult();
-  //        }
-  //      }, 600); // 確保阻斷滑動穿透時間
-  //    };
-  //
-  //    optionsDiv.appendChild(btn);
-  //  });
-	//
-	//
-	//
-	//
-  //
-  //  backBtn.style.display = currentIndex > 0 ? "inline-block" : "none";
-  //
-  //  // 失去焦點避免手機鍵盤等問題
-  //  setTimeout(() => {
-  //    document.activeElement.blur();
-  //  }, 50);
-  //}
   
-  function renderQuestion() {
+function renderQuestion() {
   const q = questions[currentIndex];
   questionTitleEl.textContent = q.title;
   questionEl.textContent = q.text;
@@ -398,23 +341,27 @@
     btn.className = "option-btn";
     btn.textContent = opt.text;
 
-    // 只有在 goingBack 是 true（使用者點「上一題」回來）時才顯示該題已選答案
-    if (goingBack && answers[currentIndex] === idx) {
+    // 如果該題已有答案 且 是從上一題回來才顯示選中狀態
+    if (answers[currentIndex] === idx && goingBack) {
       btn.classList.add("selected");
     }
 
     btn.onclick = () => {
-      if (window.isProcessing) return;  // 防止多次點擊
+      if (window.isProcessing) return;
       window.isProcessing = true;
 
-      answers[currentIndex] = idx;
-      goingBack = false;  // 下一題，取消回上一題狀態
+      // 點擊時先清除所有選中
+      document.querySelectorAll('.option-btn.selected').forEach(b => b.classList.remove('selected'));
+      // 對這個按鈕加上選中樣式
+      btn.classList.add('selected');
 
-      // 禁用所有按鈕，避免重複點擊
+      answers[currentIndex] = idx;
+      goingBack = false;
+
+      // 禁用所有按鈕避免重複點擊
       const allBtns = document.querySelectorAll('.option-btn');
       allBtns.forEach(b => b.disabled = true);
 
-      // 顯示觸控遮罩
       blocker.style.display = "block";
 
       setTimeout(() => {
@@ -427,7 +374,7 @@
         } else {
           showResult();
         }
-      }, 600); // 確保阻斷滑動穿透時間
+      }, 800);
     };
 
     optionsDiv.appendChild(btn);
@@ -435,11 +382,11 @@
 
   backBtn.style.display = currentIndex > 0 ? "inline-block" : "none";
 
-  // 失去焦點避免手機鍵盤等問題
   setTimeout(() => {
     document.activeElement.blur();
   }, 50);
 }
+
 
   
   
