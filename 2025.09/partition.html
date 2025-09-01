@@ -332,9 +332,9 @@
   };
   
 function renderQuestion() {
-	// ✅ 每次重渲染題目前，確保清除所有 .selected 樣式
-	document.querySelectorAll('.option-btn.selected').forEach(btn => btn.classList.remove('selected'));
-
+  // 清除所有選中
+  document.querySelectorAll('.option-btn.selected').forEach(btn => btn.classList.remove('selected'));
+  
   const q = questions[currentIndex];
   questionTitleEl.textContent = q.title;
   questionEl.textContent = q.text;
@@ -345,8 +345,8 @@ function renderQuestion() {
     btn.className = "option-btn";
     btn.textContent = opt.text;
 
-    // 如果該題已有答案 且 是從上一題回來才顯示選中狀態
-    if (answers[currentIndex] === idx && goingBack) {
+    // 不管是前進還是回頭，只要有答案就標示
+    if (answers[currentIndex] === idx) {
       btn.classList.add("selected");
     }
 
@@ -354,15 +354,13 @@ function renderQuestion() {
       if (window.isProcessing) return;
       window.isProcessing = true;
 
-      // 點擊時先清除所有選中
+      // 清除所有選中
       document.querySelectorAll('.option-btn.selected').forEach(b => b.classList.remove('selected'));
-      // 對這個按鈕加上選中樣式
       btn.classList.add('selected');
 
       answers[currentIndex] = idx;
-      goingBack = false;
 
-      // 禁用所有按鈕避免重複點擊
+      // 禁用所有按鈕
       const allBtns = document.querySelectorAll('.option-btn');
       allBtns.forEach(b => b.disabled = true);
 
@@ -378,7 +376,7 @@ function renderQuestion() {
         } else {
           showResult();
         }
-      }, 1000);
+      }, 500);
     };
 
     optionsDiv.appendChild(btn);
@@ -388,12 +386,8 @@ function renderQuestion() {
 
   setTimeout(() => {
     document.activeElement.blur();
-  }, 1000);
+  }, 100);
 }
-
-
-  
-  
   
 
   function showResult() {
