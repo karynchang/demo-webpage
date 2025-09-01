@@ -70,6 +70,7 @@
       transition: 0.3s;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
+	  touch-action: manipulation;
     }
 
     .option-btn:hover {
@@ -162,9 +163,9 @@
       width: 100vw;
       height: 100vh;
       z-index: 9999;
-      background-color: rgba(0, 0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.01);
     }
-	
+
   </style>
 </head>
 <body>
@@ -339,42 +340,54 @@
           btn.classList.add("selected");
         }
 
-        //btn.onclick = () => {
-        //  answers[currentIndex] = idx;
-        //  goingBack = false;
+		//btn.onclick = () => {
+		//  answers[currentIndex] = idx;
+		//  goingBack = false;
 		//
-		//  // ✅ 禁用所有選項按鈕，防止誤觸下一題
-		//  const allBtns = document.querySelectorAll('.option-btn');
-		//  allBtns.forEach(b => b.disabled = true);
+		//  // ✅ 顯示觸控遮罩，阻擋穿透點擊
+		//  const blocker = document.getElementById("touch-blocker");
+		//  blocker.style.display = "block";
 		//
-        //  setTimeout(() => {
-        //    currentIndex++;
-        //    if (currentIndex < questions.length) {
-        //      renderQuestion();
-        //    } else {
-        //      showResult();
-        //    }
-        //  }, 500); // 可調整延遲時間
-        //};
+		//  setTimeout(() => {
+		//	blocker.style.display = "none";
+		//
+		//	currentIndex++;
+		//	if (currentIndex < questions.length) {
+		//		renderQuestion();
+		//	} else {
+		//		showResult();
+		//	}
+		//  }, 500); // 0.5 秒後才切題，並移除遮罩
+		//};
+		//
+		
 		
 		btn.onclick = () => {
-		  answers[currentIndex] = idx;
-		  goingBack = false;
+			if (window.isProcessing) return;  // 防止多次點擊
+				window.isProcessing = true;
 
-		  // ✅ 顯示觸控遮罩，阻擋穿透點擊
-		  const blocker = document.getElementById("touch-blocker");
-		  blocker.style.display = "block";
+				answers[currentIndex] = idx;
+				goingBack = false;
 
-		  setTimeout(() => {
-			blocker.style.display = "none";
+			// 禁用所有按鈕
+			const allBtns = document.querySelectorAll('.option-btn');
+			allBtns.forEach(b => b.disabled = true);
 
-			currentIndex++;
-			if (currentIndex < questions.length) {
-				renderQuestion();
-			} else {
-				showResult();
-			}
-		  }, 500); // 0.5 秒後才切題，並移除遮罩
+			// 顯示觸控遮罩
+			const blocker = document.getElementById("touch-blocker");
+			blocker.style.display = "block";
+
+			setTimeout(() => {
+				blocker.style.display = "none";
+				window.isProcessing = false;
+
+				currentIndex++;
+				if (currentIndex < questions.length) {
+					renderQuestion();
+				} else {
+					showResult();
+				}
+			}, 500);
 		};
 		
 		
