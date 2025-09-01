@@ -68,7 +68,8 @@
       text-align: left;
       cursor: pointer;
       transition: 0.3s;
-      -webkit-tap-highlight-color: transparent; /* 移除手機點擊殘影 */
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .option-btn:hover {
@@ -79,7 +80,6 @@
       background-color: #aac1ff;
     }
 
-    /* 🔑 禁止手機殘留的 focus/active 高亮 */
     .option-btn:focus,
     .option-btn:active {
       outline: none;
@@ -310,27 +310,30 @@
         btn.className = "option-btn";
         btn.textContent = opt.text;
 
-        // 只有回上一題才顯示之前選過的答案
         if (goingBack && answers[currentIndex] === idx) {
           btn.classList.add("selected");
         }
 
         btn.onclick = () => {
           answers[currentIndex] = idx;
-          currentIndex++;
           goingBack = false;
-          if (currentIndex < questions.length) {
-            renderQuestion();
-          } else {
-            showResult();
-          }
+
+          setTimeout(() => {
+            currentIndex++;
+            if (currentIndex < questions.length) {
+              renderQuestion();
+            } else {
+              showResult();
+            }
+          }, 150); // ✅ 加上延遲以避免點擊穿透
         };
+
         optionsDiv.appendChild(btn);
       });
 
       backBtn.style.display = currentIndex > 0 ? "inline-block" : "none";
 
-      // 🔑 避免手機觸控殘留高亮
+      // 保險措施：移除任何焦點
       setTimeout(() => {
         document.activeElement.blur();
       }, 50);
