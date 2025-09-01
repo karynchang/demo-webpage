@@ -181,28 +181,30 @@
     questionEl.textContent = q.question;
     choicesDiv.innerHTML = "";
 
-    // 建立選項按鈕
-    q.answers.forEach((answer, idx) => {
+    q.answers.forEach((answer) => {
       const btn = document.createElement("button");
       btn.textContent = answer.text;
+
+      // 預設背景色
+      btn.style.backgroundColor = "#e0e0e0";
+
+      // 如果已選該選項，標示顏色
+      if (answersGiven[currentQuestion] === answer.type) {
+        btn.style.backgroundColor = "#b3d4fc";
+      }
+
       btn.onclick = () => {
-        // 如果之前選過此題，扣回舊分數
+        // 若之前有選，扣分
         if (answersGiven[currentQuestion]) {
           let oldType = answersGiven[currentQuestion];
-          if (!q.isTiebreaker) {
-            scores[oldType]--;
-          } else {
-            tiebreaker = null;
-          }
+          if (!q.isTiebreaker) scores[oldType]--;
+          else tiebreaker = null;
         }
 
-        // 記錄新答案，更新分數
+        // 記錄答案並加分
         answersGiven[currentQuestion] = answer.type;
-        if (!q.isTiebreaker) {
-          scores[answer.type]++;
-        } else {
-          tiebreaker = answer.type;
-        }
+        if (!q.isTiebreaker) scores[answer.type]++;
+        else tiebreaker = answer.type;
 
         // 下一題或結束
         if (currentQuestion < quiz.length - 1) {
@@ -213,15 +215,9 @@
         }
       };
 
-      // 如果這題曾選過此答案，強調按鈕
-      if (answersGiven[currentQuestion] === answer.type) {
-        btn.style.backgroundColor = "#b3d4fc";
-      }
-
       choicesDiv.appendChild(btn);
     });
 
-    // 顯示或隱藏上一題按鈕
     prevBtn.style.display = currentQuestion > 0 ? "inline-block" : "none";
   }
 
@@ -263,13 +259,11 @@
   }
 
   function restartQuiz() {
-    // 清空所有紀錄
     currentQuestion = 0;
     answersGiven.length = 0;
     for (let key in scores) scores[key] = 0;
     tiebreaker = null;
 
-    // 顯示首頁，隱藏其他區塊
     resultDiv.classList.add("hidden");
     quizDiv.classList.add("hidden");
     homeDiv.classList.remove("hidden");
