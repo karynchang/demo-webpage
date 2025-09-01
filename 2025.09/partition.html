@@ -318,6 +318,10 @@
           answers[currentIndex] = idx;
           goingBack = false;
 
+		  // ✅ 禁用所有選項按鈕，防止誤觸下一題
+		  const allBtns = document.querySelectorAll('.option-btn');
+		  allBtns.forEach(b => b.disabled = true);
+
           setTimeout(() => {
             currentIndex++;
             if (currentIndex < questions.length) {
@@ -325,8 +329,9 @@
             } else {
               showResult();
             }
-          }, 150); // ✅ 加上延遲以避免點擊穿透
+          }, 300); // 可調整延遲時間
         };
+		
 
         optionsDiv.appendChild(btn);
       });
