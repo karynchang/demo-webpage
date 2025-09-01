@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>決策風格心理測驗</title>
   <style>
     body {
@@ -50,116 +50,230 @@
       border-left: 5px solid #007acc;
       border-radius: 5px;
     }
+    .nav-buttons {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 20px;
+    }
+    #prevBtn {
+      width: auto;
+      padding: 10px 20px;
+      background: #007acc;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #prevBtn:hover {
+      background: #005f99;
+    }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
   <div id="quiz-container">
-    <h2 id="question">載入中...</h2>
-    <div id="choices"></div>
-    <div id="result" class="result" style="display:none;"></div>
+    <!-- 首頁 -->
+    <div id="home">
+      <h2>歡迎來到「決策風格心理測驗」</h2>
+      <p>透過 5 題問題，探索你做決定的風格類型！</p>
+      <button id="startBtn">開始測驗</button>
+    </div>
+
+    <!-- 測驗區 -->
+    <div id="quiz" class="hidden">
+      <h2 id="question">題目</h2>
+      <div id="choices"></div>
+      <div class="nav-buttons">
+        <button id="prevBtn">← 上一題</button>
+      </div>
+    </div>
+
+    <!-- 結果區 -->
+    <div id="result" class="result hidden">
+      <div id="resultText"></div>
+      <button id="restartBtn">重新測驗</button>
+    </div>
   </div>
 
-  <script>
-    const quiz = [
-      {
-        question: "Q1. 當你面對一個大方向的決定（如是否換工作），你會怎麼開始？",
-        answers: [
-          { text: "做 SWOT 分析、列優缺點表", type: "A" },
-          { text: "看自己現在的感覺和狀態", type: "B" },
-          { text: "先放著，再等幾天看看狀況", type: "C" },
-          { text: "有個想法就先開始行動，邊做邊調整", type: "D" }
-        ]
-      },
-      {
-        question: "Q2. 當朋友問你週末要不要出門聚會，你最常回應是？",
-        answers: [
-          { text: "問細節再看行程決定", type: "A" },
-          { text: "聽起來有趣就直接答應", type: "B" },
-          { text: "說「再看看」，其實在拖", type: "C" },
-          { text: "直接答應，問了再說", type: "D" }
-        ]
-      },
-      {
-        question: "Q3. 小時候你在家中排行是？\n📌 如果你家裡只有兩個孩子，老二請選「老么」",
-        answers: [
-          { text: "老大", type: "A" },
-          { text: "中間（3人以上家庭）", type: "C" },
-          { text: "老么（或2人中的老二）", type: "D" },
-          { text: "獨生子女", type: "B" }
-        ],
-        isTiebreaker: true
-      },
-      {
-        question: "Q4. 如果你正在挑選一份禮物給朋友，你會怎麼做？",
-        answers: [
-          { text: "看對方需求、預算、評價再選", type: "A" },
-          { text: "走進店裡，看到喜歡的就買", type: "B" },
-          { text: "猶豫很久都決定不了", type: "C" },
-          { text: "想到一個有趣的點子就馬上做", type: "D" }
-        ]
-      },
-      {
-        question: "Q5. 遇到突然發生的突發狀況（如活動取消），你最可能？",
-        answers: [
-          { text: "立刻重新安排備案，確保流程順暢", type: "A" },
-          { text: "覺得沒關係，反正順其自然", type: "B" },
-          { text: "感到焦慮，不知如何是好", type: "C" },
-          { text: "說：那我們換個玩法吧！馬上提新方案", type: "D" }
-        ]
-      }
-    ];
-
-    let currentQuestion = 0;
-    const scores = { A: 0, B: 0, C: 0, D: 0 };
-    let tiebreaker = null;
-
-    function showQuestion() {
-      const q = quiz[currentQuestion];
-      document.getElementById("question").textContent = q.question;
-      const choicesDiv = document.getElementById("choices");
-      choicesDiv.innerHTML = "";
-      q.answers.forEach(answer => {
-        const btn = document.createElement("button");
-        btn.textContent = answer.text;
-        btn.onclick = () => {
-          if (q.isTiebreaker) {
-            tiebreaker = answer.type;
-          } else {
-            scores[answer.type]++;
-          }
-          currentQuestion++;
-          if (currentQuestion < quiz.length) {
-            showQuestion();
-          } else {
-            showResult();
-          }
-        };
-        choicesDiv.appendChild(btn);
-      });
+<script>
+  const quiz = [
+    {
+      question: "Q1. 當你面對一個大方向的決定（如是否換工作），你會怎麼開始？",
+      answers: [
+        { text: "做 SWOT 分析、列優缺點表", type: "A" },
+        { text: "看自己現在的感覺和狀態", type: "B" },
+        { text: "先放著，再等幾天看看狀況", type: "C" },
+        { text: "有個想法就先開始行動，邊做邊調整", type: "D" }
+      ]
+    },
+    {
+      question: "Q2. 當朋友問你週末要不要出門聚會，你最常回應是？",
+      answers: [
+        { text: "問細節再看行程決定", type: "A" },
+        { text: "聽起來有趣就直接答應", type: "B" },
+        { text: "說「再看看」，其實在拖", type: "C" },
+        { text: "直接答應，問了再說", type: "D" }
+      ]
+    },
+    {
+      question: "Q3. 小時候你在家中排行是？\n📌 如果你家裡只有兩個孩子，老二請選「老么」",
+      answers: [
+        { text: "老大", type: "A" },
+        { text: "中間（3人以上家庭）", type: "C" },
+        { text: "老么（或2人中的老二）", type: "D" },
+        { text: "獨生子女", type: "B" }
+      ],
+      isTiebreaker: true
+    },
+    {
+      question: "Q4. 如果你正在挑選一份禮物給朋友，你會怎麼做？",
+      answers: [
+        { text: "看對方需求、預算、評價再選", type: "A" },
+        { text: "走進店裡，看到喜歡的就買", type: "B" },
+        { text: "猶豫很久都決定不了", type: "C" },
+        { text: "想到一個有趣的點子就馬上做", type: "D" }
+      ]
+    },
+    {
+      question: "Q5. 遇到突然發生的突發狀況（如活動取消），你最可能？",
+      answers: [
+        { text: "立刻重新安排備案，確保流程順暢", type: "A" },
+        { text: "覺得沒關係，反正順其自然", type: "B" },
+        { text: "感到焦慮，不知如何是好", type: "C" },
+        { text: "說：那我們換個玩法吧！馬上提新方案", type: "D" }
+      ]
     }
+  ];
 
-    function showResult() {
-      const resultDiv = document.getElementById("result");
-      document.getElementById("choices").style.display = "none";
-      document.getElementById("question").style.display = "none";
-      resultDiv.style.display = "block";
+  let currentQuestion = 0;
+  const answersGiven = []; // 紀錄每題答案type
+  const scores = { A: 0, B: 0, C: 0, D: 0 };
+  let tiebreaker = null;
 
-      const max = Math.max(...Object.values(scores));
-      const topTypes = Object.keys(scores).filter(k => scores[k] === max);
+  const homeDiv = document.getElementById("home");
+  const quizDiv = document.getElementById("quiz");
+  const resultDiv = document.getElementById("result");
+  const questionEl = document.getElementById("question");
+  const choicesDiv = document.getElementById("choices");
+  const prevBtn = document.getElementById("prevBtn");
+  const resultText = document.getElementById("resultText");
+  const startBtn = document.getElementById("startBtn");
+  const restartBtn = document.getElementById("restartBtn");
 
-      let finalType = topTypes.length === 1 ? topTypes[0] : tiebreaker || topTypes[0];
+  startBtn.addEventListener("click", startQuiz);
+  prevBtn.addEventListener("click", prevQuestion);
+  restartBtn.addEventListener("click", restartQuiz);
 
-      const messages = {
-        A: "🧠 你是【分析型思考者】：邏輯清晰、做事謹慎，是團隊裡的智多星。",
-        B: "✨ 你是【直覺型行動者】：憑感覺走人生，靈光一閃就是你出手的時機。",
-        C: "😅 你是【拖延型觀望者】：謹慎小心，但常常一拖再拖，不做決定就是你的決定。",
-        D: "⚡ 你是【衝動型執行者】：想到就做，靈活有衝勁，行動力爆表！"
+  function startQuiz() {
+    homeDiv.classList.add("hidden");
+    resultDiv.classList.add("hidden");
+    quizDiv.classList.remove("hidden");
+    currentQuestion = 0;
+    answersGiven.length = 0;
+    for (let key in scores) scores[key] = 0;
+    tiebreaker = null;
+    showQuestion();
+  }
+
+  function showQuestion() {
+    const q = quiz[currentQuestion];
+    questionEl.textContent = q.question;
+    choicesDiv.innerHTML = "";
+
+    // 建立選項按鈕
+    q.answers.forEach((answer, idx) => {
+      const btn = document.createElement("button");
+      btn.textContent = answer.text;
+      btn.onclick = () => {
+        // 如果之前選過此題，扣回舊分數
+        if (answersGiven[currentQuestion]) {
+          let oldType = answersGiven[currentQuestion];
+          if (!q.isTiebreaker) {
+            scores[oldType]--;
+          } else {
+            tiebreaker = null;
+          }
+        }
+
+        // 記錄新答案，更新分數
+        answersGiven[currentQuestion] = answer.type;
+        if (!q.isTiebreaker) {
+          scores[answer.type]++;
+        } else {
+          tiebreaker = answer.type;
+        }
+
+        // 下一題或結束
+        if (currentQuestion < quiz.length - 1) {
+          currentQuestion++;
+          showQuestion();
+        } else {
+          showResult();
+        }
       };
 
-      resultDiv.textContent = messages[finalType] || "測驗完成，無法判斷結果。";
+      // 如果這題曾選過此答案，強調按鈕
+      if (answersGiven[currentQuestion] === answer.type) {
+        btn.style.backgroundColor = "#b3d4fc";
+      }
+
+      choicesDiv.appendChild(btn);
+    });
+
+    // 顯示或隱藏上一題按鈕
+    prevBtn.style.display = currentQuestion > 0 ? "inline-block" : "none";
+  }
+
+  function prevQuestion() {
+    if (currentQuestion === 0) return;
+
+    // 扣掉目前題目分數
+    const currentQ = quiz[currentQuestion];
+    const currentAnswer = answersGiven[currentQuestion];
+    if (currentAnswer && !currentQ.isTiebreaker) {
+      scores[currentAnswer]--;
+    } else if (currentQ.isTiebreaker) {
+      tiebreaker = null;
     }
 
+    currentQuestion--;
     showQuestion();
-  </script>
+  }
+
+  function showResult() {
+    quizDiv.classList.add("hidden");
+    resultDiv.classList.remove("hidden");
+
+    // 計算最高分型別
+    const maxScore = Math.max(...Object.values(scores));
+    const topTypes = Object.keys(scores).filter(k => scores[k] === maxScore);
+
+    // 若有多重最高分，用tiebreaker判定，沒有則用第一個
+    const finalType = topTypes.length === 1 ? topTypes[0] : (tiebreaker || topTypes[0]);
+
+    const messages = {
+      A: "🧠 你是【分析型思考者】：邏輯清晰、做事謹慎，是團隊裡的智多星。",
+      B: "✨ 你是【直覺型行動者】：憑感覺走人生，靈光一閃就是你出手的時機。",
+      C: "😅 你是【拖延型觀望者】：謹慎小心，但常常一拖再拖，不做決定就是你的決定。",
+      D: "⚡ 你是【衝動型執行者】：想到就做，靈活有衝勁，行動力爆表！"
+    };
+
+    resultText.textContent = messages[finalType] || "測驗完成，無法判斷結果。";
+  }
+
+  function restartQuiz() {
+    // 清空所有紀錄
+    currentQuestion = 0;
+    answersGiven.length = 0;
+    for (let key in scores) scores[key] = 0;
+    tiebreaker = null;
+
+    // 顯示首頁，隱藏其他區塊
+    resultDiv.classList.add("hidden");
+    quizDiv.classList.add("hidden");
+    homeDiv.classList.remove("hidden");
+  }
+</script>
 </body>
 </html>
