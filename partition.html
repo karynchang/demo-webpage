@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>命運之森的抉擇試煉</title>
+<style>
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Noto Sans TC', sans-serif;
+    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+    background-size: cover;
+    color: #001240;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .container {
+    background-color: rgba(230, 240, 255, 0.9);
+    border-radius: 16px;
+    box-shadow: 0 0 25px rgba(0, 66, 255, 0.6);
+    width: 90%;
+    max-width: 600px;
+    padding: 30px 40px;
+    box-sizing: border-box;
+  }
+  h1 {
+    text-align: center;
+    color: #003080;
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    user-select: none;
+  }
+  #question {
+    font-size: 1.3rem;
+    margin-bottom: 25px;
+    white-space: pre-wrap;
+    user-select: none;
+  }
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  button.option-btn {
+    background-color: #d0dfff;
+    border: 2px solid #003080;
+    border-radius: 12px;
+    color: #001240;
+    font-size: 1.1rem;
+    padding: 16px 20px;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    user-select: none;
+  }
+  button.option-btn:hover {
+    background-color: #aac1ff;
+    color: #001240;
+  }
+  button.option-btn.selected {
+    background-color: #003080;
+    color: #e6f0ff;
+    border-color: #001a66;
+    font-weight: 700;
+  }
+  .navigation {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-start; /* 左對齊，只有上一題 */
+  }
+  button.nav-btn {
+    background-color: #003080;
+    border: none;
+    border-radius: 12px;
+    color: #e6f0ff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 12px 28px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s;
+  }
+  button.nav-btn:disabled {
+    background-color: #94aaff;
+    cursor: not-allowed;
+  }
+  button.nav-btn:hover:not(:disabled) {
+    background-color: #001a66;
+  }
+  #result {
+    display: none;
+    text-align: center;
+    color: #001240;
+  }
+  #result h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+  }
+  #result p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+  button#restart-btn {
+    background-color: #003080;
+    border: none;
+    border-radius: 12px;
+    color: #e6f0ff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 14px 40px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s;
+  }
+  button#restart-btn:hover {
+    background-color: #001a66;
+  }
+  #start-page {
+    text-align: center;
+    color: #001240;
+    padding: 60px 20px;
+    border-radius: 16px;
+    user-select: none;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    background-color: rgba(230, 240, 255, 0.85);
+  }
+  #start-btn {
+    margin-top: 40px;
+    background-color: #003080;
+    border: none;
+    border-radius: 12px;
+    color: #e6f0ff;
+    font-weight: 700;
+    font-size: 1.3rem;
+    padding: 18px 50px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s;
+  }
+  #start-btn:hover {
+    background-color: #001a66;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>命運之森的抉擇試煉</h1>
+
+    <div id="start-page">
+      <p>歡迎來到命運之森的抉擇試煉！<br>準備好踏上冒險旅程了嗎？</p>
+      <button id="start-btn">開始測驗</button>
+    </div>
+
+    <div id="quiz" style="display:none;">
+      <p id="question"></p>
+      <div class="options"></div>
+
+      <div class="navigation">
+        <button id="prev-btn" class="nav-btn" disabled>上一題</button>
+      </div>
+    </div>
+
+    <div id="result" style="display:none;">
+      <h2>你的冒險者性格是：</h2>
+      <p id="result-text"></p>
+      <button id="restart-btn">重新測驗</button>
+    </div>
+  </div>
+
+<script>
+  const questions = [
+    {
+      text: "🔮 Q1. 你剛收到一張神秘的地圖，地圖上標示了一座傳說中的寶藏遺跡。你打算怎麼處理這張地圖？",
+      options: [
+        { text: "A：仔細研究地圖與周邊地形，做足資料查找再出發。", type: "A" },
+        { text: "B：閉上眼感受地圖上的能量流動，覺得哪裡有感就走。", type: "B" },
+        { text: "C：雖然很想去，但擔心危險或迷路，暫時先放一邊。", type: "C" },
+        { text: "D：太刺激了！馬上打包裝備就要出發。", type: "D" },
+      ],
+    },
+    {
+      text: "🧙‍♀️ Q2. 路上你遇到一位旅者，他邀請你加入一場未知的任務，但沒有說明太多細節。你會怎麼回應？",
+      options: [
+        { text: "A：詢問任務內容、風險與回報，再決定是否加入。", type: "A" },
+        { text: "B：感覺這人不壞，而且直覺告訴你這任務值得冒險，就答應了。", type: "B" },
+        { text: "C：說「再考慮一下」，其實你在猶豫很久都還沒決定。", type: "C" },
+        { text: "D：馬上說好，反正有事就當作磨練經驗值！", type: "D" },
+      ],
+    },
+    {
+      text: "🏰 Q3. 任務途中你來到一個神秘的交叉口，四條路看起來一樣，但每條路都可能通往不同命運。你會？",
+      options: [
+        { text: "A：拿出指南針、比對地圖與星象，理性分析再選擇。", type: "A" },
+        { text: "B：站在路中央，感受哪條路「在召喚你」，順勢而行。", type: "B" },
+        { text: "C：你選不出來，乾脆原地搭帳篷休息一晚再說。", type: "C" },
+        { text: "D：任選一條直走，因為「不走不會知道」。", type: "D" },
+      ],
+    },
+    {
+      text: "👨‍👩‍👧 Q4. 旅程中，你遇見了一位會預言的老者，他說你的成長背景影響了你的選擇傾向。他問你：「你在家中的排行是？」\n📌（如果家中只有兩個孩子，請老二選「老么」）",
+      options: [
+        { text: "A：我是家中老大，習慣領導與負責。", type: "A" },
+        { text: "B：我是獨生子女，習慣自己獨立思考與安排。", type: "B" },
+        { text: "C：我是家中中間的孩子，常在他人之間平衡。", type: "C" },
+        { text: "D：我是家中老么，習慣自由且有創意地生活。", type: "D" },
+      ],
+    },
+    {
+      text: "🐉 Q5. 最後一關你面對一頭守護寶藏的巨龍，它提出一個條件：「你要決定獨自挑戰我，還是集結夥伴一同應戰？」你會？",
+      options: [
+        { text: "A：召集隊友並規劃戰略，每人分工合作。", type: "A" },
+        { text: "B：看起來這條龍不一定要打，或許有其他和平方式？", type: "B" },
+        { text: "C：猶豫很久，不確定該選哪個方式最好。", type: "C" },
+        { text: "D：你燃起戰鬥之魂，決定一個人上場一戰到底！", type: "D" },
+      ],
+    },
+    {
+      text: "🌫️ Q6. 你擊敗巨龍後，寶藏門打開了，但裡面不是黃金，而是一面神秘的「命運之鏡」。鏡子裡會顯現你心中最渴望的畫面。你看到了什麼？",
+      options: [
+        { text: "A：一張策略地圖，上面標著你未來幾年要完成的任務與路線。", type: "A" },
+        { text: "B：一段充滿色彩與可能性的旅程，你正隨風而行。", type: "B" },
+        { text: "C：你站在十字路口，望著多條分岔的路，不知該去哪。", type: "C" },
+        { text: "D：你與夥伴們在篝火前歡笑，那是剛完成一場刺激冒險後的夜晚。", type: "D" },
+      ],
+    },
+    {
+      text: "🌌 Q7. 命運之森開始崩塌，你要快速離開！但出口方向有三條路，各自有未知的風險與機會。你會怎麼應對？",
+      options: [
+        { text: "A：冷靜分析環境與風險，選擇最安全的路線。", type: "A" },
+        { text: "B：相信直覺與感覺，選擇心中第一個想到的路。", type: "B" },
+        { text: "C：遲疑與恐懼讓你停下腳步，直到有人拉你一把。", type: "C" },
+        { text: "D：勇敢地往前衝，冒險才是人生的真諦！", type: "D" },
+      ],
+    },
+  ];
+
+  const startPage = document.getElementById('start-page');
+  const startBtn = document.getElementById('start-btn');
+  const quiz = document.getElementById('quiz');
+  const questionEl = document.getElementById('question');
+  const optionsEl = document.querySelector('.options');
+  const prevBtn = document.getElementById('prev-btn');
+  const resultPage = document.getElementById('result');
+  const resultText = document.getElementById('result-text');
+  const restartBtn = document.getElementById('restart-btn');
+
+  let currentQuestion = 0;
+  const answers = new Array(questions.length).fill(null);
+
+  startBtn.addEventListener('click', () => {
+    startPage.style.display = 'none';
+    quiz.style.display = 'block';
+    currentQuestion = 0;
+    answers.fill(null);
+    showQuestion();
+  });
+
+  function showQuestion() {
+    const q = questions[currentQuestion];
+    questionEl.textContent = q.text;
+    optionsEl.innerHTML = '';
+
+    q.options.forEach((option, index) => {
+      const btn = document.createElement('button');
+      btn.classList.add('option-btn');
+      btn.textContent = option.text;
+      btn.dataset.type = option.type;
+      btn.dataset.index = index;
+
+      // 標示已選擇答案
+      if (answers[currentQuestion] === index) {
+        btn.classList.add('selected');
+      }
+
+      btn.addEventListener('click', () => {
+        answers[currentQuestion] = index;
+        updateOptionsSelection();
+
+        // 點選後自動跳下一題或結果
+        if (currentQuestion < questions.length - 1) {
+          currentQuestion++;
+          showQuestion();
+        } else {
+          showResult();
+        }
+      });
+
+      optionsEl.appendChild(btn);
+    });
+
+    prevBtn.disabled = currentQuestion === 0;
+  }
+
+  function updateOptionsSelection() {
+    const buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach((btn) => {
+      btn.classList.remove('selected');
+      if (parseInt(btn.dataset.index) === answers[currentQuestion]) {
+        btn.classList.add('selected');
+      }
+    });
+  }
+
+  prevBtn.addEventListener('click', () => {
+    if (currentQuestion > 0) {
+      currentQuestion--;
+      showQuestion();
+    }
+  });
+
+  function showResult() {
+    quiz.style.display = 'none';
+    resultPage.style.display = 'block';
+
+    const count = { A: 0, B: 0, C: 0, D: 0 };
+    answers.forEach((ans, idx) => {
+      if (ans !== null) {
+        const type = questions[idx].options[ans].type;
+        count[type]++;
+      }
+    });
+
+    let maxType = 'A';
+    let maxCount = count.A;
+    for (const t of ['B', 'C', 'D']) {
+      if (count[t] > maxCount) {
+        maxType = t;
+        maxCount = count[t];
+      }
+    }
+
+    const descriptions = {
+      A: "你是謹慎而理性的策略家，喜歡計畫和準備，總能在危機中找到最佳解決方案。",
+      B: "你是感性且富有直覺的探險家，勇於相信自己內心的聲音，樂於冒險與嘗試新事物。",
+      C: "你是謹慎且考慮周全的觀察者，遇事會多方權衡，偏好安全穩健的路線。",
+      D: "你是熱血且果斷的行動派，勇於面對挑戰，喜歡直接衝刺達成目標。",
+    };
+
+    resultText.textContent = descriptions[maxType];
+  }
+
+  restartBtn.addEventListener('click', () => {
+    resultPage.style.display = 'none';
+    startPage.style.display = 'block';
+  });
+</script>
+</body>
+</html>
