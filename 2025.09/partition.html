@@ -354,6 +354,9 @@
         //  btn.classList.add("selected");
         //}
 
+		// 👉 先暫時禁用點擊
+		btn.disabled = true;
+		
         btn.onclick = () => {
           if (window.isProcessing) return;
           window.isProcessing = true;
@@ -391,8 +394,12 @@
       // 淡入選項
       setTimeout(() => {
         optionsDiv.classList.remove("hidden");
+		// ✅ 啟用選項按鈕（等動畫跑完再啟用點擊）
+		document.querySelectorAll('.option-btn').forEach(btn => {
+		btn.disabled = false;
+		});
         window.isProcessing = false;
-      }, 50);
+      }, 300);
 
       setTimeout(() => {
         document.activeElement.blur();
