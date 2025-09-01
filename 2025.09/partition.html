@@ -68,6 +68,7 @@
       text-align: left;
       cursor: pointer;
       transition: 0.3s;
+      -webkit-tap-highlight-color: transparent; /* 移除手機點擊殘影 */
     }
 
     .option-btn:hover {
@@ -76,6 +77,13 @@
 
     .option-btn.selected {
       background-color: #aac1ff;
+    }
+
+    /* 🔑 禁止手機殘留的 focus/active 高亮 */
+    .option-btn:focus,
+    .option-btn:active {
+      outline: none;
+      box-shadow: none;
     }
 
     #result {
@@ -172,7 +180,7 @@
       <button id="restart-btn">重新測驗</button>
     </div>
   </div>
-
+  
   <script>
     const questions = [
       {
@@ -322,10 +330,10 @@
 
       backBtn.style.display = currentIndex > 0 ? "inline-block" : "none";
 
-      // 避免手機殘留高亮
+      // 🔑 避免手機觸控殘留高亮
       setTimeout(() => {
         document.activeElement.blur();
-      }, 0);
+      }, 50);
     }
 
     function showResult() {
