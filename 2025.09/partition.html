@@ -1,273 +1,351 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>決策風格心理測驗</title>
-  <style>
-    body {
-      font-family: "Helvetica Neue", sans-serif;
-      background: #f4f4f4;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    #quiz-container {
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      max-width: 600px;
-      width: 100%;
-    }
-    h2 {
-      font-size: 1.4em;
-      margin-bottom: 20px;
-    }
-    button {
-      display: block;
-      width: 100%;
-      margin: 10px 0;
-      padding: 15px;
-      font-size: 1em;
-      border: none;
-      border-radius: 5px;
-      background: #e0e0e0;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background: #ccc;
-    }
-    .result {
-      font-size: 1.2em;
-      margin-top: 20px;
-      padding: 20px;
-      background: #f0f8ff;
-      border-left: 5px solid #007acc;
-      border-radius: 5px;
-    }
-    .nav-buttons {
-      display: flex;
-      justify-content: flex-start;
-      margin-top: 20px;
-    }
-    #prevBtn {
-      width: auto;
-      padding: 10px 20px;
-      background: #007acc;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    #prevBtn:hover {
-      background: #005f99;
-    }
-    .hidden {
-      display: none;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>命運之森的抉擇試煉</title>
+<style>
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Noto Sans TC', sans-serif;
+    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+    background-size: cover;
+    color: #001240;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .container {
+    background-color: rgba(230, 240, 255, 0.9);
+    border-radius: 16px;
+    box-shadow: 0 0 25px rgba(0, 66, 255, 0.6);
+    width: 90%;
+    max-width: 600px;
+    padding: 30px 40px;
+    box-sizing: border-box;
+  }
+  h1 {
+    text-align: center;
+    color: #003080;
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    user-select: none;
+  }
+  #question {
+    font-size: 1.3rem;
+    margin-bottom: 25px;
+    white-space: pre-wrap;
+    user-select: none;
+  }
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  button.option-btn {
+    background-color: #d0dfff;
+    border: 2px solid #003080;
+    border-radius: 12px;
+    color: #001240;
+    font-size: 1.1rem;
+    padding: 16px 20px;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    user-select: none;
+  }
+  button.option-btn:hover {
+    background-color: #aac1ff;
+    color: #001240;
+  }
+  button.option-btn.selected {
+    background-color: #003080;
+    color: #e6f0ff;
+    border-color: #001a66;
+    font-weight: 700;
+  }
+  .navigation {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-start; /* 左對齊，只有上一題 */
+  }
+  button.nav-btn {
+    background-color: #003080;
+    border: none;
+    border-radius: 12px;
+    color: #e6f0ff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 12px 28px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s;
+  }
+  button.nav-btn:disabled {
+    background-color: #94aaff;
+    cursor: not-allowed;
+  }
+  button.nav-btn:hover:not(:disabled) {
+    background-color: #001a66;
+  }
+  #result {
+    display: none;
+    text-align: center;
+    color: #001240;
+  }
+  #result h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+  }
+  #result p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+  button#restart-btn {
+    background-color: #003080;
+    border: none;
+    border-radius: 12px;
+    color: #e6f0ff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 14px 40px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s;
+  }
+  button#restart-btn:hover {
+    background-color: #001a66;
+  }
+  #start-page {
+    text-align: center;
+    color: #001240;
+    padding: 60px 20px;
+    border-radius: 16px;
+    user-select: none;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    background-color: rgba(230, 240, 255, 0.85);
+  }
+  #start-btn {
+    margin-top: 40px;
+    background-color: #003080;
+    border: none;
+    border-radius: 12px;
+    color: #e6f0ff;
+    font-weight: 700;
+    font-size: 1.3rem;
+    padding: 18px 50px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s;
+  }
+  #start-btn:hover {
+    background-color: #001a66;
+  }
+</style>
 </head>
 <body>
-  <div id="quiz-container">
-    <!-- 首頁 -->
-    <div id="home">
-      <h2>歡迎來到「決策風格心理測驗」</h2>
-      <p>透過 5 題問題，探索你做決定的風格類型！</p>
-      <button id="startBtn">開始測驗</button>
+  <div class="container">
+    <h1>命運之森的抉擇試煉</h1>
+
+    <div id="start-page">
+      <p>歡迎來到命運之森的抉擇試煉！<br>準備好踏上冒險旅程了嗎？</p>
+      <button id="start-btn">開始測驗</button>
     </div>
 
-    <!-- 測驗區 -->
-    <div id="quiz" class="hidden">
-      <h2 id="question">題目</h2>
-      <div id="choices"></div>
-      <div class="nav-buttons">
-        <button id="prevBtn">← 上一題</button>
+    <div id="quiz" style="display:none;">
+      <p id="question"></p>
+      <div class="options"></div>
+
+      <div class="navigation">
+        <button id="prev-btn" class="nav-btn" disabled>上一題</button>
       </div>
     </div>
 
-    <!-- 結果區 -->
-    <div id="result" class="result hidden">
-      <div id="resultText"></div>
-      <button id="restartBtn">重新測驗</button>
+    <div id="result" style="display:none;">
+      <h2>你的冒險者性格是：</h2>
+      <p id="result-text"></p>
+      <button id="restart-btn">重新測驗</button>
     </div>
   </div>
 
 <script>
-  const quiz = [
+  const questions = [
     {
-      question: "Q1. 當你面對一個大方向的決定（如是否換工作），你會怎麼開始？",
-      answers: [
-        { text: "做 SWOT 分析、列優缺點表", type: "A" },
-        { text: "看自己現在的感覺和狀態", type: "B" },
-        { text: "先放著，再等幾天看看狀況", type: "C" },
-        { text: "有個想法就先開始行動，邊做邊調整", type: "D" }
-      ]
-    },
-    {
-      question: "Q2. 當朋友問你週末要不要出門聚會，你最常回應是？",
-      answers: [
-        { text: "問細節再看行程決定", type: "A" },
-        { text: "聽起來有趣就直接答應", type: "B" },
-        { text: "說「再看看」，其實在拖", type: "C" },
-        { text: "直接答應，問了再說", type: "D" }
-      ]
-    },
-    {
-      question: "Q3. 小時候你在家中排行是？\n📌 如果你家裡只有兩個孩子，老二請選「老么」",
-      answers: [
-        { text: "老大", type: "A" },
-        { text: "中間（3人以上家庭）", type: "C" },
-        { text: "老么（或2人中的老二）", type: "D" },
-        { text: "獨生子女", type: "B" }
+      text: "🔮 Q1. 你剛收到一張神秘的地圖，地圖上標示了一座傳說中的寶藏遺跡。你打算怎麼處理這張地圖？",
+      options: [
+        { text: "A：仔細研究地圖與周邊地形，做足資料查找再出發。", type: "A" },
+        { text: "B：閉上眼感受地圖上的能量流動，覺得哪裡有感就走。", type: "B" },
+        { text: "C：雖然很想去，但擔心危險或迷路，暫時先放一邊。", type: "C" },
+        { text: "D：太刺激了！馬上打包裝備就要出發。", type: "D" },
       ],
-      isTiebreaker: true
     },
     {
-      question: "Q4. 如果你正在挑選一份禮物給朋友，你會怎麼做？",
-      answers: [
-        { text: "看對方需求、預算、評價再選", type: "A" },
-        { text: "走進店裡，看到喜歡的就買", type: "B" },
-        { text: "猶豫很久都決定不了", type: "C" },
-        { text: "想到一個有趣的點子就馬上做", type: "D" }
-      ]
+      text: "🧙‍♀️ Q2. 路上你遇到一位旅者，他邀請你加入一場未知的任務，但沒有說明太多細節。你會怎麼回應？",
+      options: [
+        { text: "A：詢問任務內容、風險與回報，再決定是否加入。", type: "A" },
+        { text: "B：感覺這人不壞，而且直覺告訴你這任務值得冒險，就答應了。", type: "B" },
+        { text: "C：說「再考慮一下」，其實你在猶豫很久都還沒決定。", type: "C" },
+        { text: "D：馬上說好，反正有事就當作磨練經驗值！", type: "D" },
+      ],
     },
     {
-      question: "Q5. 遇到突然發生的突發狀況（如活動取消），你最可能？",
-      answers: [
-        { text: "立刻重新安排備案，確保流程順暢", type: "A" },
-        { text: "覺得沒關係，反正順其自然", type: "B" },
-        { text: "感到焦慮，不知如何是好", type: "C" },
-        { text: "說：那我們換個玩法吧！馬上提新方案", type: "D" }
-      ]
-    }
+      text: "🏰 Q3. 任務途中你來到一個神秘的交叉口，四條路看起來一樣，但每條路都可能通往不同命運。你會？",
+      options: [
+        { text: "A：拿出指南針、比對地圖與星象，理性分析再選擇。", type: "A" },
+        { text: "B：站在路中央，感受哪條路「在召喚你」，順勢而行。", type: "B" },
+        { text: "C：你選不出來，乾脆原地搭帳篷休息一晚再說。", type: "C" },
+        { text: "D：任選一條直走，因為「不走不會知道」。", type: "D" },
+      ],
+    },
+    {
+      text: "👨‍👩‍👧 Q4. 旅程中，你遇見了一位會預言的老者，他說你的成長背景影響了你的選擇傾向。他問你：「你在家中的排行是？」\n📌（如果家中只有兩個孩子，請老二選「老么」）",
+      options: [
+        { text: "A：我是家中老大，習慣領導與負責。", type: "A" },
+        { text: "B：我是獨生子女，習慣自己獨立思考與安排。", type: "B" },
+        { text: "C：我是家中中間的孩子，常在他人之間平衡。", type: "C" },
+        { text: "D：我是家中老么，習慣自由且有創意地生活。", type: "D" },
+      ],
+    },
+    {
+      text: "🐉 Q5. 最後一關你面對一頭守護寶藏的巨龍，它提出一個條件：「你要決定獨自挑戰我，還是集結夥伴一同應戰？」你會？",
+      options: [
+        { text: "A：召集隊友並規劃戰略，每人分工合作。", type: "A" },
+        { text: "B：看起來這條龍不一定要打，或許有其他和平方式？", type: "B" },
+        { text: "C：猶豫很久，不確定該選哪個方式最好。", type: "C" },
+        { text: "D：你燃起戰鬥之魂，決定一個人上場一戰到底！", type: "D" },
+      ],
+    },
+    {
+      text: "🌫️ Q6. 你擊敗巨龍後，寶藏門打開了，但裡面不是黃金，而是一面神秘的「命運之鏡」。鏡子裡會顯現你心中最渴望的畫面。你看到了什麼？",
+      options: [
+        { text: "A：一張策略地圖，上面標著你未來幾年要完成的任務與路線。", type: "A" },
+        { text: "B：一段充滿色彩與可能性的旅程，你正隨風而行。", type: "B" },
+        { text: "C：你站在十字路口，望著多條分岔的路，不知該去哪。", type: "C" },
+        { text: "D：你與夥伴們在篝火前歡笑，那是剛完成一場刺激冒險後的夜晚。", type: "D" },
+      ],
+    },
+    {
+      text: "🌌 Q7. 命運之森開始崩塌，你要快速離開！但出口方向有三條路，各自有未知的風險與機會。你會怎麼應對？",
+      options: [
+        { text: "A：冷靜分析環境與風險，選擇最安全的路線。", type: "A" },
+        { text: "B：相信直覺與感覺，選擇心中第一個想到的路。", type: "B" },
+        { text: "C：遲疑與恐懼讓你停下腳步，直到有人拉你一把。", type: "C" },
+        { text: "D：勇敢地往前衝，冒險才是人生的真諦！", type: "D" },
+      ],
+    },
   ];
 
+  const startPage = document.getElementById('start-page');
+  const startBtn = document.getElementById('start-btn');
+  const quiz = document.getElementById('quiz');
+  const questionEl = document.getElementById('question');
+  const optionsEl = document.querySelector('.options');
+  const prevBtn = document.getElementById('prev-btn');
+  const resultPage = document.getElementById('result');
+  const resultText = document.getElementById('result-text');
+  const restartBtn = document.getElementById('restart-btn');
+
   let currentQuestion = 0;
-  const answersGiven = []; // 紀錄每題答案type
-  const scores = { A: 0, B: 0, C: 0, D: 0 };
-  let tiebreaker = null;
+  const answers = new Array(questions.length).fill(null);
 
-  const homeDiv = document.getElementById("home");
-  const quizDiv = document.getElementById("quiz");
-  const resultDiv = document.getElementById("result");
-  const questionEl = document.getElementById("question");
-  const choicesDiv = document.getElementById("choices");
-  const prevBtn = document.getElementById("prevBtn");
-  const resultText = document.getElementById("resultText");
-  const startBtn = document.getElementById("startBtn");
-  const restartBtn = document.getElementById("restartBtn");
-
-  startBtn.addEventListener("click", startQuiz);
-  prevBtn.addEventListener("click", prevQuestion);
-  restartBtn.addEventListener("click", restartQuiz);
-
-  function startQuiz() {
-    homeDiv.classList.add("hidden");
-    resultDiv.classList.add("hidden");
-    quizDiv.classList.remove("hidden");
+  startBtn.addEventListener('click', () => {
+    startPage.style.display = 'none';
+    quiz.style.display = 'block';
     currentQuestion = 0;
-    answersGiven.length = 0;
-    for (let key in scores) scores[key] = 0;
-    tiebreaker = null;
+    answers.fill(null);
     showQuestion();
-  }
+  });
 
   function showQuestion() {
-    const q = quiz[currentQuestion];
-    questionEl.textContent = q.question;
-    choicesDiv.innerHTML = "";
+    const q = questions[currentQuestion];
+    questionEl.textContent = q.text;
+    optionsEl.innerHTML = '';
 
-    q.answers.forEach((answer) => {
-      const btn = document.createElement("button");
-      btn.textContent = answer.text;
+    q.options.forEach((option, index) => {
+      const btn = document.createElement('button');
+      btn.classList.add('option-btn');
+      btn.textContent = option.text;
+      btn.dataset.type = option.type;
+      btn.dataset.index = index;
 
-      // 預設背景色
-      btn.style.backgroundColor = "#e0e0e0";
-
-      // 如果已選該選項，標示顏色
-      if (answersGiven[currentQuestion] === answer.type) {
-        btn.style.backgroundColor = "#b3d4fc";
+      // 標示已選擇答案
+      if (answers[currentQuestion] === index) {
+        btn.classList.add('selected');
       }
 
-      btn.onclick = () => {
-        // 若之前有選，扣分
-        if (answersGiven[currentQuestion]) {
-          let oldType = answersGiven[currentQuestion];
-          if (!q.isTiebreaker) scores[oldType]--;
-          else tiebreaker = null;
-        }
+      btn.addEventListener('click', () => {
+        answers[currentQuestion] = index;
+        updateOptionsSelection();
 
-        // 記錄答案並加分
-        answersGiven[currentQuestion] = answer.type;
-        if (!q.isTiebreaker) scores[answer.type]++;
-        else tiebreaker = answer.type;
-
-        // 下一題或結束
-        if (currentQuestion < quiz.length - 1) {
+        // 點選後自動跳下一題或結果
+        if (currentQuestion < questions.length - 1) {
           currentQuestion++;
           showQuestion();
         } else {
           showResult();
         }
-      };
+      });
 
-      choicesDiv.appendChild(btn);
+      optionsEl.appendChild(btn);
     });
 
-    prevBtn.style.display = currentQuestion > 0 ? "inline-block" : "none";
+    prevBtn.disabled = currentQuestion === 0;
   }
 
-  function prevQuestion() {
-    if (currentQuestion === 0) return;
+  function updateOptionsSelection() {
+    const buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach((btn) => {
+      btn.classList.remove('selected');
+      if (parseInt(btn.dataset.index) === answers[currentQuestion]) {
+        btn.classList.add('selected');
+      }
+    });
+  }
 
-    // 扣掉目前題目分數
-    const currentQ = quiz[currentQuestion];
-    const currentAnswer = answersGiven[currentQuestion];
-    if (currentAnswer && !currentQ.isTiebreaker) {
-      scores[currentAnswer]--;
-    } else if (currentQ.isTiebreaker) {
-      tiebreaker = null;
+  prevBtn.addEventListener('click', () => {
+    if (currentQuestion > 0) {
+      currentQuestion--;
+      showQuestion();
     }
-
-    currentQuestion--;
-    showQuestion();
-  }
+  });
 
   function showResult() {
-    quizDiv.classList.add("hidden");
-    resultDiv.classList.remove("hidden");
+    quiz.style.display = 'none';
+    resultPage.style.display = 'block';
 
-    // 計算最高分型別
-    const maxScore = Math.max(...Object.values(scores));
-    const topTypes = Object.keys(scores).filter(k => scores[k] === maxScore);
+    const count = { A: 0, B: 0, C: 0, D: 0 };
+    answers.forEach((ans, idx) => {
+      if (ans !== null) {
+        const type = questions[idx].options[ans].type;
+        count[type]++;
+      }
+    });
 
-    // 若有多重最高分，用tiebreaker判定，沒有則用第一個
-    const finalType = topTypes.length === 1 ? topTypes[0] : (tiebreaker || topTypes[0]);
+    let maxType = 'A';
+    let maxCount = count.A;
+    for (const t of ['B', 'C', 'D']) {
+      if (count[t] > maxCount) {
+        maxType = t;
+        maxCount = count[t];
+      }
+    }
 
-    const messages = {
-      A: "🧠 你是【分析型思考者】：邏輯清晰、做事謹慎，是團隊裡的智多星。",
-      B: "✨ 你是【直覺型行動者】：憑感覺走人生，靈光一閃就是你出手的時機。",
-      C: "😅 你是【拖延型觀望者】：謹慎小心，但常常一拖再拖，不做決定就是你的決定。",
-      D: "⚡ 你是【衝動型執行者】：想到就做，靈活有衝勁，行動力爆表！"
+    const descriptions = {
+      A: "你是謹慎而理性的策略家，喜歡計畫和準備，總能在危機中找到最佳解決方案。",
+      B: "你是感性且富有直覺的探險家，勇於相信自己內心的聲音，樂於冒險與嘗試新事物。",
+      C: "你是謹慎且考慮周全的觀察者，遇事會多方權衡，偏好安全穩健的路線。",
+      D: "你是熱血且果斷的行動派，勇於面對挑戰，喜歡直接衝刺達成目標。",
     };
 
-    resultText.textContent = messages[finalType] || "測驗完成，無法判斷結果。";
+    resultText.textContent = descriptions[maxType];
   }
 
-  function restartQuiz() {
-    currentQuestion = 0;
-    answersGiven.length = 0;
-    for (let key in scores) scores[key] = 0;
-    tiebreaker = null;
-
-    resultDiv.classList.add("hidden");
-    quizDiv.classList.add("hidden");
-    homeDiv.classList.remove("hidden");
-  }
+  restartBtn.addEventListener('click', () => {
+    resultPage.style.display = 'none';
+    startPage.style.display = 'block';
+  });
 </script>
 </body>
 </html>
